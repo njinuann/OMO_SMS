@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Enums" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Enums" elementFormDefault="qualified">
+	<xs:simpleType name="TransactionType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ActivateAccount"/>
+			<xs:enumeration value="SavingsDeposit"/>
+			<xs:enumeration value="SavingsWithdrawal"/>
+			<xs:enumeration value="GetAccountBalance"/>
+			<xs:enumeration value="GetTransactionList"/>
+			<xs:enumeration value="PayLoan"/>
+			<xs:enumeration value="RequestLoan"/>
+			<xs:enumeration value="NotifyTransaction"/>
+			<xs:enumeration value="LoanMiniStatement"/>
+			<xs:enumeration value="PayLoanSavings"/>
+			<xs:enumeration value="CheckCreditLimit"/>
+			<xs:enumeration value="ActivateGroupAccount"/>
+			<xs:enumeration value="NotifyGroupMemberKYC"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="TransactionType" type="tns:TransactionType" nillable="true"/>
+	<xs:simpleType name="TransactionState">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="COMPLETED"/>
+			<xs:enumeration value="CANCELLED"/>
+			<xs:enumeration value="EXPIRED"/>
+			<xs:enumeration value="ALREADYCOMPLETED"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="TransactionState" type="tns:TransactionState" nillable="true"/>
+	<xs:simpleType name="CreditState">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RCL1"/>
+			<xs:enumeration value="RCL2"/>
+			<xs:enumeration value="RCL3"/>
+			<xs:enumeration value="NA"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="CreditState" type="tns:CreditState" nillable="true"/>
+</xs:schema>

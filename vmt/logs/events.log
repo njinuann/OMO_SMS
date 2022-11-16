@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<logger class="Ruby.acx.AXLogger" datetime="Sat Aug 25 16:40:28 WAT 2018">
+<event realm="vmt" datetime="Sat Aug 25 16:40:28 WAT 2018">
+	<info>Stopped ServerConnector@d96d516{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:40:28 WAT 2018">
+	<info>Stopped o.e.j.s.h.ContextHandler@76de9a7f{/ruby/home,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:40:28 WAT 2018">
+	<info>Stopped o.e.j.h.s.HttpSpiContextHandler@481a578d{/ruby/vmt/vserve,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:41:38 WAT 2018">
+	<info>Logging initialized @7675ms to org.eclipse.jetty.util.log.APLog</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:41:42 WAT 2018">
+	<info>jetty-9.4.z-SNAPSHOT; built: unknown; git: unknown; jvm 1.8.0_172-b11</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:41:42 WAT 2018">
+	<info>Started o.e.j.s.h.ContextHandler@54360b89{/ruby/home,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:41:42 WAT 2018">
+	<info>Started o.e.j.h.s.HttpSpiContextHandler@2e059ec7{/ruby/vmt/vserve,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:41:42 WAT 2018">
+	<info>Missing mime-type resource: org/eclipse/jetty/http/mime.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:41:42 WAT 2018">
+	<info>Missing encoding resource: org/eclipse/jetty/http/encoding.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:41:42 WAT 2018">
+	<info>x509=X509@76ae2ab4(ruby,h=[fincadrc.com],w=[fincadrc.com]) for SslContextFactory@15de1ed8[provider=null,keyStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks,trustStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks]</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:41:42 WAT 2018">
+	<info>Started @11951ms</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:41:42 WAT 2018">
+	<info>Started ServerConnector@34bd6b42{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:41:42 WAT 2018">
+	<exec>
+		<reference>FN180825164141367002</reference>
+		<txntype>RS ~ Recovery</txntype>
+		<account></account>
+		<narration>Saving Loan Recovery</narration>
+		<request>AXRequest=<[ account=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, amount=<0>, branch=<[ buCode=<124>, buId=<-23>, buName=<MOBILE>, glPrefix=<1-124>, status=<A> ]>, channel=<VMT>, channelId=<13>, charge=<[ channelLedger=<null>, chargeAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, chargeAmount=<0>, chargeLedger=<null>, chargeNarration=<null>, scheme=<V01>, splitList=<[]>, taxAmount=<0> ]>, charged=<false>, contra=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, count=<null>, currency=<[ currencyCode=<USD>, currencyId=<841>, currencyName=<Us Dollar>, decimalPlaces=<2> ]>, detail=<null>, disbAmount=<0>, inverted=<true>, loanTerm=<null>, msisdn=<null>, narration=<Saving Loan Recovery>, reference=<FN180825164141367002>, reversal=<false>, setBalance=<true>, termCode=<null>, txnCode=<RS>, txnType=<[ RECOVERY ]>, user=<[ buId=<null>, creditScore=<[ code=<-1>, grade=<null>, limit=<0>, message=<null>, msisdn=<null>, reason=<null>, score=<null> ]>, custCat=<null>, custId=<null>, custNo=<null>, error=<false>, firstName=<null>, fullName=<null>, loanAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, msisdn=<null>, repaymentAccounts=<[]>, savingAccounts=<[]>, status=<null>, userId=<null>, verified=<false>, vmtNumber=<null> ]>, userRole=<[ branchCode=<100>, branchId=<-99>, branchName=<HEAD OFFICE>, buRoleId=<1>, drawers=<[]>, limits=<[ URLimit=<[ creditLimit=<10000>, currency=<USD>, debitLimit=<10000>, role=<null>, roleId=<-99> ]>, URLimit=<[ creditLimit=<20000000>, currency=<CDF>, debitLimit=<20000000>, role=<null>, roleId=<-99> ]> ]>, role=<System Administrator>, roleId=<-99>, supervisor=<Y>, userId=<-99>, userName=<SYSTEM>, userRoleId=<-99> ]>, vmtNumber=<null> ]></request>
+		<vmtcallreq>PaybackLoanSavingRequest=<[ fIAccountNumber=<[ globalScope=<false>, name=<{http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/}FIAccountNumber>, nil=<false>, typeSubstituted=<false>, value=<1240330000000007> ]>, fSIIdentityId=<[ mSISDN=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}MSISDN>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, groupID=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}GroupID>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, fSILinkType=<Loan>, amount=<175>, bankShortCode=<1412>, messageId=<[ id=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}Id>, nil=<false>, typeSubstituted=<false>, value=<FN180825164141367002> ]>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.367>, hour=<16>, millisecond=<367>, minute=<41>, month=<8>, second=<41>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, transactionId=<1535211701367>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallreq>
+		<vmtcallres>PaybackLoanSavingResponse=<[ fSIIdentityId=<[ mSISDN=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}MSISDN>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, groupID=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}GroupID>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, additionalInformation=<null>, amountPaid=<null>, bankResponseCode=<S1>, bankShortCode=<1412>, isFullyRepaid=<false>, isOverpaid=<false>, loanBalance=<null>, loanPayByDate=<null>, messageId=<[ id=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}Id>, nil=<false>, typeSubstituted=<false>, value=<FN180825164141367002> ]>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.367>, hour=<16>, millisecond=<367>, minute=<41>, month=<8>, second=<41>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, savingBalance=<null>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.820>, hour=<16>, millisecond=<820>, minute=<41>, month=<8>, second=<42>, timezone=<60>, valid=<true>, year=<2018> ]>, transactionId=<1535211701367>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallres>
+		<response>AXResponse=<[ accountNumber=<null>, applId=<null>, balance=<null>, chargeId=<null>, customerNumber=<null>, data=<null>, loanDetail=<[ acctNo=<null>, arrears=<0>, balance=<0>, charge=<0>, currency=<null>, custId=<null>, expired=<null>, expiryDt=<null>, interest=<0>, loanAmt=<0>, loanId=<null>, msisdn=<null>, overage=<0>, paid=<0>, startDt=<null>, vmtNo=<null> ]>, message=<null>, reference=<null>, respCode=<null>, result=<[ INVALID_MSISDN ]>, txnId=<null>, xapiCode=<null> ]></response>
+		<result>INVALID_MSISDN</result>
+		<duration>1500 Ms</duration>
+	</exec>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:44:29 WAT 2018">
+	<info>Stopped ServerConnector@34bd6b42{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:44:29 WAT 2018">
+	<info>Stopped o.e.j.h.s.HttpSpiContextHandler@2e059ec7{/ruby/vmt/vserve,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:44:29 WAT 2018">
+	<info>Stopped o.e.j.s.h.ContextHandler@54360b89{/ruby/home,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:44:38 WAT 2018">
+	<info>Logging initialized @4682ms to org.eclipse.jetty.util.log.APLog</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:44:41 WAT 2018">
+	<info>jetty-9.4.z-SNAPSHOT; built: unknown; git: unknown; jvm 1.8.0_172-b11</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:44:41 WAT 2018">
+	<info>Started o.e.j.s.h.ContextHandler@2da05961{/ruby/home,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:44:41 WAT 2018">
+	<info>Started o.e.j.h.s.HttpSpiContextHandler@5c58c477{/ruby/vmt/vserve,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:44:41 WAT 2018">
+	<info>Missing mime-type resource: org/eclipse/jetty/http/mime.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:44:41 WAT 2018">
+	<info>Missing encoding resource: org/eclipse/jetty/http/encoding.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:44:41 WAT 2018">
+	<info>x509=X509@ea486d2(ruby,h=[fincadrc.com],w=[fincadrc.com]) for SslContextFactory@5801df5c[provider=null,keyStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks,trustStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks]</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:44:41 WAT 2018">
+	<info>Started ServerConnector@60b2677f{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:44:41 WAT 2018">
+	<info>Started @7380ms</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:44:42 WAT 2018">
+	<exec>
+		<reference>FN180825164441740002</reference>
+		<txntype>RS ~ Recovery</txntype>
+		<account></account>
+		<narration>Saving Loan Recovery</narration>
+		<request>AXRequest=<[ account=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, amount=<0>, branch=<[ buCode=<124>, buId=<-23>, buName=<MOBILE>, glPrefix=<1-124>, status=<A> ]>, channel=<VMT>, channelId=<13>, charge=<[ channelLedger=<null>, chargeAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, chargeAmount=<0>, chargeLedger=<null>, chargeNarration=<null>, scheme=<V01>, splitList=<[]>, taxAmount=<0> ]>, charged=<false>, contra=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, count=<null>, currency=<[ currencyCode=<USD>, currencyId=<841>, currencyName=<Us Dollar>, decimalPlaces=<2> ]>, detail=<null>, disbAmount=<0>, inverted=<true>, loanTerm=<null>, msisdn=<null>, narration=<Saving Loan Recovery>, reference=<FN180825164441740002>, reversal=<false>, setBalance=<true>, termCode=<null>, txnCode=<RS>, txnType=<[ RECOVERY ]>, user=<[ buId=<null>, creditScore=<[ code=<-1>, grade=<null>, limit=<0>, message=<null>, msisdn=<null>, reason=<null>, score=<null> ]>, custCat=<null>, custId=<null>, custNo=<null>, error=<false>, firstName=<null>, fullName=<null>, loanAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, msisdn=<null>, repaymentAccounts=<[]>, savingAccounts=<[]>, status=<null>, userId=<null>, verified=<false>, vmtNumber=<null> ]>, userRole=<[ branchCode=<100>, branchId=<-99>, branchName=<HEAD OFFICE>, buRoleId=<1>, drawers=<[]>, limits=<[ URLimit=<[ creditLimit=<10000>, currency=<USD>, debitLimit=<10000>, role=<null>, roleId=<-99> ]>, URLimit=<[ creditLimit=<20000000>, currency=<CDF>, debitLimit=<20000000>, role=<null>, roleId=<-99> ]> ]>, role=<System Administrator>, roleId=<-99>, supervisor=<Y>, userId=<-99>, userName=<SYSTEM>, userRoleId=<-99> ]>, vmtNumber=<null> ]></request>
+		<vmtcallreq>PaybackLoanSavingRequest=<[ fIAccountNumber=<[ globalScope=<false>, name=<{http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/}FIAccountNumber>, nil=<false>, typeSubstituted=<false>, value=<1240330000000007> ]>, fSIIdentityId=<[ mSISDN=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}MSISDN>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, groupID=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}GroupID>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, fSILinkType=<Loan>, amount=<175>, bankShortCode=<1412>, messageId=<[ id=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}Id>, nil=<false>, typeSubstituted=<false>, value=<FN180825164441740002> ]>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.740>, hour=<16>, millisecond=<740>, minute=<44>, month=<8>, second=<41>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, transactionId=<1535211881753>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallreq>
+		<vmtcallres>PaybackLoanSavingResponse=<[ fSIIdentityId=<[ mSISDN=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}MSISDN>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, groupID=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}GroupID>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, additionalInformation=<null>, amountPaid=<null>, bankResponseCode=<S1>, bankShortCode=<1412>, isFullyRepaid=<false>, isOverpaid=<false>, loanBalance=<null>, loanPayByDate=<null>, messageId=<[ id=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}Id>, nil=<false>, typeSubstituted=<false>, value=<FN180825164441740002> ]>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.740>, hour=<16>, millisecond=<740>, minute=<44>, month=<8>, second=<41>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, savingBalance=<null>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.988>, hour=<16>, millisecond=<988>, minute=<44>, month=<8>, second=<41>, timezone=<60>, valid=<true>, year=<2018> ]>, transactionId=<1535211881753>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallres>
+		<response>AXResponse=<[ accountNumber=<null>, applId=<null>, balance=<null>, chargeId=<null>, customerNumber=<null>, data=<null>, loanDetail=<[ acctNo=<null>, arrears=<0>, balance=<0>, charge=<0>, currency=<null>, custId=<null>, expired=<null>, expiryDt=<null>, interest=<0>, loanAmt=<0>, loanId=<null>, msisdn=<null>, overage=<0>, paid=<0>, startDt=<null>, vmtNo=<null> ]>, message=<null>, reference=<null>, respCode=<null>, result=<[ INVALID_MSISDN ]>, txnId=<null>, xapiCode=<null> ]></response>
+		<result>INVALID_MSISDN</result>
+		<duration>282 Ms</duration>
+	</exec>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:48:38 WAT 2018">
+	<info>Stopped ServerConnector@60b2677f{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:48:38 WAT 2018">
+	<info>Stopped o.e.j.h.s.HttpSpiContextHandler@5c58c477{/ruby/vmt/vserve,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:48:38 WAT 2018">
+	<info>Stopped o.e.j.s.h.ContextHandler@2da05961{/ruby/home,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:48:48 WAT 2018">
+	<info>Logging initialized @4710ms to org.eclipse.jetty.util.log.APLog</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:48:50 WAT 2018">
+	<info>jetty-9.4.z-SNAPSHOT; built: unknown; git: unknown; jvm 1.8.0_172-b11</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:48:50 WAT 2018">
+	<info>Started o.e.j.h.s.HttpSpiContextHandler@4191a593{/ruby/vmt/vserve,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:48:50 WAT 2018">
+	<info>Started o.e.j.s.h.ContextHandler@396d24bc{/ruby/home,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:48:50 WAT 2018">
+	<info>Missing encoding resource: org/eclipse/jetty/http/encoding.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:48:50 WAT 2018">
+	<info>Missing mime-type resource: org/eclipse/jetty/http/mime.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:48:50 WAT 2018">
+	<info>x509=X509@6cd55b0b(ruby,h=[fincadrc.com],w=[fincadrc.com]) for SslContextFactory@40e16ef3[provider=null,keyStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks,trustStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks]</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:48:51 WAT 2018">
+	<info>Started ServerConnector@2a81ccc5{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:48:51 WAT 2018">
+	<info>Started @7566ms</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:48:51 WAT 2018">
+	<exec>
+		<reference>FN180825164850659002</reference>
+		<txntype>RS ~ Recovery</txntype>
+		<account></account>
+		<narration>Saving Loan Recovery</narration>
+		<request>AXRequest=<[ account=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, amount=<0>, branch=<[ buCode=<124>, buId=<-23>, buName=<MOBILE>, glPrefix=<1-124>, status=<A> ]>, channel=<VMT>, channelId=<13>, charge=<[ channelLedger=<null>, chargeAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, chargeAmount=<0>, chargeLedger=<null>, chargeNarration=<null>, scheme=<V01>, splitList=<[]>, taxAmount=<0> ]>, charged=<false>, contra=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, count=<null>, currency=<[ currencyCode=<USD>, currencyId=<841>, currencyName=<Us Dollar>, decimalPlaces=<2> ]>, detail=<null>, disbAmount=<0>, inverted=<true>, loanTerm=<null>, msisdn=<null>, narration=<Saving Loan Recovery>, reference=<FN180825164850659002>, reversal=<false>, setBalance=<true>, termCode=<null>, txnCode=<RS>, txnType=<[ RECOVERY ]>, user=<[ buId=<null>, creditScore=<[ code=<-1>, grade=<null>, limit=<0>, message=<null>, msisdn=<null>, reason=<null>, score=<null> ]>, custCat=<null>, custId=<null>, custNo=<null>, error=<false>, firstName=<null>, fullName=<null>, loanAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, msisdn=<null>, repaymentAccounts=<[]>, savingAccounts=<[]>, status=<null>, userId=<null>, verified=<false>, vmtNumber=<null> ]>, userRole=<[ branchCode=<100>, branchId=<-99>, branchName=<HEAD OFFICE>, buRoleId=<1>, drawers=<[]>, limits=<[ URLimit=<[ creditLimit=<10000>, currency=<USD>, debitLimit=<10000>, role=<null>, roleId=<-99> ]>, URLimit=<[ creditLimit=<20000000>, currency=<CDF>, debitLimit=<20000000>, role=<null>, roleId=<-99> ]> ]>, role=<System Administrator>, roleId=<-99>, supervisor=<Y>, userId=<-99>, userName=<SYSTEM>, userRoleId=<-99> ]>, vmtNumber=<null> ]></request>
+		<vmtcallreq>PaybackLoanSavingRequest=<[ fIAccountNumber=<[ globalScope=<false>, name=<{http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/}FIAccountNumber>, nil=<false>, typeSubstituted=<false>, value=<1240330000000007> ]>, fSIIdentityId=<[ mSISDN=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}MSISDN>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, groupID=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}GroupID>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, fSILinkType=<Loan>, amount=<175>, bankShortCode=<1412>, messageId=<[ id=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}Id>, nil=<false>, typeSubstituted=<false>, value=<FN180825164850659002> ]>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.674>, hour=<16>, millisecond=<674>, minute=<48>, month=<8>, second=<50>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, transactionId=<1535212130674>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallreq>
+		<vmtcallres>PaybackLoanSavingResponse=<[ fSIIdentityId=<[ mSISDN=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}MSISDN>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, groupID=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}GroupID>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, additionalInformation=<null>, amountPaid=<null>, bankResponseCode=<S1>, bankShortCode=<1412>, isFullyRepaid=<false>, isOverpaid=<false>, loanBalance=<null>, loanPayByDate=<null>, messageId=<[ id=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}Id>, nil=<false>, typeSubstituted=<false>, value=<FN180825164850659002> ]>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.674>, hour=<16>, millisecond=<674>, minute=<48>, month=<8>, second=<50>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, savingBalance=<null>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.956>, hour=<16>, millisecond=<956>, minute=<48>, month=<8>, second=<50>, timezone=<60>, valid=<true>, year=<2018> ]>, transactionId=<1535212130674>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallres>
+		<response>AXResponse=<[ accountNumber=<null>, applId=<null>, balance=<null>, chargeId=<null>, customerNumber=<null>, data=<null>, loanDetail=<[ acctNo=<null>, arrears=<0>, balance=<0>, charge=<0>, currency=<null>, custId=<null>, expired=<null>, expiryDt=<null>, interest=<0>, loanAmt=<0>, loanId=<null>, msisdn=<null>, overage=<0>, paid=<0>, startDt=<null>, vmtNo=<null> ]>, message=<null>, reference=<null>, respCode=<null>, result=<[ INVALID_MSISDN ]>, txnId=<null>, xapiCode=<null> ]></response>
+		<result>INVALID_MSISDN</result>
+		<duration>375 Ms</duration>
+	</exec>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:53:45 WAT 2018">
+	<info>Stopped ServerConnector@2a81ccc5{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:53:45 WAT 2018">
+	<info>Stopped o.e.j.s.h.ContextHandler@396d24bc{/ruby/home,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:53:45 WAT 2018">
+	<info>Stopped o.e.j.h.s.HttpSpiContextHandler@4191a593{/ruby/vmt/vserve,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:53:55 WAT 2018">
+	<info>Logging initialized @4764ms to org.eclipse.jetty.util.log.APLog</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:53:57 WAT 2018">
+	<info>jetty-9.4.z-SNAPSHOT; built: unknown; git: unknown; jvm 1.8.0_172-b11</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:53:57 WAT 2018">
+	<exec>
+		<reference>FN180825165357391002</reference>
+		<txntype>RS ~ Recovery</txntype>
+		<account></account>
+		<narration>Saving Loan Recovery</narration>
+		<request>AXRequest=<[ account=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, amount=<0>, branch=<[ buCode=<124>, buId=<-23>, buName=<MOBILE>, glPrefix=<1-124>, status=<A> ]>, channel=<VMT>, channelId=<13>, charge=<[ channelLedger=<null>, chargeAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, chargeAmount=<0>, chargeLedger=<null>, chargeNarration=<null>, scheme=<V01>, splitList=<[]>, taxAmount=<0> ]>, charged=<false>, contra=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, count=<null>, currency=<[ currencyCode=<USD>, currencyId=<841>, currencyName=<Us Dollar>, decimalPlaces=<2> ]>, detail=<null>, disbAmount=<0>, inverted=<true>, loanTerm=<null>, msisdn=<null>, narration=<Saving Loan Recovery>, reference=<FN180825165357391002>, reversal=<false>, setBalance=<true>, termCode=<null>, txnCode=<RS>, txnType=<[ RECOVERY ]>, user=<[ buId=<null>, creditScore=<[ code=<-1>, grade=<null>, limit=<0>, message=<null>, msisdn=<null>, reason=<null>, score=<null> ]>, custCat=<null>, custId=<null>, custNo=<null>, error=<false>, firstName=<null>, fullName=<null>, loanAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, msisdn=<null>, repaymentAccounts=<[]>, savingAccounts=<[]>, status=<null>, userId=<null>, verified=<false>, vmtNumber=<null> ]>, userRole=<[ branchCode=<100>, branchId=<-99>, branchName=<HEAD OFFICE>, buRoleId=<1>, drawers=<[]>, limits=<[ URLimit=<[ creditLimit=<10000>, currency=<USD>, debitLimit=<10000>, role=<null>, roleId=<-99> ]>, URLimit=<[ creditLimit=<20000000>, currency=<CDF>, debitLimit=<20000000>, role=<null>, roleId=<-99> ]> ]>, role=<System Administrator>, roleId=<-99>, supervisor=<Y>, userId=<-99>, userName=<SYSTEM>, userRoleId=<-99> ]>, vmtNumber=<null> ]></request>
+		<vmtcallreq>PaybackLoanSavingRequest=<[ fIAccountNumber=<[ globalScope=<false>, name=<{http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/}FIAccountNumber>, nil=<false>, typeSubstituted=<false>, value=<1240330000000007> ]>, fSIIdentityId=<[ mSISDN=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}MSISDN>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, groupID=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}GroupID>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, fSILinkType=<Loan>, amount=<175>, bankShortCode=<1412>, messageId=<[ id=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}Id>, nil=<false>, typeSubstituted=<false>, value=<FN180825165357391002> ]>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.391>, hour=<16>, millisecond=<391>, minute=<53>, month=<8>, second=<57>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, transactionId=<1535212437407>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallreq>
+		<vmtcallres>PaybackLoanSavingResponse=<[ fSIIdentityId=<[ mSISDN=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}MSISDN>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, groupID=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}GroupID>, nil=<true>, typeSubstituted=<false>, value=<null> ]>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, additionalInformation=<null>, amountPaid=<null>, bankResponseCode=<S1>, bankShortCode=<1412>, isFullyRepaid=<false>, isOverpaid=<false>, loanBalance=<null>, loanPayByDate=<null>, messageId=<[ id=<[ globalScope=<false>, name=<{http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common}Id>, nil=<false>, typeSubstituted=<false>, value=<FN180825165357391002> ]>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.391>, hour=<16>, millisecond=<391>, minute=<53>, month=<8>, second=<57>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, savingBalance=<null>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.672>, hour=<16>, millisecond=<672>, minute=<53>, month=<8>, second=<57>, timezone=<60>, valid=<true>, year=<2018> ]>, transactionId=<1535212437407>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallres>
+		<response>AXResponse=<[ accountNumber=<null>, applId=<null>, balance=<null>, chargeId=<null>, customerNumber=<null>, data=<null>, loanDetail=<[ acctNo=<null>, arrears=<0>, balance=<0>, charge=<0>, currency=<null>, custId=<null>, expired=<null>, expiryDt=<null>, interest=<0>, loanAmt=<0>, loanId=<null>, msisdn=<null>, overage=<0>, paid=<0>, startDt=<null>, vmtNo=<null> ]>, message=<null>, reference=<null>, respCode=<null>, result=<[ INVALID_MSISDN ]>, txnId=<null>, xapiCode=<null> ]></response>
+		<result>INVALID_MSISDN</result>
+		<duration>390 Ms</duration>
+	</exec>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:53:57 WAT 2018">
+	<info>Missing mime-type resource: org/eclipse/jetty/http/mime.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:53:57 WAT 2018">
+	<info>Missing encoding resource: org/eclipse/jetty/http/encoding.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:53:57 WAT 2018">
+	<info>Started o.e.j.h.s.HttpSpiContextHandler@384cf107{/ruby/vmt/vserve,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:53:57 WAT 2018">
+	<info>Started o.e.j.s.h.ContextHandler@2cb388e8{/ruby/home,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:53:58 WAT 2018">
+	<info>x509=X509@52150a3a(ruby,h=[fincadrc.com],w=[fincadrc.com]) for SslContextFactory@383dd6bf[provider=null,keyStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks,trustStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks]</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:53:58 WAT 2018">
+	<info>Started ServerConnector@4119eba7{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 16:53:58 WAT 2018">
+	<info>Started @7869ms</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:27:09 WAT 2018">
+	<info>Stopped ServerConnector@4119eba7{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:27:09 WAT 2018">
+	<info>Stopped o.e.j.s.h.ContextHandler@2cb388e8{/ruby/home,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:27:09 WAT 2018">
+	<info>Stopped o.e.j.h.s.HttpSpiContextHandler@384cf107{/ruby/vmt/vserve,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:27:22 WAT 2018">
+	<info>Logging initialized @4827ms to org.eclipse.jetty.util.log.APLog</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:27:25 WAT 2018">
+	<exec>
+		<reference>FN180825172725070002</reference>
+		<txntype>RS ~ Recovery</txntype>
+		<account></account>
+		<narration>Saving Loan Recovery</narration>
+		<request>AXRequest=<[ account=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, amount=<0>, branch=<[ buCode=<124>, buId=<-23>, buName=<MOBILE>, glPrefix=<1-124>, status=<A> ]>, channel=<VMT>, channelId=<13>, charge=<[ channelLedger=<null>, chargeAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, chargeAmount=<0>, chargeLedger=<null>, chargeNarration=<null>, scheme=<V01>, splitList=<[]>, taxAmount=<0> ]>, charged=<false>, contra=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, count=<null>, currency=<[ currencyCode=<USD>, currencyId=<841>, currencyName=<Us Dollar>, decimalPlaces=<2> ]>, detail=<null>, disbAmount=<0>, inverted=<true>, loanTerm=<null>, msisdn=<null>, narration=<Saving Loan Recovery>, reference=<FN180825172725070002>, reversal=<false>, setBalance=<true>, termCode=<null>, txnCode=<RS>, txnType=<[ RECOVERY ]>, user=<[ buId=<null>, creditScore=<[ code=<-1>, grade=<null>, limit=<0>, message=<null>, msisdn=<null>, reason=<null>, score=<null> ]>, custCat=<null>, custId=<null>, custNo=<null>, error=<false>, firstName=<null>, fullName=<null>, loanAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, msisdn=<null>, repaymentAccounts=<[]>, savingAccounts=<[]>, status=<null>, userId=<null>, verified=<false>, vmtNumber=<null> ]>, userRole=<[ branchCode=<100>, branchId=<-99>, branchName=<HEAD OFFICE>, buRoleId=<1>, drawers=<[]>, limits=<[ URLimit=<[ creditLimit=<10000>, currency=<USD>, debitLimit=<10000>, role=<null>, roleId=<-99> ]>, URLimit=<[ creditLimit=<20000000>, currency=<CDF>, debitLimit=<20000000>, role=<null>, roleId=<-99> ]> ]>, role=<System Administrator>, roleId=<-99>, supervisor=<Y>, userId=<-99>, userName=<SYSTEM>, userRoleId=<-99> ]>, vmtNumber=<null> ]></request>
+		<vmtcallreq>PaybackLoanSavingRequest=<[ fIAccountNumber=<1240330000000007>, fSIIdentityId=<[ mSISDN=<null>, groupID=<null>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, fSILinkType=<Loan>, amount=<175>, bankShortCode=<1412>, messageId=<[ id=<FN180825172725070002>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.070>, hour=<17>, millisecond=<70>, minute=<27>, month=<8>, second=<25>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, transactionId=<1535214445070>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallreq>
+		<vmtcallres>PaybackLoanSavingResponse=<[ fSIIdentityId=<[ mSISDN=<null>, groupID=<null>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, additionalInformation=<null>, amountPaid=<null>, bankResponseCode=<S1>, bankShortCode=<1412>, isFullyRepaid=<false>, isOverpaid=<false>, loanBalance=<null>, loanPayByDate=<null>, messageId=<[ id=<FN180825172725070002>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.070>, hour=<17>, millisecond=<70>, minute=<27>, month=<8>, second=<25>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, savingBalance=<null>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.148>, hour=<17>, millisecond=<148>, minute=<27>, month=<8>, second=<25>, timezone=<60>, valid=<true>, year=<2018> ]>, transactionId=<1535214445070>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallres>
+		<response>AXResponse=<[ accountNumber=<null>, applId=<null>, balance=<null>, chargeId=<null>, customerNumber=<null>, data=<null>, loanDetail=<[ acctNo=<null>, arrears=<0>, balance=<0>, charge=<0>, currency=<null>, custId=<null>, expired=<null>, expiryDt=<null>, interest=<0>, loanAmt=<0>, loanId=<null>, msisdn=<null>, overage=<0>, paid=<0>, startDt=<null>, vmtNo=<null> ]>, message=<null>, reference=<null>, respCode=<null>, result=<[ INVALID_MSISDN ]>, txnId=<null>, xapiCode=<null> ]></response>
+		<result>INVALID_MSISDN</result>
+		<duration>359 Ms</duration>
+	</exec>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:27:25 WAT 2018">
+	<info>jetty-9.4.z-SNAPSHOT; built: unknown; git: unknown; jvm 1.8.0_172-b11</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:27:25 WAT 2018">
+	<info>Missing encoding resource: org/eclipse/jetty/http/encoding.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:27:25 WAT 2018">
+	<info>Started o.e.j.h.s.HttpSpiContextHandler@6fc46cd5{/ruby/vmt/vserve,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:27:25 WAT 2018">
+	<info>Started o.e.j.s.h.ContextHandler@1715dcd6{/ruby/home,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:27:25 WAT 2018">
+	<info>Missing mime-type resource: org/eclipse/jetty/http/mime.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:27:26 WAT 2018">
+	<info>x509=X509@7ebeab66(ruby,h=[fincadrc.com],w=[fincadrc.com]) for SslContextFactory@79f91086[provider=null,keyStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks,trustStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks]</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:27:26 WAT 2018">
+	<info>Started @8768ms</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:27:26 WAT 2018">
+	<info>Started ServerConnector@30e1fa6f{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:34:33 WAT 2018">
+	<info>Stopped ServerConnector@30e1fa6f{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:34:33 WAT 2018">
+	<info>Stopped o.e.j.s.h.ContextHandler@1715dcd6{/ruby/home,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:34:33 WAT 2018">
+	<info>Stopped o.e.j.h.s.HttpSpiContextHandler@6fc46cd5{/ruby/vmt/vserve,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:34:44 WAT 2018">
+	<info>Logging initialized @4732ms to org.eclipse.jetty.util.log.APLog</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:34:46 WAT 2018">
+	<info>jetty-9.4.z-SNAPSHOT; built: unknown; git: unknown; jvm 1.8.0_172-b11</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:34:46 WAT 2018">
+	<info>Missing encoding resource: org/eclipse/jetty/http/encoding.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:34:46 WAT 2018">
+	<info>Started o.e.j.h.s.HttpSpiContextHandler@3ec366f5{/ruby/vmt/vserve,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:34:46 WAT 2018">
+	<info>Missing mime-type resource: org/eclipse/jetty/http/mime.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:34:46 WAT 2018">
+	<info>Started o.e.j.s.h.ContextHandler@181bbfd1{/ruby/home,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:34:47 WAT 2018">
+	<info>x509=X509@50b60bbd(ruby,h=[fincadrc.com],w=[fincadrc.com]) for SslContextFactory@5247f176[provider=null,keyStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks,trustStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks]</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:34:47 WAT 2018">
+	<info>Started ServerConnector@229b9376{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:34:47 WAT 2018">
+	<info>Started @7593ms</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:34:47 WAT 2018">
+	<exec>
+		<reference>FN180825173447150002</reference>
+		<txntype>RS ~ Recovery</txntype>
+		<account></account>
+		<narration>Saving Loan Recovery</narration>
+		<request>AXRequest=<[ account=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, amount=<0>, branch=<[ buCode=<124>, buId=<-23>, buName=<MOBILE>, glPrefix=<1-124>, status=<A> ]>, channel=<VMT>, channelId=<13>, charge=<[ channelLedger=<null>, chargeAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, chargeAmount=<0>, chargeLedger=<null>, chargeNarration=<null>, scheme=<V01>, splitList=<[]>, taxAmount=<0> ]>, charged=<false>, contra=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, count=<null>, currency=<[ currencyCode=<USD>, currencyId=<841>, currencyName=<Us Dollar>, decimalPlaces=<2> ]>, detail=<null>, disbAmount=<0>, inverted=<true>, loanTerm=<null>, msisdn=<null>, narration=<Saving Loan Recovery>, reference=<FN180825173447150002>, reversal=<false>, setBalance=<true>, termCode=<null>, txnCode=<RS>, txnType=<[ RECOVERY ]>, user=<[ buId=<null>, creditScore=<[ code=<-1>, grade=<null>, limit=<0>, message=<null>, msisdn=<null>, reason=<null>, score=<null> ]>, custCat=<null>, custId=<null>, custNo=<null>, error=<false>, firstName=<null>, fullName=<null>, loanAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, msisdn=<null>, repaymentAccounts=<[]>, savingAccounts=<[]>, status=<null>, userId=<null>, verified=<false>, vmtNumber=<null> ]>, userRole=<[ branchCode=<100>, branchId=<-99>, branchName=<HEAD OFFICE>, buRoleId=<1>, drawers=<[]>, limits=<[ URLimit=<[ creditLimit=<10000>, currency=<USD>, debitLimit=<10000>, role=<null>, roleId=<-99> ]>, URLimit=<[ creditLimit=<20000000>, currency=<CDF>, debitLimit=<20000000>, role=<null>, roleId=<-99> ]> ]>, role=<System Administrator>, roleId=<-99>, supervisor=<Y>, userId=<-99>, userName=<SYSTEM>, userRoleId=<-99> ]>, vmtNumber=<null> ]></request>
+		<vmtcallreq>PaybackLoanSavingRequest=<[ fIAccountNumber=<1240330000000007>, fSIIdentityId=<[ mSISDN=<null>, groupID=<null>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, fSILinkType=<Loan>, amount=<175>, bankShortCode=<1412>, messageId=<[ id=<FN180825173447150002>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.165>, hour=<17>, millisecond=<165>, minute=<34>, month=<8>, second=<47>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, transactionId=<1535214887165>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallreq>
+		<vmtcallres>PaybackLoanSavingResponse=<[ fSIIdentityId=<[ mSISDN=<null>, groupID=<null>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, additionalInformation=<null>, amountPaid=<null>, bankResponseCode=<S1>, bankShortCode=<1412>, isFullyRepaid=<false>, isOverpaid=<false>, loanBalance=<null>, loanPayByDate=<null>, messageId=<[ id=<FN180825173447150002>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.165>, hour=<17>, millisecond=<165>, minute=<34>, month=<8>, second=<47>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, savingBalance=<null>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.447>, hour=<17>, millisecond=<447>, minute=<34>, month=<8>, second=<47>, timezone=<60>, valid=<true>, year=<2018> ]>, transactionId=<1535214887165>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallres>
+		<response>AXResponse=<[ accountNumber=<null>, applId=<null>, balance=<null>, chargeId=<null>, customerNumber=<null>, data=<null>, loanDetail=<[ acctNo=<null>, arrears=<0>, balance=<0>, charge=<0>, currency=<null>, custId=<null>, expired=<null>, expiryDt=<null>, interest=<0>, loanAmt=<0>, loanId=<null>, msisdn=<null>, overage=<0>, paid=<0>, startDt=<null>, vmtNo=<null> ]>, message=<null>, reference=<null>, respCode=<null>, result=<[ INVALID_MSISDN ]>, txnId=<null>, xapiCode=<null> ]></response>
+		<result>INVALID_MSISDN</result>
+		<duration>438 Ms</duration>
+	</exec>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:56:18 WAT 2018">
+	<info>Stopped ServerConnector@229b9376{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:56:18 WAT 2018">
+	<info>Stopped o.e.j.s.h.ContextHandler@181bbfd1{/ruby/home,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:56:18 WAT 2018">
+	<info>Stopped o.e.j.h.s.HttpSpiContextHandler@3ec366f5{/ruby/vmt/vserve,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:56:43 WAT 2018">
+	<info>Logging initialized @4742ms to org.eclipse.jetty.util.log.APLog</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:56:46 WAT 2018">
+	<info>jetty-9.4.z-SNAPSHOT; built: unknown; git: unknown; jvm 1.8.0_172-b11</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:56:46 WAT 2018">
+	<info>Missing encoding resource: org/eclipse/jetty/http/encoding.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:56:46 WAT 2018">
+	<info>Started o.e.j.s.h.ContextHandler@6af2f18d{/ruby/home,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:56:46 WAT 2018">
+	<info>Started o.e.j.h.s.HttpSpiContextHandler@6e7490ef{/ruby/vmt/vserve,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:56:46 WAT 2018">
+	<info>Missing mime-type resource: org/eclipse/jetty/http/mime.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:56:46 WAT 2018">
+	<info>x509=X509@140b4618(ruby,h=[fincadrc.com],w=[fincadrc.com]) for SslContextFactory@6c3ff167[provider=null,keyStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks,trustStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks]</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:56:46 WAT 2018">
+	<info>Started ServerConnector@d28371{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:56:46 WAT 2018">
+	<info>Started @7755ms</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 17:56:46 WAT 2018">
+	<exec>
+		<reference>FN180825175646034002</reference>
+		<txntype>RS ~ Recovery</txntype>
+		<account></account>
+		<narration>Saving Loan Recovery</narration>
+		<request>AXRequest=<[ account=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, amount=<0>, branch=<[ buCode=<124>, buId=<-23>, buName=<MOBILE>, glPrefix=<1-124>, status=<A> ]>, channel=<VMT>, channelId=<13>, charge=<[ channelLedger=<null>, chargeAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, chargeAmount=<0>, chargeLedger=<null>, chargeNarration=<null>, scheme=<V01>, splitList=<[]>, taxAmount=<0> ]>, charged=<false>, contra=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, count=<null>, currency=<[ currencyCode=<USD>, currencyId=<841>, currencyName=<Us Dollar>, decimalPlaces=<2> ]>, detail=<null>, disbAmount=<0>, inverted=<true>, loanTerm=<null>, msisdn=<null>, narration=<Saving Loan Recovery>, reference=<FN180825175646034002>, reversal=<false>, setBalance=<true>, termCode=<null>, txnCode=<RS>, txnType=<[ RECOVERY ]>, user=<[ buId=<null>, creditScore=<[ code=<-1>, grade=<null>, limit=<0>, message=<null>, msisdn=<null>, reason=<null>, score=<null> ]>, custCat=<null>, custId=<null>, custNo=<null>, error=<false>, firstName=<null>, fullName=<null>, loanAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, msisdn=<null>, repaymentAccounts=<[]>, savingAccounts=<[]>, status=<null>, userId=<null>, verified=<false>, vmtNumber=<null> ]>, userRole=<[ branchCode=<100>, branchId=<-99>, branchName=<HEAD OFFICE>, buRoleId=<1>, drawers=<[]>, limits=<[ URLimit=<[ creditLimit=<10000>, currency=<USD>, debitLimit=<10000>, role=<null>, roleId=<-99> ]>, URLimit=<[ creditLimit=<20000000>, currency=<CDF>, debitLimit=<20000000>, role=<null>, roleId=<-99> ]> ]>, role=<System Administrator>, roleId=<-99>, supervisor=<Y>, userId=<-99>, userName=<SYSTEM>, userRoleId=<-99> ]>, vmtNumber=<null> ]></request>
+		<vmtcallreq>PaybackLoanSavingRequest=<[ fIAccountNumber=<1240330000000007>, fSIIdentityId=<[ mSISDN=<null>, groupID=<null>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, fSILinkType=<Loan>, amount=<175>, bankShortCode=<1412>, messageId=<[ id=<FN180825175646034002>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.050>, hour=<17>, millisecond=<50>, minute=<56>, month=<8>, second=<46>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, transactionId=<1535216206050>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallreq>
+		<vmtcallres>PaybackLoanSavingResponse=<[ fSIIdentityId=<[ mSISDN=<null>, groupID=<null>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, additionalInformation=<null>, amountPaid=<null>, bankResponseCode=<S1>, bankShortCode=<1412>, isFullyRepaid=<false>, isOverpaid=<false>, loanBalance=<null>, loanPayByDate=<null>, messageId=<[ id=<FN180825175646034002>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.050>, hour=<17>, millisecond=<50>, minute=<56>, month=<8>, second=<46>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, savingBalance=<null>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.331>, hour=<17>, millisecond=<331>, minute=<56>, month=<8>, second=<46>, timezone=<60>, valid=<true>, year=<2018> ]>, transactionId=<1535216206050>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallres>
+		<response>AXResponse=<[ accountNumber=<null>, applId=<null>, balance=<null>, chargeId=<null>, customerNumber=<null>, data=<null>, loanDetail=<[ acctNo=<null>, arrears=<0>, balance=<0>, charge=<0>, currency=<null>, custId=<null>, expired=<null>, expiryDt=<null>, interest=<0>, loanAmt=<0>, loanId=<null>, msisdn=<null>, overage=<0>, paid=<0>, startDt=<null>, vmtNo=<null> ]>, message=<null>, reference=<null>, respCode=<null>, result=<[ INVALID_MSISDN ]>, txnId=<null>, xapiCode=<null> ]></response>
+		<result>INVALID_MSISDN</result>
+		<duration>531 Ms</duration>
+	</exec>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 18:23:05 WAT 2018">
+	<info>Stopped ServerConnector@d28371{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 18:23:05 WAT 2018">
+	<info>Stopped o.e.j.s.h.ContextHandler@6af2f18d{/ruby/home,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 18:23:05 WAT 2018">
+	<info>Stopped o.e.j.h.s.HttpSpiContextHandler@6e7490ef{/ruby/vmt/vserve,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 18:23:15 WAT 2018">
+	<info>Logging initialized @4761ms to org.eclipse.jetty.util.log.APLog</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 18:23:17 WAT 2018">
+	<info>jetty-9.4.z-SNAPSHOT; built: unknown; git: unknown; jvm 1.8.0_172-b11</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 18:23:18 WAT 2018">
+	<info>Missing mime-type resource: org/eclipse/jetty/http/mime.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 18:23:18 WAT 2018">
+	<info>Started o.e.j.s.h.ContextHandler@4d077e74{/ruby/home,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 18:23:18 WAT 2018">
+	<info>Started o.e.j.h.s.HttpSpiContextHandler@631002d{/ruby/vmt/vserve,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 18:23:18 WAT 2018">
+	<info>Missing encoding resource: org/eclipse/jetty/http/encoding.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 18:23:18 WAT 2018">
+	<info>x509=X509@5bfdbd70(ruby,h=[fincadrc.com],w=[fincadrc.com]) for SslContextFactory@a241338[provider=null,keyStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks,trustStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks]</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 18:23:18 WAT 2018">
+	<info>Started @8137ms</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 18:23:18 WAT 2018">
+	<info>Started ServerConnector@b9a6f2a{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 18:23:19 WAT 2018">
+	<exec>
+		<reference>FN180825182317893002</reference>
+		<txntype>RS ~ Recovery</txntype>
+		<account></account>
+		<narration>Saving Loan Recovery</narration>
+		<request>AXRequest=<[ account=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, amount=<0>, branch=<[ buCode=<124>, buId=<-23>, buName=<MOBILE>, glPrefix=<1-124>, status=<A> ]>, channel=<VMT>, channelId=<13>, charge=<[ channelLedger=<null>, chargeAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, chargeAmount=<0>, chargeLedger=<null>, chargeNarration=<null>, scheme=<V01>, splitList=<[]>, taxAmount=<0> ]>, charged=<false>, contra=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, count=<null>, currency=<[ currencyCode=<USD>, currencyId=<841>, currencyName=<Us Dollar>, decimalPlaces=<2> ]>, detail=<null>, disbAmount=<0>, inverted=<true>, loanTerm=<null>, msisdn=<null>, narration=<Saving Loan Recovery>, reference=<FN180825182317893002>, reversal=<false>, setBalance=<true>, termCode=<null>, txnCode=<RS>, txnType=<[ RECOVERY ]>, user=<[ buId=<null>, creditScore=<[ code=<-1>, grade=<null>, limit=<0>, message=<null>, msisdn=<null>, reason=<null>, score=<null> ]>, custCat=<null>, custId=<null>, custNo=<null>, error=<false>, firstName=<null>, fullName=<null>, loanAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, msisdn=<null>, repaymentAccounts=<[]>, savingAccounts=<[]>, status=<null>, userId=<null>, verified=<false>, vmtNumber=<null> ]>, userRole=<[ branchCode=<100>, branchId=<-99>, branchName=<HEAD OFFICE>, buRoleId=<1>, drawers=<[]>, limits=<[ URLimit=<[ creditLimit=<10000>, currency=<USD>, debitLimit=<10000>, role=<null>, roleId=<-99> ]>, URLimit=<[ creditLimit=<20000000>, currency=<CDF>, debitLimit=<20000000>, role=<null>, roleId=<-99> ]> ]>, role=<System Administrator>, roleId=<-99>, supervisor=<Y>, userId=<-99>, userName=<SYSTEM>, userRoleId=<-99> ]>, vmtNumber=<null> ]></request>
+		<vmtcallreq>PaybackLoanSavingRequest=<[ fIAccountNumber=<1240330000000007>, fSIIdentityId=<[ mSISDN=<null>, groupID=<null>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, fSILinkType=<Loan>, amount=<175>, bankShortCode=<1412>, messageId=<[ id=<FN180825182317893002>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.893>, hour=<18>, millisecond=<893>, minute=<23>, month=<8>, second=<17>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, transactionId=<1535217797893>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallreq>
+		<vmtcallres>PaybackLoanSavingResponse=<[ fSIIdentityId=<[ mSISDN=<null>, groupID=<null>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, additionalInformation=<null>, amountPaid=<null>, bankResponseCode=<S1>, bankShortCode=<1412>, isFullyRepaid=<false>, isOverpaid=<false>, loanBalance=<null>, loanPayByDate=<null>, messageId=<[ id=<FN180825182317893002>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.893>, hour=<18>, millisecond=<893>, minute=<23>, month=<8>, second=<17>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, savingBalance=<null>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.315>, hour=<18>, millisecond=<315>, minute=<23>, month=<8>, second=<19>, timezone=<60>, valid=<true>, year=<2018> ]>, transactionId=<1535217797893>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallres>
+		<response>AXResponse=<[ accountNumber=<null>, applId=<null>, balance=<null>, chargeId=<null>, customerNumber=<null>, data=<null>, loanDetail=<[ acctNo=<null>, arrears=<0>, balance=<0>, charge=<0>, currency=<null>, custId=<null>, expired=<null>, expiryDt=<null>, interest=<0>, loanAmt=<0>, loanId=<null>, msisdn=<null>, overage=<0>, paid=<0>, startDt=<null>, vmtNo=<null> ]>, message=<null>, reference=<null>, respCode=<null>, result=<[ INVALID_MSISDN ]>, txnId=<null>, xapiCode=<null> ]></response>
+		<result>INVALID_MSISDN</result>
+		<duration>1469 Ms</duration>
+	</exec>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 20:40:56 WAT 2018">
+	<info>Stopped ServerConnector@b9a6f2a{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 20:40:56 WAT 2018">
+	<info>Stopped o.e.j.s.h.ContextHandler@4d077e74{/ruby/home,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 20:40:56 WAT 2018">
+	<info>Stopped o.e.j.h.s.HttpSpiContextHandler@631002d{/ruby/vmt/vserve,null,UNAVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 20:41:08 WAT 2018">
+	<info>Logging initialized @4746ms to org.eclipse.jetty.util.log.APLog</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 20:41:11 WAT 2018">
+	<info>jetty-9.4.z-SNAPSHOT; built: unknown; git: unknown; jvm 1.8.0_172-b11</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 20:41:11 WAT 2018">
+	<info>Missing mime-type resource: org/eclipse/jetty/http/mime.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 20:41:11 WAT 2018">
+	<info>Started o.e.j.h.s.HttpSpiContextHandler@4c024699{/ruby/vmt/vserve,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 20:41:11 WAT 2018">
+	<info>Started o.e.j.s.h.ContextHandler@439da9ce{/ruby/home,null,AVAILABLE}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 20:41:11 WAT 2018">
+	<info>Missing encoding resource: org/eclipse/jetty/http/encoding.properties</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 20:41:11 WAT 2018">
+	<info>x509=X509@2f0cb3a8(ruby,h=[fincadrc.com],w=[fincadrc.com]) for SslContextFactory@62415ad[provider=null,keyStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks,trustStore=file:///C:/Ruby%20VMT/vmt/cert/ruby.ks]</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 20:41:11 WAT 2018">
+	<info>Started ServerConnector@2e1a6a87{SSL,[ssl, http/1.1]}{0.0.0.0:8900}</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 20:41:11 WAT 2018">
+	<info>Started @8042ms</info>
+</event>
+<event realm="vmt" datetime="Sat Aug 25 20:41:13 WAT 2018">
+	<exec>
+		<reference>FN180825204111485002</reference>
+		<txntype>RS ~ Recovery</txntype>
+		<account></account>
+		<narration>Saving Loan Recovery</narration>
+		<request>AXRequest=<[ account=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, amount=<0>, branch=<[ buCode=<124>, buId=<-23>, buName=<MOBILE>, glPrefix=<1-124>, status=<A> ]>, channel=<VMT>, channelId=<13>, charge=<[ channelLedger=<null>, chargeAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, chargeAmount=<0>, chargeLedger=<null>, chargeNarration=<null>, scheme=<V01>, splitList=<[]>, taxAmount=<0> ]>, charged=<false>, contra=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, count=<null>, currency=<[ currencyCode=<USD>, currencyId=<841>, currencyName=<Us Dollar>, decimalPlaces=<2> ]>, detail=<null>, disbAmount=<0>, inverted=<true>, loanTerm=<null>, msisdn=<null>, narration=<Saving Loan Recovery>, reference=<FN180825204111485002>, reversal=<false>, setBalance=<true>, termCode=<null>, txnCode=<RS>, txnType=<[ RECOVERY ]>, user=<[ buId=<null>, creditScore=<[ code=<-1>, grade=<null>, limit=<0>, message=<null>, msisdn=<null>, reason=<null>, score=<null> ]>, custCat=<null>, custId=<null>, custNo=<null>, error=<false>, firstName=<null>, fullName=<null>, loanAccount=<[ accountName=<null>, accountNumber=<null>, accountType=<null>, acctId=<null>, balance=<0>, branch=<[ buCode=<null>, buId=<null>, buName=<null>, glPrefix=<null>, status=<null> ]>, currency=<[ currencyCode=<null>, currencyId=<null>, currencyName=<null>, decimalPlaces=<0> ]>, custId=<null>, productId=<null>, shortName=<null>, status=<null> ]>, msisdn=<null>, repaymentAccounts=<[]>, savingAccounts=<[]>, status=<null>, userId=<null>, verified=<false>, vmtNumber=<null> ]>, userRole=<[ branchCode=<100>, branchId=<-99>, branchName=<HEAD OFFICE>, buRoleId=<1>, drawers=<[]>, limits=<[ URLimit=<[ creditLimit=<10000>, currency=<USD>, debitLimit=<10000>, role=<null>, roleId=<-99> ]>, URLimit=<[ creditLimit=<20000000>, currency=<CDF>, debitLimit=<20000000>, role=<null>, roleId=<-99> ]> ]>, role=<System Administrator>, roleId=<-99>, supervisor=<Y>, userId=<-99>, userName=<SYSTEM>, userRoleId=<-99> ]>, vmtNumber=<null> ]></request>
+		<vmtcallreq>PaybackLoanSavingRequest=<[ fIAccountNumber=<1240330000000007>, fSIIdentityId=<[ mSISDN=<null>, groupID=<null>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, fSILinkType=<Loan>, amount=<175>, bankShortCode=<1412>, messageId=<[ id=<FN180825204111485002>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.485>, hour=<20>, millisecond=<485>, minute=<41>, month=<8>, second=<11>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, transactionId=<1535226071548>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallreq>
+		<vmtcallres>PaybackLoanSavingResponse=<[ fSIIdentityId=<[ mSISDN=<null>, groupID=<null>, shortCode=<1412>, vmtReferenceNumber=<null> ]>, additionalInformation=<null>, amountPaid=<null>, bankResponseCode=<S1>, bankShortCode=<1412>, isFullyRepaid=<false>, isOverpaid=<false>, loanBalance=<null>, loanPayByDate=<null>, messageId=<[ id=<FN180825204111485002>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.485>, hour=<20>, millisecond=<485>, minute=<41>, month=<8>, second=<11>, timezone=<60>, valid=<true>, year=<2018> ]> ]>, savingBalance=<null>, timeStamp=<[ xMLSchemaType=<{http://www.w3.org/2001/XMLSchema}dateTime>, day=<25>, eon=<null>, eonAndYear=<2018>, fractionalSecond=<0.032>, hour=<20>, millisecond=<32>, minute=<41>, month=<8>, second=<13>, timezone=<60>, valid=<true>, year=<2018> ]>, transactionId=<1535226071548>, transactionReceiptNumber=<null>, transactionTypeName=<[ PAY_LOAN_SAVINGS ]> ]></vmtcallres>
+		<response>AXResponse=<[ accountNumber=<null>, applId=<null>, balance=<null>, chargeId=<null>, customerNumber=<null>, data=<null>, loanDetail=<[ acctNo=<null>, arrears=<0>, balance=<0>, charge=<0>, currency=<null>, custId=<null>, expired=<null>, expiryDt=<null>, interest=<0>, loanAmt=<0>, loanId=<null>, msisdn=<null>, overage=<0>, paid=<0>, startDt=<null>, vmtNo=<null> ]>, message=<null>, reference=<null>, respCode=<null>, result=<[ INVALID_MSISDN ]>, txnId=<null>, xapiCode=<null> ]></response>
+		<result>INVALID_MSISDN</result>
+		<duration>1547 Ms</duration>
+	</exec>
+</event>

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>Ruby Menus</comment>
+    <entry key="LANGUAGE">========================================================================================================</entry>
+    <entry key="LA000S_EN">Lugha:^{LIST}~0: Cancel</entry>
+    <entry key="LA000S_KW">Language:^{LIST}~0: Cancel</entry>
+    <entry key="MAIN MENU">============================================================================================================</entry>
+    <entry key="MM000S_EN">Access Blocked!~Please contact or visit our nearest customer care centre to reactivate service.</entry>
+    <entry key="MM000S_KW">Huduma Imesitishwa!~Tafadhali walisiana au temembelea kituo chetu cha huduma kwa wateja kilicho karibu nawe</entry>
+    <entry key="MM000U_EN">Access Denied!~New or unknown simcard detected. Please contact or visit our nearest customer care centre for assistance.</entry>
+    <entry key="MM000U_KW">Huduma Imezuiwa!Kadi ya simu yako haitambuliki. Tafadhali wasiliana au tembelea kituo chetu cha huduma kwa wateja kilicho karibu nawe</entry>
+    <entry key="GUEST MENU">============================================================================================================</entry>
+    <entry key="GM000S_EN">Select Service:^1: Activate HaloYako~2: Product Information~3: Terms & Conditions~4: Lugha~0: Exit</entry>
+    <entry key="GM000S_KW">Chagua Huduma:^1: Sajili HaloYako~2: Taarifa Bidhaa Zetu~3: Vigezo na Masharti~4: Language~0: Exit</entry>
+    <entry key="ACTIVATE CUSTOMER">============================================================================================================</entry>
+	<entry key="AM000S_EN">Please read and accept the terms and conditions summarized below to activate this service.^1: Accept Terms~2: Read Terms~0: Cancel</entry>
+    <entry key="AM000S_KW">Tafadhali soma na kukubali muhtasari wa vigezo na masharti ili kujisajili kwenye huduma ya HaloYako.^1: Soma Vigezo & Masharti~2: Kubali Vigezo & Masharti~0: Rudi</entry>
+    <entry key="AM030S_EN">Hello {NAME}, welcome to HaloYako! Your mobile number has been activated for HaloYako successfully. Please dial *2309*99# to use the service.</entry>
+    <entry key="AM030S_KW">Habari {NAME}, karibu kwenye HaloYako! Namba yako ya simu imesajiliwa kwenye huduma ya HaloYako. Piga *2309*99# ili kutumia huduma hii.</entry>
+    <entry key="AM030D_EN">Your mobile number was NOT activated for HaloYako because you did not accept the terms and conditions provided. Please contact Halotel customer care centre on 102 for further information.</entry>
+    <entry key="AM030D_KW">Namba yako haijasaliwa kwenye HaloYako kwa sababu hujakubaliana na vigezo na masharti vya huduma hii. Piga 102 ili kuongea na watoa huduma wetu kwa maelezo zaidi.</entry>
+    <entry key="AM030G_EN">Activation failed! You must be atleast 18 years of age to use this service. Please review your halopesa registration date of birth.</entry>
+    <entry key="AM030G_KW"></entry>
+    <entry key="AM030T_EN">Activation failed! You must have a valid identity document to use this service. Please review your halopesa registration identification documents.</entry>
+    <entry key="AM030T_KW"></entry>
+    <entry key="AM030F_EN">Activation failed! {MESSAGE}. Please contact Halotel customer care centre on 102 for assistance.</entry>
+    <entry key="AM030F_KW">Ombi lako la kujisajili kwenye HaloYako halijafanikiwa.Piga 102 ili kuongea na watoa huduma wetu kupata msaada zaidi.</entry>
+    <entry key="ACTIVATION TERMS">============================================================================================================</entry>
+    <entry key="AT000S_EN">Terms & Conditions:^1: Eligibility~2: Savings Accounts~3: Use of Data~4: Transaction Fees~5: Complaints~6: Closing Account~7: Termination~0: Back</entry>
+    <entry key="AT000S_KW">Vigezo & Masharti:^1: Kuhusu Ustahili~2: Kuhusu Akiba~3: Matumizi ya Taarifa~4: Ada za Miamala~5: Malalamiko~6: Kusitisha Huduma~7: Kusitishwa Huduma~0: Rudi</entry>
+    <entry key="AT001S_EN">Terms & Conditions:^1: Eligibility~2: Savings Accounts~3: Use of Data~4: Transaction Fees~5: Complaints~6: Closing Account~7: Termination~8: Accept~0: Cancel</entry>
+    <entry key="AT001S_KW">Vigezo & Masharti:^1: Kuhusu Ustahili~2: Kuhusu Akiba~3: Matumizi ya Taarifa~4: Ada za Miamala~5: Malalamiko~6: Kusitisha Huduma~7: Kusitishwa Huduma~8: Kubali Vigezo & Masharti~0: Rudi</entry>		
+    <entry key="AT011S_EN">To access the product, you need to:~* Be above 18 years of age.~* Be registered with HaloPesa.~* Not be on any sanction list.^0: Back</entry>
+    <entry key="AT011S_KW">Kupata huduma ya HaloYako, inabidi uwe:~* Zaidi ya miaka 18.~* Umejisaliwa kwenye Halopesa.~* Haupo kwenye orodha ya watu walio ekewa vikwazo.^0: Rudi</entry>
+    <entry key="AT012S_EN">Savings interest is paid monthly. Interest can range between 2% - 6% per annum. There are Halo savings and target savings. As per Tanzanian law, 10% withholding tax is deducted from interest payments.^0: Back</entry>
+    <entry key="AT012S_KW">Gawio la riba linatolewa kila mwezi. Asilimia ya riba inaweza kuwa kati ya 2% mpaka 6% kwa mwaka. Kuna akaunti ya akiba ya kawaida na akiba ya malengo. Kwa mujibu wa sheria ya Tanzania, 10% ya riba itakatwa kama kodi ya zuio.^0: Rudi</entry>
+    <entry key="AT013S_EN">By signing up for the service, you consent to the use of your personal HaloPesa and Halotel information.^0: Back</entry>
+    <entry key="AT013S_KW">Ukijisajili kwa huduma hii, unakubali taarifa zako binafsi na za matumizi ya Halotel na HaloPesa zitumike.^0: Rudi</entry>
+    <entry key="AT014S_EN">Transactions shifting money between your HaloPesa wallet and your HaloYako savings accounts are free.^0: Back</entry>
+    <entry key="AT014S_KW">Miamala ya kuhamisha pesa kati ya HaloPesa na akaunti yako ya akiba ni haitalipiwa ada yoyote.^0: Rudi</entry>
+    <entry key="AT015S_EN">If you have a complaint about the HaloYako service, please call the Halotel customer care centre on 102^0: Back</entry>
+    <entry key="AT015S_KW">Kama una malalamiko kuhusu huduma ya HaloYako, tafadhali piga 102 ili kuongea na watoa huduma wetu katika kituo chetu cha huduma kwa wateja^0: Rudi</entry>
+    <entry key="AT016S_EN">To close your account, transfer any remaining balance to your HaloPesa Wallet. If you have an outstanding loan, you will be required to repay the loan before closing the account.^0: Back</entry>
+    <entry key="AT016S_KW">Ili Kusitisha huduma, hamisha salio lako lote la akiba kwenda HaloPesa. Ukiwa na mkopo ambao haujamalizika, utahitajika kulipa mkopo wote pamoja na ada zake kwanza kabla ya kusitisha huduma.^0: Rudi</entry>
+    <entry key="AT017S_EN">Your account may be terminated by Halotel in case of fraud, inactivity, or unpaid loans.^0: Back</entry>
+    <entry key="AT017S_KW">Huduma inawezwa kusitishwa muda wowote kukitokea kesi ya utapeli, kutotumika kwa muda mrefu au kuwa na madeni sugu.^0: Rudi</entry>
+    <entry key="PRODUCT INFORMATION">============================================================================================================</entry>
+    <entry key="PI000S_EN">Select Product:^1: Halo Saving~2: Target Saving~0: Back</entry>
+    <entry key="PI000S_KW">Chagua Bidhaa:^1: Halo Akiba~2: Akiba Ya Malengo~3: Mkopo~0: Rudi</entry>
+    <entry key="PI011S_EN">Halo Saving Features:~* Unlimited Amount~* Unlimited Frequency~* Unlimited Duration~* Earns Interest~* No Charges~* Auto Save^0: Back</entry>
+    <entry key="PI011S_KW">Sifa za Halo Akiba:~* Haina kikomo cha kiasi~* Haina kikomo cha idadi~* Haina kikomo cha muda~* Inapata riba~* Haina Ada~* Agizo la kuweka akiba^0: Rudi</entry>
+    <entry key="PI012S_EN">Target Saving Features:~* Unlimited Amount~* Self-Defined Targets~* SMS Reminders~* Earns Interest~* No Charges~* Auto Save^0: Back</entry>
+    <entry key="PI012S_KW">Sifa ya Akiba Ya Malengo:~* Haina kikomo cha kiasi~* Kuweka malengo yako mwenyewe~* Kukumbushwa kwa SMS~* Inapata riba~* Haina ada~* Agizo la kuweka akiba^0: Rudi</entry>
+    <entry key="HOME MENU">============================================================================================================</entry>
+    <entry key="HM000S_EN">Select Service:^1: Halo Saving~2: Target Saving~3: Terms & Conditions~4: Product Information~5: Lugha~0: Exit</entry>
+    <entry key="HM000S_KW">Chagua Huduma:^1: Halo Akiba~2: Akiba Malengo~3: Vigezo & Masharti~4: Taarifa za bidhaa~5: Language~0: Toka</entry>
+    <entry key="SAVING MENU">============================================================================================================</entry>
+    <entry key="SM000S_EN">Select Service:^1: Save~2: Withdraw~3: Auto-Save~4: Check Balance~0: Back</entry>
+    <entry key="SM000S_KW">Chagua Huduma:^1: Weka akiba~2: Toa akiba~3: Agizo la kuweka akiba~4: Salio~0: Rudi</entry>
+    <entry key="SAVING BALANCE">==================================================================================================</entry>
+    <entry key="SB000E_EN">No Account Found!^0: Cancel</entry>
+    <entry key="SB000E_KW">Akaunti haijapatikana!^0: Rudi</entry>
+    <entry key="SB000S_EN">Select Account:^{LIST}~0: Cancel</entry>
+    <entry key="SB000S_KW">Chagua akaunti:^{LIST}~0: Rudi</entry>
+    <entry key="SB000V_EN">Invalid Choice!~Select Account:^{LIST}~0: Cancel</entry>
+    <entry key="SB000V_KW">Chaguo batili!~Chagua akaunti:^{LIST}~0: Rudi</entry>
+    <entry key="SB020S_EN">Account: {ACCOUNT}~Balance: {CURRENCY} {AVAILBAL}~{MINISTATEMENT}</entry>
+    <entry key="SB020S_KW">Akaunti: {ACCOUNT}~Salio: {CURRENCY} {AVAILBAL}~{MINISTATEMENT}</entry>
+    <entry key="SB020I_EN">Balance request declined! Insufficient funds for charge in account {ACCOUNT}. Balance: {CURRENCY} {AVAILBAL}</entry>
+    <entry key="SB020I_KW">Ombi la kuona salio limekataliwa! Akaunti ya {ACCOUNT} haina pesa ya kutosha kulipia ada ya muamala huu. Salio: {CURRENCY} {AVAILBAL}</entry>
+    <entry key="SB020F_EN">Balance request failed! {MESSAGE}. Please contact Halotel customer care centre on 102 for assistance.</entry>
+    <entry key="SB020F_KW">Ombi la kuona salio limeshindikana! Kosa: {ERROR}. Piga 102 kuongea na muhudu wetu katika kituo cha huduma kwa wateja kupata msaada.</entry>
+    <entry key="TARGET BALANCE">==================================================================================================</entry>
+    <entry key="TB000E_EN">No Account Found!^0: Cancel</entry>
+    <entry key="TB000E_KW">Akaunti haijapatikana!^0: Rudi</entry>
+    <entry key="TB000S_EN">Select Account:^{LIST}~0: Cancel</entry>
+    <entry key="TB000S_KW">Chagua Lengo:^{LIST}~0: Rudi</entry>
+    <entry key="TB000V_EN">Invalid Choice!~Select Account:^{LIST}~0: Cancel</entry>
+    <entry key="TB000V_KW">Chaguo batili!~Chagua Lengo:^{LIST}~0: Rudi</entry>
+    <entry key="TB020S_EN">Account: {ACCOUNT}~Balance: {CURRENCY} {AVAILBAL}~{MINISTATEMENT}</entry>
+    <entry key="TB020S_KW">Lengo: {ACCOUNT}~Salio: {CURRENCY} {AVAILBAL}~{MINISTATEMENT}</entry>
+    <entry key="TB020I_EN">Balance request declined! Insufficient funds for charge in account {ACCOUNT}. Balance: {CURRENCY} {AVAILBAL}</entry>
+    <entry key="TB020I_KW">Ombi la kuona salio limekataliwa! Akaunti ya {ACCOUNT} haina pesa ya kutosha kulipia ada ya muamala huu. Salio: {CURRENCY} {AVAILBAL}</entry>
+    <entry key="TB020F_EN">Balance request failed! {MESSAGE}. Please contact Halotel customer care centre on 102 for assistance.</entry>
+    <entry key="TB020F_KW">Ombi la kuona salio limeshindikana! Kosa: {ERROR}. Piga 102 kuongea na muhudu wetu katika kituo cha huduma kwa wateja kupata msaada.</entry>
+    <entry key="DEPOSIT SAVING">===================================================================================================</entry>
+    <entry key="DS000E_EN">No Account Found!^0: Cancel</entry>
+    <entry key="DS000E_KW">Akaunti haijapatikana!^0: Rudi</entry>
+    <entry key="DS000S_EN">Save To:^{LIST}~0: Cancel</entry>
+    <entry key="DS000S_KW">Weka akiba kwenye:^{LIST}~0: Rudi</entry>
+    <entry key="DS000V_EN">Invalid Choice!~Save To:^{LIST}~0: Cancel</entry>
+    <entry key="DS000V_KW">Chaguo batili!~Weka akiba kwenye:^{LIST}~0: Rudi</entry>
+    <entry key="DS010S_EN">Enter Amount {CURRENCY}:^0: Cancel</entry>
+    <entry key="DS010S_KW">Ingiza kiasi unachoweka {CURRENCY}:^0: Rudi</entry>
+    <entry key="DS010V_EN">Invalid Amount!~Enter Amount {CURRENCY}:^0: Cancel</entry>
+    <entry key="DS010V_KW">Umeweka kiasi batili!~Ingiza kiasi unachoweka {CURRENCY}:^0: Rudi</entry>
+    <entry key="DS030S_EN">Are you sure?~Press 1 to confirm saving of {CURRENCY} {AMOUNT} to {ACCOUNT} from HaloPesa wallet.^1: Confirm~0: Cancel</entry>
+    <entry key="DS030S_KW">Una uhakika?~Ingiza 1 kuthibitisha kuweka {CURRENCY} {AMOUNT} kwenye akaunti yako ya {ACCOUNT} kutoka HaloPesa.^1: Thibitisha~0: Rudi</entry>
+    <entry key="DS060S_EN">Dear {NAME}, You have saved {CURRENCY} {AMOUNT} to your {ACCOUNT} account from your HaloPesa wallet. Balance: {CURRENCY} {AVAILBAL}. Thank you for saving with HaloYako.</entry>
+    <entry key="DS060S_KW">Habari {NAME}, umefanikiwa kuweka akiba kiasi cha {CURRENCY} {AMOUNT} kwenye akaunti yako ya {ACCOUNT} kutoka HaloPesa. Salio: {CURRENCY} {AVAILBAL}. Ahsante kwa kutumia HaloYako.</entry>
+    <entry key="DS060F_EN">Saving failed! {MESSAGE}. Please contact Halotel customer care centre on 102 for assistance.</entry>
+    <entry key="DS060F_KW">Haujafanikiwa kuweka akiba yako! Kosa: {ERROR}. {MESSAGE}. Piga 102 kuongea na muhudu wetu katika kituo cha huduma kwa wateja kupata msaada.</entry>
+    <entry key="WITHDRAW SAVING">===================================================================================================</entry>
+    <entry key="WS000E_EN">No Account Found!^0: Cancel</entry>
+    <entry key="WS000E_KW">Akaunti haijapatikana!^0: Rudi</entry>
+    <entry key="WS000S_EN">Withdraw From:^{LIST}~0: Cancel</entry>
+    <entry key="WS000S_KW">Toa akiba kutoka:^{LIST}~0: Rudi</entry>
+    <entry key="WS000V_EN">Invalid Choice!~Withdraw From:^{LIST}~0: Cancel</entry>
+    <entry key="WS000V_KW">Umeingiza chaguo batili!~Toa akiba kutoka:^{LIST}~0: Rudi</entry>
+    <entry key="WS010S_EN">Enter Amount {CURRENCY}:^0: Cancel</entry>
+    <entry key="WS010S_KW">Ingiza kiasi unachotoa {CURRENCY}:^0: Rudi</entry>
+    <entry key="WS010V_EN">Invalid Amount!~Enter Amount {CURRENCY}:^0: Cancel</entry>
+    <entry key="WS010V_KW">Umeingiza kiasi batili!~Ingiza kiasi unachotoa {CURRENCY}:^0: Rudi</entry>
+    <entry key="WS010I_EN">Insufficient funds for withdrawal of {CURRENCY} {AMOUNT} in your {ACCOUNT} account.~Enter Amount Below {CURRENCY} {AVAILBAL}:^0: Cancel</entry>
+    <entry key="WS010I_KW">Salio kwenye akaunti ya {ACCOUNT} halitoshi kutoa kiasi cha {CURRENCY} {AMOUNT}. Ingiza kiasha chini ya {CURRENCY} {AVAILBAL}:^0: Cancel</entry>
+    <entry key="WS030S_EN">Are you sure?~Press 1 to confirm withdrawal of {CURRENCY} {AMOUNT} from {ACCOUNT} to HaloPesa wallet.^1: Confirm~0: Cancel</entry>
+    <entry key="WS030S_KW">Una Uhakika?~Ingiza 1 kuthibitisha kutoa kiasi cha {CURRENCY} {AMOUNT} kutoka kwenye akaunti ya {ACCOUNT} kwenda HaloPesa.^1: Thibitisha~0: Rudi</entry>
+    <entry key="WS060S_EN">Dear {NAME}, You have withdrawn {CURRENCY} {AMOUNT} from your {ACCOUNT} account into your HaloPesa wallet. Balance: {CURRENCY} {AVAILBAL}. Thank you for saving with HaloYako.</entry>
+    <entry key="WS060S_KW">Habari {NAME}, umefanikiwa kutoa kiasi cha {CURRENCY} {AMOUNT} kutoka kwenye akaunti yako ya {ACCOUNT} kwenda HaloPesa. Salio: {CURRENCY} {AVAILBAL}. Ahsante kwa kutumia HaloYako.</entry>
+    <entry key="WS060I_EN">Withdrawal declined! Insufficient funds for transaction in your {ACCOUNT} account. Balance: {CURRENCY} {AVAILBAL}</entry>
+    <entry key="WS060I_KW">Ombi lako la kutoa akiba limezuiwa! Hauna pesa ya kutosha kwenya akaunti yako ya {ACCOUNT}. Salio: {CURRENCY} {AVAILBAL}</entry>
+    <entry key="WS060F_EN">Withdrawal failed! {MESSAGE}. Please contact Halotel customer care centre on 102 for assistance.</entry>
+    <entry key="WS060F_KW">Haujafanikiwa kutoa akiba yako! Kosa: {ERROR}. {MESSAGE}. Piga 102 kuongea na muhudu wetu katika kituo cha huduma kwa wateja kupata msaada.</entry>
+    <entry key="AUTO HOME">===================================================================================================</entry>
+    <entry key="AH000S_EN">Auto Savings enables you to set up an instruction to automatically save a set amount of money on a set date.^1: Proceed~0: Cancel</entry>
+    <entry key="AH000S_KW">Agizo la kuweka akiba linakupa uwezo wa kuweka malekezo ya kuweka akiba ya kiasi cha pesa katika tarehe itakayo chaguliwa moja kwa moja bila ya kutumia simu yako.^1: Endelea~0: Rudi</entry>
+    <entry key="AH020E_EN">No Account Found!^0: Cancel</entry>
+    <entry key="AH020E_KW">Akaunti haijapatikana!^0: Rudi</entry>
+    <entry key="AH020S_EN">Save To:^{LIST}~0: Cancel</entry>
+    <entry key="AH020S_KW">Weka akiba kwenye:^{LIST}~0: Rudi</entry>
+    <entry key="AH020V_EN">Invalid Choice!~Save To:^{LIST}~0: Cancel</entry>
+    <entry key="AH020V_KW">Chaguo batili!~Weka akiba kwenye:^{LIST}~0: Rudi</entry>
+    <entry key="AH030S_EN">Select Option:^1: Activate AutoSave~0: Cancel</entry>
+    <entry key="AH030S_KW">Ingiaza chaguo lako:^1: Weka agizo la kuweka akiba~0: Rudi</entry>
+    <entry key="AH030V_EN">Invalid Choice!~Select Option:^1: Activate AutoSave~0: Back</entry>
+    <entry key="AH030V_KW">Chaguo batili!~Ingiaza chaguo lako:^1: Weka agizo la kuweka akiba~0: Rudi</entry>
+    <entry key="AH031S_EN">Select Option:^1: Modify AutoSave~2: Cancel AutoSave~0: Back</entry>
+    <entry key="AH031S_KW">Ingiza chaguo lako:^1: Rekebisha agizo la kuweka akiba~2: Ondoa agizo la kuweka akiba~0: Rudi</entry>
+    <entry key="AH031V_EN">Invalid Choice!~Select Option:^1: Modify AutoSave~2: Cancel AutoSave~0: Back</entry>
+    <entry key="AH031V_KW">Chaguo batili!~Ingiza chaguo lako:^1: Rekebisha agizo la kuweka akiba~2: Ondoa agizo la kuweka akiba~0: Rudi</entry>
+    <entry key="AUTO SAVE">===================================================================================================</entry>
+    <entry key="AU000S_EN">Select Schedule:^1: Daily~2: Weekly~3: Monthly~0: Cancel</entry>
+    <entry key="AU000S_KW">Chagua ratiba:^1: Kila siku~2: Kila wiki~3: Kila mwezi~0: Rudi</entry>
+    <entry key="AU000V_EN">Invalid Choice!~Select Schedule:^1: Daily~2: Weekly~3: Monthly~0: Cancel</entry>
+    <entry key="AU000V_KW">Chaguo batili!~Chagua ratiba:^1: Kila siku~2: Kila wiki~3: Kila mwezi~0: Rudi</entry>
+    <entry key="AU020S_EN">Select Day of Week:^1: Monday~2: Tuesday~3: Wednesday~4: Thursday~5: Friday~6: Saturday~7: Sunday~0: Cancel</entry>
+    <entry key="AU020S_KW">Chagua siku ya wiki:^1: Jumatatu~2: Jumanne~3: Jumatano~4: Alhamisi~5: Ijumaa~6: Jumamosi~7: Jumapili~0: Rudi</entry>
+    <entry key="AU020V_EN">Invalid Choice!~Select Day of Week:^1: Monday~2: Tuesday~3: Wednesday~4: Thursday~5: Friday~6: Saturday~7: Sunday~0: Cancel</entry>
+    <entry key="AU020V_KW">Chaguo batili!~Chagua siku ya wiki:^1: Jumatatu~2: Jumanne~3: Jumatano~4: Alhamisi~5: Ijumaa~6: Jumamosi~7: Jumapili~0: Rudi</entry>
+    <entry key="AU021S_EN">Enter Day of Month 1-28:^0: Cancel</entry>
+    <entry key="AU021S_KW">Chagua siku katika mwezi 1-28:^0: Cancel</entry>
+    <entry key="AU021V_EN">Invalid Choice!~Enter Day of Month 1-28:^0: Cancel</entry>
+    <entry key="AU021V_KW">Chaguo batili!~Chagua siku katika mwezi 1-28:^0: Rudi</entry>
+    <entry key="AU040S_EN">Enter Amount {CURRENCY}:^0: Cancel</entry>
+    <entry key="AU040S_KW">Ingiza kiasi cha kuweka {CURRENCY}:^0: Rudi</entry>
+    <entry key="AU040V_EN">Invalid Amount!~Enter Amount {CURRENCY}:^0: Cancel</entry>
+    <entry key="AU040V_KW">Umeingiza kiasi batili!~Ingiza kiasi cha kuweka {CURRENCY}:^0: Rudi</entry>
+    <entry key="AU060S_EN">Are you sure?~Press 1 to activate {FREQUENCY} autosave of {CURRENCY} {AMOUNT} to your {ACCOUNT} account every [date] {DAY} starting {DATE} from your HaloPesa wallet.^1: Confirm~0: Cancel</entry>
+    <entry key="AU060S_KW">Una uhakika?~Ingiza 1 kuthibitisha kusajili agizo la kuweka akiba {FREQUENCY} [tarehe] {DAY} kiasi cha {CURRENCY} {AMOUNT} kwenda kwenye akaunti yako ya {ACCOUNT} kutoka HaloPesa.^1: Thibitisha~0: Rudi</entry>
+    <entry key="AU090S_EN">Dear {NAME}, You have activated {FREQUENCY} autosave of {CURRENCY} {AMOUNT} to your {ACCOUNT} account every [date] {DAY} starting {DATE} from your HaloPesa wallet. Thank you for saving with HaloYako.</entry>
+    <entry key="AU090S_KW">Habari {NAME}, umefanikiwa kusajili agizo la kuweka akiba {FREQUENCY} [tarehe] {DAY} kiasi cha {CURRENCY} {AMOUNT} kwenda kwenye akaunti yako ya {ACCOUNT} kutoka HaloPesa. Ahsante kwa kutumia HaloYako.</entry>
+    <entry key="AU090F_EN">Failed! {MESSAGE}. Please contact Halotel customer care centre on 102 for assistance.</entry>
+    <entry key="AU090F_KW">Haujafanikiwa kusajili agizo la kuweka akiba! Kosa: {ERROR}. {MESSAGE}. Piga 102 kuongea na muhudu wetu katika kituo cha huduma kwa wateja kupata msaada.</entry>	
+    <entry key="CANCEL AUTO">===================================================================================================</entry>
+    <entry key="CA000S_EN">Please confirm the cancellation of {FREQUENCY} autosave of {CURRENCY} {AMOUNT} on your {ACCOUNT} account.^1: Confirm~0: Cancel</entry>
+    <entry key="CA000S_KW">Tafadhani thibitisha kuondoa agizo la kuweka akiba kila {FREQUENCY} kiasi cha {CURRENCY} {AMOUNT} kwenye akaunti yako ya {ACCOUNT}.^1: Thibitisha~0: Rudi</entry>
+    <entry key="CA030S_EN">Dear {NAME}, You have canceled {FREQUENCY} autosave on your {ACCOUNT} account from your HaloPesa wallet. Thank you for saving with HaloYako.</entry>
+    <entry key="CA030S_KW">Habari {NAME}, umefanikiwa kuondoa agizo la kuweka akiba {FREQUENCY} kwenye akaunti yako ya {ACCOUNT} kutoka HaloPesa. Ahsante kwa kutumia HaloYako.</entry>
+    <entry key="CA030F_EN">Failed! {MESSAGE}. Please contact Halotel customer care centre on 102 for assistance.</entry>
+    <entry key="CA030F_KW">Ombi la kuondoa agizo la kuweka akiba halijafanikiwa! Kosa: {ERROR}. {MESSAGE}. Piga 102 kuongea na mhudumu wetu katika kituo cha huduma kwa wateja kupata msaada.</entry>
+    <entry key="AUTO SAVING">===================================================================================================</entry>
+    <entry key="PA000S_EN">Dear {NAME}, Your auto saving of {CURRENCY} {AMOUNT} to your {ACCOUNT} account has been processed successfully. Balance: {CURRENCY} {AVAILBAL}. Thank you for saving with HaloYako.</entry>
+    <entry key="PA000S_KW">Habari {NAME}, agizo lako la kuweka akiba kila {CURRENCY} kiasi cha {AMOUNT} kwenda kwenye akauti yako ya {ACCOUNT} limetekelezwa kikamilifu. Salio: {CURRENCY} {AVAILBAL}. Ahsante kwa kutumia HaloYako.</entry>
+    <entry key="PA000F_EN">Auto saving failed! Amount {CURRENCY} {AMOUNT}, Account {ACCOUNT}. {MESSAGE}. Please contact Halotel customer care centre on 102 for assistance.</entry>
+    <entry key="PA000F_KW">Agizo lako la kuweka akiba kiasi cha {CURRENCY} {AMOUNT}, kwenda kwenye akaunti yako ya {ACCOUNT} halijafanikiwa. Kosa: {ERROR}. {MESSAGE}. Piga 102 kuongea na mhudumu wetu katika kituo cha huduma kwa wateja kupata msaada.</entry>
+    <entry key="TARGET MENU">============================================================================================================</entry>
+    <entry key="TM000S_EN">Target savings gives you an opportunity to save for your goals. It also gives you an opportunity to earn higher interest.^1: Proceed~0: Back</entry>
+    <entry key="TM000S_KW">Akiba Ya Malengo inakupa nafasi ya kuweka akiba ili kufikia lengo lako. Pia inakuwa nafasi ya kupata riba ya kiasi cha juu ziadi.^1: Endelea~0: Rudi</entry>
+    <entry key="TM000V_EN">Invalid Choice!~Target savings gives you an opportunity to save for your goals. It also gives you an opportunity to earn higher interest.^1: Proceed~0: Back</entry>
+    <entry key="TM000V_KW">Chaguo batili!~Akiba Ya Malengo inakuwa nafasi ya kuweka akiba ili kufikia lengo lako. Pia inakuwa nafasi ya kupata riba ya kiasi cha juu ziadi.^1: Endelea~0: Rudi</entry>
+    <entry key="TM020S_EN">Select Service:^1: Set Target~0: Back</entry>
+    <entry key="TM020S_KW">Chagua huduma:^1: Jiwekee Lengo~0: Rudi</entry>
+    <entry key="TM021S_EN">Select Service:^1: Set Target~2: Change Target~3: Save To Target~4: Break Target~5: Auto Save~6: Check Balance~0: Back</entry>
+    <entry key="TM021S_KW">Chagua Huduma:^1: Jiwekee Lengo~2: Badili Lengo~3: Weka akiba kwenye lengo~4: Sitisha Lengo~5: Agizo la kuweka akiba kwenye lengo~6: Angalia Salio~0: Rudi</entry>
+    <entry key="TM030S_EN">Sorry, You have reached the maximum of {MAX} concurrently active targets allowed. Please meet or break any of your existing targets before setting a new target.^0: Back</entry>
+    <entry key="TM030S_KW">Samahani, unaruhusiwa kuwa malengo {MAX} tu kwa wakati mmoja. Jitahidi kutimiza malengo uliyo nayo ili kuweza kuweka malengo mapya.^0: Rudi</entry>
+    <entry key="SET TARGET">============================================================================================================</entry>
+    <entry key="ST000E_EN">No Target Found!^0: Cancel</entry>
+    <entry key="ST000E_KW">Lengo haipatikani!^0: Cancel</entry>
+    <entry key="ST000S_EN">Select Target:^{LIST}~0: Back</entry>
+    <entry key="ST000S_KW">Chagua Lengo:^{LIST}~0: Rudi</entry>
+    <entry key="ST000V_EN">Invalid Choice!~Select Target:^{LIST}~0: Back</entry>
+    <entry key="ST000V_KW">Chaguo batili!Chagua Lengo:^{LIST}~0: Rudi</entry>
+    <entry key="ST010S_EN">Enter Target Name:^0: Cancel</entry>
+    <entry key="ST010S_KW">Ingiza jina la lengo:^0: Rudi</entry>
+    <entry key="ST010V_EN">Invalid Input!~Enter Target Name:^0: Cancel</entry>
+    <entry key="ST010V_KW">Umeingiza jina batili!~Ingiza jina la lengo:^0: Rudi</entry>
+    <entry key="ST030S_EN">Enter Duration (Months):^1: 1 Month~2: 2 Months~3: 3 Months~6: 6 Months~9: 9 Months~12: 12 Months~24: 24 Months~0: Cancel</entry>
+    <entry key="ST030S_KW">Ingiza muda wa lengo (Miezi):^1: Mwezi mmoja~2: Miezi miwili~3: Miezi mitatu~6: Miezi sita~9: Miezi tisa~12: Miezi 12~24: Miezi 24~0: Ruda</entry>
+    <entry key="ST030V_EN">Invalid Input!~Enter Duration (Months):^1: 1 Month~2: 2 Months~3: 3 Months~6: 6 Months~9: 9 Months~12: 12 Months~24: 24 Months~0: Cancel</entry>
+    <entry key="ST030V_KW">Umeingiza muda batili!~Ingiza muda wa lengo (Miezi):^1: Mwezi mmoja~2: Miezi miwili~3: Miezi mitatu~6: Miezi sita~9: Miezi tisa~12: Miezi 12~24: Miezi 24~0: Ruda</entry>
+    <entry key="ST050S_EN">Enter Target Amount ({CURRENCY}):^0: Cancel</entry>
+    <entry key="ST050S_KW">Ingiza kiasi cha lengo ({CURRENCY}):^0: Rudi</entry>
+    <entry key="ST050V_EN">Invalid Amount!~Enter Target Amount ({CURRENCY}):^0: Cancel</entry>
+    <entry key="ST050V_KW">Umeingiza kiasi batili!~Ingiza kiasi cha lengo ({CURRENCY}):^0: Rudi</entry>
+    <entry key="ST070S_EN">Please confirm your commitment to save {CURRENCY} {RATE} every month adding up to {CURRENCY} {AMOUNT} by {ENDDATE}.^1: Confirm~0: Cancel</entry>
+    <entry key="ST070S_KW">Tafadhali thibitisha dhamira yako ya kuweka akiba kiasi cha {CURRENCY} {RATE} kila mwezi, kitakacho fikia {CURRENCY} {AMOUNT} ikifika tarehe {ENDDATE}.^1: Thibitisha~0: Rudi</entry>
+    <entry key="ST070V_EN">Invalid Choice!~Please confirm your commitment to save {CURRENCY} {RATE} every month adding up to {CURRENCY} {AMOUNT} by {ENDDATE}.^1: Confirm~0: Cancel</entry>
+    <entry key="ST070V_KW">Umeingiza chaguo batili!~Tafadhali thibitisha dhamira yako ya kuweka akiba kiasi cha {CURRENCY} {RATE} kila mwezi, kitakacho fikia {CURRENCY} {AMOUNT} ikifika tarehe {ENDDATE}.^1: Thibitisha~0: Rudi</entry>
+    <entry key="ST100F_EN">Failed! {MESSAGE}. Please contact Halotel customer care centre on 102 for assistance.</entry>
+    <entry key="ST100F_KW">Ombi lako la kufungua akaunti ya akiba malengo halijafanikiwa! Kosa: {ERROR}. {MESSAGE}.Piga 102 kuongea na mhudumu wetu katika kituo cha huduma kwa wateja kupata msaada.</entry>
+    <entry key="ST100S_EN">Dear {NAME}, You have committed to save {CURRENCY} {AMOUNT} over a period of {PERIOD} months for {TARGET}. Your saving will earn monthly interest of 6% per year subject to terms & conditions.</entry>
+    <entry key="ST100S_KW">Habari {NAME}, umejiwekea dhamira ya kuweka akiba ya kiasi cha {CURRENCY} {AMOUNT} kwa kipindi cha miezi {PERIOD} kwa ajili ya lengo la {TARGET}. Akiba yako itapata riba kulingana na vigezo na masharti.</entry>
+    <entry key="CHANGE TARGET">============================================================================================================</entry>
+    <entry key="CT000E_EN">No Target Found!^0: Cancel</entry>
+    <entry key="CT000E_KW">Lengo haipatikani!^0: Cancel</entry>
+    <entry key="CT000S_EN">Select Target:^{LIST}~0: Back</entry>
+    <entry key="CT000S_KW">Chagua Lengo:^{LIST}~0: Rudi</entry>
+    <entry key="CT000V_EN">Invalid Choice!~Select Target:^{LIST}~0: Back</entry>
+    <entry key="CT000V_KW">Chaguo batili!Chagua Lengo:^{LIST}~0: Rudi</entry>
+    <entry key="CT010S_EN">Enter Period (At least {PERIOD} Months):^1: 1 Month~2: 2 Months~3: 3 Months~6: 6 Months~9: 9 Months~12: 12 Months~24: 24 Months~0: Cancel</entry>
+    <entry key="CT010S_KW">Ingiza muda wa lengo (sio chini ya miezi {PERIOD} ):^1: Mwezi mmoja~2: Miezi miwili~3: Miezi mitatu~6: Miezi sita~9: Miezi tisa~12: Miezi 12~24: Miezi 24~0: Rudi</entry>
+    <entry key="CT010V_EN">Invalid Input!~Enter Period (At least {PERIOD} Months):^1: 1 Month~2: 2 Months~3: 3 Months~6: 6 Months~9: 9 Months~12: 12 Months~24: 24 Months~0: Cancel</entry>
+    <entry key="CT010V_KW">Umeingiza muda batili!~Ingiza muda wa lengo (sio chini ya miezi {PERIOD} ):^1: Mwezi mmoja~2: Miezi miwili~3: Miezi mitatu~6: Miezi sita~9: Miezi tisa~12: Miezi 12~24: Miezi 24~0: Rudi</entry>
+    <entry key="CT030S_EN">Enter Target Amount (At least {CURRENCY} {AMOUNT}):^0: Cancel</entry>
+    <entry key="CT030S_KW">Ingiza kiasi cha lengo ({CURRENCY}):^0: Rudi</entry>
+    <entry key="CT030V_EN">Invalid Amount!~Enter Target Amount (At least {CURRENCY} {AMOUNT}):^0: Cancel</entry>
+    <entry key="CT030V_KW">Umeingiza kiasi batili!~Ingiza kiasi cha lengo ({CURRENCY}):^0: Rudi</entry>
+    <entry key="CT050S_EN">Please confirm your commitment to save {CURRENCY} {RATE} every month adding up to {CURRENCY} {AMOUNT} by {ENDDATE}.^1: Confirm~0: Cancel</entry>
+    <entry key="CT050S_KW">Tafadhali thibitisha dhamira yako ya kuweka akiba kiasi cha {CURRENCY} {RATE} kila mwezi, kitakacho fikia {CURRENCY} {AMOUNT} ikifika tarehe {ENDDATE}.^1: Thibitisha~0: Rudi</entry>
+    <entry key="CT050V_EN">Invalid Choice!~Please confirm your commitment to save {CURRENCY} {RATE} every month adding up to {CURRENCY} {AMOUNT} by {ENDDATE}.^1: Confirm~0: Cancel</entry>
+    <entry key="CT050V_KW">Umeingiza chaguo batili!~Tafadhali thibitisha dhamira yako ya kuweka akiba kiasi cha {CURRENCY} {RATE} kila mwezi, kitakacho fikia {CURRENCY} {AMOUNT} ikifika tarehe {ENDDATE}.^1: Thibitisha~0: Rudi</entry>
+    <entry key="CT080F_EN">Failed! {MESSAGE}. Please contact Halotel customer care centre on 102 for assistance.</entry>
+    <entry key="CT080F_KW">Ombi lako la kubadili akaunti yako ya akiba ya malengo halijafanikiwa! Kosa: {ERROR}. {MESSAGE}.Piga 102 kuongea na mhudumu wetu katika kituo cha huduma kwa wateja kupata msaada.</entry>
+    <entry key="CT080S_EN">Dear {NAME}, You have committed to save {CURRENCY} {AMOUNT} over a period of {PERIOD} months for {TARGET}. Your saving will earn monthly interest of 6% per year subject to terms & conditions.</entry>
+    <entry key="CT080S_KW">Habari {NAME}, umejiwekea dhamira ya kuweka akiba ya kiasi cha {CURRENCY} {AMOUNT} kwa kipindi cha miezi {PERIOD} kwa ajili ya lengo la {TARGET}. Akiba yako itapata riba kulingana na vigezo na masharti.</entry>
+    <entry key="SAVE TO TARGET">===================================================================================================</entry>
+    <entry key="DT000E_EN">No Target Found!^0: Cancel</entry>
+    <entry key="DT000E_KW">Lengo haipatikani!^0: Cancel</entry>
+    <entry key="DT000S_EN">Save To:^{LIST}~0: Cancel</entry>
+    <entry key="DT000S_KW">Weka akiba kwenye:^{LIST}~0: Rudi</entry>
+    <entry key="DT000V_EN">Invalid Choice!~Save To:^{LIST}~0: Cancel</entry>
+    <entry key="DT000V_KW">Umeingiza chaguo batili!~Weka akiba kwenye:^{LIST}~0: Rudi</entry>
+    <entry key="DT010S_EN">Enter Amount {CURRENCY}:^0: Cancel</entry>
+    <entry key="DT010S_KW">Ingiza kiasi cha akiba unacho weka {CURRENCY}:^0: Rudi</entry>
+    <entry key="DT010V_EN">Invalid Amount!~Enter Amount {CURRENCY}:^0: Cancel</entry>
+    <entry key="DT010V_KW">Umeingiza kiasi batili!~Ingiza kiasi cha akiba  unacho weka {CURRENCY}:^0: Rudi</entry>
+    <entry key="DT030S_EN">Are you sure?~Press 1 to confirm saving of {CURRENCY} {AMOUNT} to {ACCOUNT} from HaloPesa wallet.^1: Confirm~0: Cancel</entry>
+    <entry key="DT030S_KW">Una uhakika?~Chagua 1 kuthibitisha kuweka akiba ya kiasi cha {CURRENCY} {AMOUNT} kwenda kwenye lengo lako la {ACCOUNT} kutoka HaloPesa.^1: Thibitisha~0: Rudi</entry>
+    <entry key="DT060S_EN">Dear {NAME}, You have saved {CURRENCY} {AMOUNT} to your {ACCOUNT} account from your HaloPesa wallet. Balance: {CURRENCY} {AVAILBAL}. Thank you for saving with HaloYako.</entry>
+    <entry key="DT060S_KW">Habari {NAME}, umefanikiwa kuweka kiasi cha {CURRENCY} {AMOUNT} kwenye lengo la {ACCOUNT} kutoka HaloPesa. Salio: {CURRENCY} {AVAILBAL}. Ahsante kwa kutumia HaloYako.</entry>
+    <entry key="DT060F_EN">Saving failed! {MESSAGE}. Please contact Halotel customer care centre on 102 for assistance.</entry>
+    <entry key="DT060F_KW">Ombi lako la kuweka akiba kwenye lengo lako halijafanikiwa! Kosa: {ERROR}. {MESSAGE}. Piga 102 kuongea na mhudumu wetu katika kituo cha huduma kwa wateja kupata msaada.</entry>
+    <entry key="BREAK TARGET">===================================================================================================</entry>
+    <entry key="BT000E_EN">No Targets Found!^0: Cancel</entry>
+    <entry key="BT000E_KW">Hauna lengo unaloweza kusitisha!^0: Rudi</entry>
+    <entry key="BT000S_EN">Select Target:^{LIST}~0: Cancel</entry>
+    <entry key="BT000S_KW">Chagua Lengo:^{LIST}~0: Rudi</entry>
+    <entry key="BT000V_EN">Invalid Choice!~Select Target:^{LIST}~0: Cancel</entry>
+    <entry key="BT000V_KW">Umeingiza chaguo batili!~Chagua Lengo:^{LIST}~0: Rudi</entry>
+    <entry key="BT010V_EN">Your have an active autosave attached to {ACCOUNT} account. Please cancel that autosave first before breaking the target.^0: Cancel</entry>
+    <entry key="BT010V_KW">Una agizo la kuweka akiba moja kwa moja kwenye lengo la {ACCOUNT}. Tafadhali ondoa agizo hilo la kuweka akiba kwanza kabla kusitisha lengo hili.^0: Rudi</entry>
+    <entry key="BT020I_EN">Break target declined! Insufficient funds for transaction in your {ACCOUNT} account. Balance: {CURRENCY} {AMOUNT}</entry>
+    <entry key="BT020I_KW">Ombi lako la kusitisha lengo limeshindwa kufanyika! Hauna pesa kwenye lengo {ACCOUNT}. Salio: {CURRENCY} {AMOUNT}</entry>
+    <entry key="BT030S_EN">Are you sure?~Press 1 to confirm withdrawal of your entire target balance of {CURRENCY} {AMOUNT} from {ACCOUNT} to your HaloPesa wallet.^1: Confirm~0: Cancel</entry>
+    <entry key="BT030S_KW">Una uhakika?~Chagua 1 kuthibitisha kutoa salio lako lote la kiasi cha {CURRENCY} {AMOUNT} kutoka kwenye lengo lako la {ACCOUNT} kwenda HaloPesa. Hautaweza kupata riba ambayo imekusanywa mpaka muda huu.^1: Thibitisha~0: Rudi</entry>
+    <entry key="BT060S_EN">Dear {NAME}, You have withdrawn your entire {CURRENCY} {AMOUNT} from your {ACCOUNT} target account into your HaloPesa wallet. Balance: {CURRENCY} {AVAILBAL}. Thank you for saving with HaloYako.</entry>
+    <entry key="BT060S_KW">Habari {NAME}, umefanikiwa kutoa salio lako lote la kiasi cha {CURRENCY} {AMOUNT} kutoka kwenye lengo la {ACCOUNT} kwenda HaloPesa. Salio: {CURRENCY} {AVAILBAL}. Ahsante kwa kutumia HaloYako.</entry>
+    <entry key="BT061S_EN">Dear {NAME}, You have withdrawn your entire {CURRENCY} {AMOUNT} from your {ACCOUNT} target account into your savings wallet. Balance: {CURRENCY} {AVAILBAL}. Thank you for saving with HaloYako.</entry>
+    <entry key="BT061S_KW">Habari {NAME}, umefanikiwa kutoa salio lako lote la kiasi cha {CURRENCY} {AMOUNT} kutoka kwenye lengo la {ACCOUNT} kwenda akaunti yako ya Halo Akiba. Salio: {CURRENCY} {AVAILBAL}. Ahsante kwa kutumia HaloYako.</entry>
+    <entry key="BT060I_EN">Break target declined! Insufficient funds for transaction in your {ACCOUNT} account. Balance: {CURRENCY} {AVAILBAL}</entry>
+    <entry key="BT060I_KW">Ombi lako la kusitisha lengo limesitishwa! Hauna pesa kwenye lengo {ACCOUNT}. Salio: {CURRENCY} {AVAILBAL}</entry>
+    <entry key="BT060F_EN">Break target failed! {MESSAGE}. Please contact Halotel customer care centre on 102 for assistance.</entry>
+    <entry key="BT060F_KW">Ombi lako la kusitisha lengo limeshindwa kufanyika! Kosa:{ERROR}. {MESSAGE}.Piga 102 kuongea na mhudumu wetu katika kituo cha huduma kwa wateja kupata msaada.</entry>
+    <entry key="OTHER">===========================================================================================================</entry>
+    <entry key="PIP_EN">Your request has been received and is currently being processed. You will receive a confirmation by SMS when it has been completed.</entry>
+    <entry key="PIP_KW">Ombi lako limepokelewa na linafanyikiwa kazi sasa hivi. Utapokea ujumbe mfupi wa SMS kuthibitsha muamala wako pindi tu utakapo kamilika. Ahsante kwa kutumia HaloYako</entry>
+    <entry key="SSP_EN">Sorry, This service is currently unavailable. Please try again later.^0: Back</entry>
+    <entry key="SSP_KW">Samahani, huduma yetu kwa sasa haipatikani. Tafadhali jaribu baadae au Piga 102 kuongea na mhudumu wetu katika kituo cha huduma kwa wateja kupata maelezo zaidi.</entry>
+    <entry key="BYE_EN">Thank you for saving with us, we will be happy to serve you again next time.</entry>
+    <entry key="BYE_KW">Ahsante kwa kuweka akiba na HaloYako. Tutafurahi kukuhudumia tena hivi karibuni.</entry>
+    <entry key="PWT_EN">Redirecting...</entry>
+    <entry key="PWT_KW">Tafadhali subiri...</entry>
+    <entry key="NXT_EN">Next</entry>
+    <entry key="NXT_KW">Endelea</entry>
+</properties>

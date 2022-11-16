@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Ruby Narrations</comment>
+<entry key="CT">Change Target</entry>
+<entry key="LT">Loan Terms</entry>
+<entry key="TB">Target Balance</entry>
+<entry key="AU">Auto Save</entry>
+<entry key="AT">Activation Terms</entry>
+<entry key="DS">Deposit Saving</entry>
+<entry key="ST">Set Target</entry>
+<entry key="LA">User Language</entry>
+<entry key="AM">Activate Customer</entry>
+<entry key="GM">Guest Menu</entry>
+<entry key="MM">Main Menu</entry>
+<entry key="AH">Auto Save Home</entry>
+<entry key="SM">Saving Menu</entry>
+<entry key="PI">Product Information</entry>
+<entry key="BT">Break Target</entry>
+<entry key="SB">Saving Balance</entry>
+<entry key="WS">Withdraw Saving</entry>
+<entry key="HM">Home Menu</entry>
+<entry key="TM">Target Menu</entry>
+</properties>

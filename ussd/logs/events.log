@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<logger class="Ruby.acx.AXLogger" datetime="Mon Jul 23 10:28:09 WAT 2018">
+<event realm="ussd" datetime="Mon Jul 23 10:28:09 WAT 2018">
+	<error>
+		<class>FileNotFoundException</class>
+		<message>[ vmt\conf\translator.prp (The system cannot find the path specified) ]</message>
+		<stacktrace>
+			at java.io.FileInputStream.open0(Native Method)
+			at java.io.FileInputStream.open(FileInputStream.java:195)
+			at java.io.FileInputStream.<init>(FileInputStream.java:138)
+			at Ruby.vmt.VXController.configure(VXController.java:99)
+			at Ruby.vmt.VXController.initialize(VXController.java:81)
+			at Ruby.APMain.setControllers(APMain.java:178)
+			at Ruby.APMain.initialize(APMain.java:82)
+			at Ruby.APMain.execute(APMain.java:69)
+			at Ruby.APMain.main(APMain.java:59)
+		</stacktrace>
+	</error>
+</event>
+<event realm="ussd" datetime="Mon Jul 23 10:28:09 WAT 2018">
+	<error>
+		<class>FileNotFoundException</class>
+		<message>[ vmt\conf\narrations.prp (The system cannot find the path specified) ]</message>
+		<stacktrace>
+			at java.io.FileInputStream.open0(Native Method)
+			at java.io.FileInputStream.open(FileInputStream.java:195)
+			at java.io.FileInputStream.<init>(FileInputStream.java:138)
+			at Ruby.vmt.VXController.configure(VXController.java:90)
+			at Ruby.vmt.VXController.initialize(VXController.java:81)
+			at Ruby.APMain.setControllers(APMain.java:178)
+			at Ruby.APMain.initialize(APMain.java:82)
+			at Ruby.APMain.execute(APMain.java:69)
+			at Ruby.APMain.main(APMain.java:59)
+		</stacktrace>
+	</error>
+</event>
+<event realm="ussd" datetime="Mon Jul 23 10:28:12 WAT 2018">
+	<info>Logging initialized @4658ms to org.eclipse.jetty.util.log.APLog</info>
+</event>

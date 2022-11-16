@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:q1="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common" xmlns:q2="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common" targetNamespace="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" elementFormDefault="qualified">
+	<xs:import namespace="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common" schemaLocation="VMT2C4FSPService1.xsd"/>
+	<xs:complexType name="FailureRequestMessage_MissingInformation" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence>
+					<xs:element name="NamesOfMissingAttributes" type="xs:string" nillable="true" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureRequestMessage_MissingInformation" type="tns:FailureRequestMessage_MissingInformation" nillable="true"/>
+	<xs:complexType name="FailureBase">
+		<xs:sequence>
+			<xs:element name="FSIIdentityId" type="q1:FSIIdentityIdentifier" nillable="true" minOccurs="0"/>
+			<xs:element name="FailureDetails" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="MessageId" type="q2:MessageIdentifier" nillable="true" minOccurs="0"/>
+			<xs:element name="ReasonCode" type="xs:string" nillable="true" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FailureBase" type="tns:FailureBase" nillable="true"/>
+	<xs:complexType name="FailureCustomerNotRecognized" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureCustomerNotRecognized" type="tns:FailureCustomerNotRecognized" nillable="true"/>
+	<xs:complexType name="FailureRequestMessage_InvalidFormat" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureRequestMessage_InvalidFormat" type="tns:FailureRequestMessage_InvalidFormat" nillable="true"/>
+	<xs:complexType name="FailureDuplicateMessage" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureDuplicateMessage" type="tns:FailureDuplicateMessage" nillable="true"/>
+	<xs:complexType name="FailureUnableToProcessRequest" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureUnableToProcessRequest" type="tns:FailureUnableToProcessRequest" nillable="true"/>
+	<xs:complexType name="FailureInsufficientFunds" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence>
+					<xs:element name="BankShortCode" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="CurrentBalance" type="xs:decimal" minOccurs="0"/>
+					<xs:element name="RequestedAmount" type="xs:decimal" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureInsufficientFunds" type="tns:FailureInsufficientFunds" nillable="true"/>
+	<xs:complexType name="FailureSavingsAccountWithdrawalDeclined" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureSavingsAccountWithdrawalDeclined" type="tns:FailureSavingsAccountWithdrawalDeclined" nillable="true"/>
+	<xs:complexType name="FailureMaxLimitBreached" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureMaxLimitBreached" type="tns:FailureMaxLimitBreached" nillable="true"/>
+	<xs:complexType name="FailureSavingsAccountDepositDeclined" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureSavingsAccountDepositDeclined" type="tns:FailureSavingsAccountDepositDeclined" nillable="true"/>
+	<xs:complexType name="FailureSavingsAccountBalanceDeclined" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureSavingsAccountBalanceDeclined" type="tns:FailureSavingsAccountBalanceDeclined" nillable="true"/>
+	<xs:complexType name="FailureMiniStatementDeclined" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureMiniStatementDeclined" type="tns:FailureMiniStatementDeclined" nillable="true"/>
+	<xs:complexType name="FailureAccountActivationDeclined" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureAccountActivationDeclined" type="tns:FailureAccountActivationDeclined" nillable="true"/>
+	<xs:complexType name="FailureAccountAlreadyExists" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureAccountAlreadyExists" type="tns:FailureAccountAlreadyExists" nillable="true"/>
+	<xs:complexType name="FailureRequestLoanDeclined" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureRequestLoanDeclined" type="tns:FailureRequestLoanDeclined" nillable="true"/>
+	<xs:complexType name="FailureExistingLoanRequestInProgress" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureExistingLoanRequestInProgress" type="tns:FailureExistingLoanRequestInProgress" nillable="true"/>
+	<xs:complexType name="FailurePayLoanDeclined" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailurePayLoanDeclined" type="tns:FailurePayLoanDeclined" nillable="true"/>
+	<xs:complexType name="FailureLoanAccountDoesNotExists" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureLoanAccountDoesNotExists" type="tns:FailureLoanAccountDoesNotExists" nillable="true"/>
+	<xs:complexType name="FailurePayLoanSavingDeclined" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailurePayLoanSavingDeclined" type="tns:FailurePayLoanSavingDeclined" nillable="true"/>
+	<xs:complexType name="FailureLoanMiniStatementDeclined" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureLoanMiniStatementDeclined" type="tns:FailureLoanMiniStatementDeclined" nillable="true"/>
+	<xs:complexType name="FailureLoanCreditLimitDeclined" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FailureBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FailureLoanCreditLimitDeclined" type="tns:FailureLoanCreditLimitDeclined" nillable="true"/>
+</xs:schema>

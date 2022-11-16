@@ -1,0 +1,1233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<logger class="Ruby.BRLogger" datetime="Tue May 16 00:38:11 EAT 2017">
+<event realm="sms" datetime="Tue May 16 00:37:56 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:06 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:06 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:06 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:06 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:06 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:06 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:06 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:06 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:06 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:37:56 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:37:56 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:37:56 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:37:56 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:37:56 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:37:56 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:37:56 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:37:56 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:16 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:16 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:16 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:16 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:16 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:16 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:16 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:16 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:16 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:26 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:26 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:26 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:26 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:26 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:26 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:26 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:26 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:26 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:36 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:36 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:36 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:36 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:36 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:36 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:36 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:36 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 00:38:36 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:08:24 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:08:24 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:08:24 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:08:24 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:08:24 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:08:24 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:08:24 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:08:24 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:08:24 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:08:55 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:08:55 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:08:55 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:18:03 EAT 2017">
+    <error>
+        <class>InterruptedException</class>
+        <message>[ sleep interrupted ]</message>
+        <stacktrace>
+            at java.lang.Thread.sleep(Native Method)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:48)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:21:09 EAT 2017">
+    <error>
+        <class>InterruptedException</class>
+        <message>[ sleep interrupted ]</message>
+        <stacktrace>
+            at java.lang.Thread.sleep(Native Method)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:48)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:22:08 EAT 2017">
+    <error>
+        <class>InterruptedException</class>
+        <message>[ sleep interrupted ]</message>
+        <stacktrace>
+            at java.lang.Thread.sleep(Native Method)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:48)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:25:14 EAT 2017">
+    <error>
+        <class>InterruptedException</class>
+        <message>[ sleep interrupted ]</message>
+        <stacktrace>
+            at java.lang.Thread.sleep(Native Method)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:48)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:37:39 EAT 2017">
+    <error>
+        <class>InterruptedException</class>
+        <message>[ sleep interrupted ]</message>
+        <stacktrace>
+            at java.lang.Thread.sleep(Native Method)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:48)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 09:51:32 EAT 2017">
+    <error>
+        <class>InterruptedException</class>
+        <message>[ sleep interrupted ]</message>
+        <stacktrace>
+            at java.lang.Thread.sleep(Native Method)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:48)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 14:43:42 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: Socket read timed out ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CStatement.executeForDescribe(T4CStatement.java:782)
+            at oracle.jdbc.driver.OracleStatement.executeMaybeDescribe(OracleStatement.java:897)
+            at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1034)
+            at oracle.jdbc.driver.OracleStatement.doScrollExecuteCommon(OracleStatement.java:4999)
+            at oracle.jdbc.driver.OracleStatement.doScrollStmtExecuteQuery(OracleStatement.java:5124)
+            at oracle.jdbc.driver.OracleStatement.executeQuery(OracleStatement.java:1260)
+            at oracle.jdbc.driver.OracleStatementWrapper.executeQuery(OracleStatementWrapper.java:420)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 14:43:42 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 14:44:03 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 14:44:03 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 14:44:03 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 14:44:24 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 14:44:24 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 14:44:24 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 14:44:55 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 14:44:55 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 14:44:55 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 14:45:16 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ IO Error: The Network Adapter could not establish the connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:673)
+            at oracle.jdbc.driver.PhysicalConnection.<init>(PhysicalConnection.java:715)
+            at oracle.jdbc.driver.T4CConnection.<init>(T4CConnection.java:385)
+            at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:30)
+            at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:564)
+            at java.sql.DriverManager.getConnection(DriverManager.java:664)
+            at java.sql.DriverManager.getConnection(DriverManager.java:247)
+            at Ruby.TDClient.connectToDB(TDClient.java:66)
+            at Ruby.TDClient.executeQuery(TDClient.java:149)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 14:45:16 EAT 2017">
+    <error>
+        <class>NullPointerException</class>
+        <message>[ null ]</message>
+        <stacktrace>
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1408)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 14:45:16 EAT 2017">
+    <error>
+        <class>SQLRecoverableException</class>
+        <message>[ Closed Connection ]</message>
+        <stacktrace>
+            at oracle.jdbc.driver.PhysicalConnection.createStatement(PhysicalConnection.java:3908)
+            at Ruby.TDClient.executeQuery(TDClient.java:153)
+            at Ruby.TDClient.executeQueryToResultSet(TDClient.java:85)
+            at Ruby.TDClient.getProcessingDate(TDClient.java:1406)
+            at Ruby.sms.MXProcessor.getPendingAlerts(MXProcessor.java:60)
+            at Ruby.sms.MXProcessor.processPendingAlerts(MXProcessor.java:82)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:47)
+        </stacktrace>
+    </error>
+</event>
+<event realm="sms" datetime="Tue May 16 16:25:33 EAT 2017">
+    <error>
+        <class>InterruptedException</class>
+        <message>[ sleep interrupted ]</message>
+        <stacktrace>
+            at java.lang.Thread.sleep(Native Method)
+            at Ruby.sms.MXProcessor.run(MXProcessor.java:48)
+        </stacktrace>
+    </error>
+</event>
+</logger>

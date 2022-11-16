@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>Ruby Narrations</comment>
+	<entry key="AA">Account Activation</entry>
+	<entry key="SW">Saving Withdrawal</entry>
+	<entry key="SD">Saving Deposit</entry>
+	<entry key="AB">Account Balance</entry>
+	<entry key="TL">Transaction List</entry>
+	<entry key="LR">Loan Request</entry>
+	<entry key="WR">Wallet Loan Repayment</entry>
+	<entry key="SR">Saving Loan Repayment</entry>
+	<entry key="RS">Saving Loan Recovery</entry>
+	<entry key="SN">State Notification</entry>
+	<entry key="LM">Loan Ministatement</entry>
+	<entry key="CL">Loan Credit Limit</entry>
+	<entry key="AG">Activate Group</entry>
+	<entry key="MK">Group Member KYC</entry>
+</properties>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>SMS Properties</comment>
+    <entry key="ChannelID">9</entry>
+    <entry key="ChannelCode">SMS</entry>
+    <entry key="SMPPSystemID">vfcrwanda</entry>
+    <entry key="SMPPPassword">SRVMGqn+K4V+myzj5C5jZg==</entry>
+    <entry key="SMPPSenderAddress">8877</entry>    
+    <entry key="MaxTreeLogSize">1000</entry>  
+    <entry key="FilterRecipients">Y</entry>
+    <entry key="RecipientsList">250782336057,250788433506,250736634700,250784664405,250732381600,250736634703,250736634698,250736634694,250736718807,250735930372,250736634719,250736634699,250783111989,250736634702,250783149331,250781466857,250725149331,250736718808</entry>
+    <entry key="SendSmsURL">http://10.121.31.7:80/mobilegate/api/send_sms</entry>    
+</properties>

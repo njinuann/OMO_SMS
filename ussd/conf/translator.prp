@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <comment>Ruby Translator</comment>
+	<entry key="Deposit_KW">Ingizo</entry>
+	<entry key="Withdrawal_KW">Toleo</entry>
+	<entry key="Charge_KW">Ada</entry>
+	<entry key="Monday_KW">Jumatatu</entry>
+	<entry key="Tuesday_KW">Jumanne</entry>
+	<entry key="Wednesday_KW">Jumatano</entry>
+	<entry key="Thursday_KW">Alhamisi</entry>
+	<entry key="Friday_KW">Ijumaa</entry>
+	<entry key="Saturday_KW">Jumamosi</entry>
+	<entry key="Sunday_KW">Jumapili</entry>
+	<entry key="Date_KW">Tarehe</entry>
+</properties>

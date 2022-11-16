@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:q1="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q2="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q3="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q4="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q5="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q6="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q7="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q8="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q9="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q10="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q11="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q12="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q13="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q14="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q15="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q16="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q17="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q18="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q19="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q20="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q21="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q22="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q23="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q24="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:q25="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" targetNamespace="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService" elementFormDefault="qualified">
+	<xs:import namespace="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" schemaLocation="VMT2C4FSPService2.xsd"/>
+	<xs:element name="VMTInitiatedSavingsWithdrawal">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="request" type="q1:VMTInitiatedTransferFundsRequest" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="VMTInitiatedSavingsWithdrawalResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="VMTInitiatedSavingsWithdrawalResult" type="q2:VMTInitiatedTransferFundsResponse" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="VMTInitiatedSavingsDeposit">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="request" type="q3:VMTInitiatedTransferFundsRequest" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="VMTInitiatedSavingsDepositResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="VMTInitiatedSavingsDepositResult" type="q4:VMTInitiatedTransferFundsResponse" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetAccountBalance">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="request" type="q5:GetAccountBalanceRequest" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetAccountBalanceResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="GetAccountBalanceResult" type="q6:GetAccountBalanceResponse" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetAccountTransactionList">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="request" type="q7:GetAccountTransactionListRequest" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetAccountTransactionListResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="GetAccountTransactionListResult" type="q8:GetAccountTransactionListResponse" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ActivateAccount">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="request" type="q9:ActivateRequest" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ActivateAccountResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ActivateAccountResult" type="q10:ActivateResponse" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LoanRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="request" type="q11:RequestLoanRequest" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LoanRequestResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="LoanRequestResult" type="q12:RequestLoanResponse" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PaybackLoan">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="request" type="q13:PaybackLoanRequest" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PaybackLoanResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PaybackLoanResult" type="q14:PaybackLoanResponse" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NotifyTransactionState">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="request" type="q15:TransactionStateNotification" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NotifyTransactionStateResponse">
+		<xs:complexType>
+			<xs:sequence/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PaybackLoanSaving">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="request" type="q16:PaybackLoanSavingRequest" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PaybackLoanSavingResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PaybackLoanSavingResult" type="q17:PaybackLoanSavingResponse" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LoanMiniStatement">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="request" type="q18:LoanAccountMiniStatementRequest" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LoanMiniStatementResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="LoanMiniStatementResult" type="q19:LoanAccountMiniStatementResponse" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetLoanCreditLimit">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="request" type="q20:GetLoanCreditLimitRequest" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetLoanCreditLimitResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="GetLoanCreditLimitResult" type="q21:GetLoanCreditLimitResponse" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ActivateGroupAccount">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="request" type="q22:ActivateGroupFSIRequest" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ActivateGroupAccountResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ActivateGroupAccountResult" type="q23:ActivateGroupFSIResponse" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NotifyGroupMemberKYC">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="request" type="q24:NotifyGroupMemberKYCRequest" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NotifyGroupMemberKYCResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NotifyGroupMemberKYCResult" type="q25:NotifyGroupMemberKYCResponse" nillable="true" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

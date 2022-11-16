@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Ruby Properties</comment>
+<entry key="CmSchemaPassword">k6MjR8pvTyRGV9wGAt7S2zlOTLyxalBy</entry>
+<entry key="TreeLogSize">1000</entry>
+<entry key="DatabaseDriverName">oracle.jdbc.driver.OracleDriver</entry>
+<entry key="LockShutdown">No</entry>
+<entry key="YearsToKeepLogs">2</entry>
+<entry key="XapiWsContext">http://localhost:5555/rubikonci/services/|http://localhost:5555/rubikonci/services/</entry>
+<entry key="DisplayLines">1000</entry>
+<entry key="XapiUser">biKsgfG84Onp9zM0zF2huA==</entry>
+<entry key="LanguageListId">147</entry>
+<entry key="DisplayConsole">Yes</entry>
+<entry key="CmSchemaName">CHANNELMANAGERTEST</entry>
+<entry key="DefaultLanguage">EN</entry>
+<entry key="LanguageFieldId">119</entry>
+<entry key="CoreSchemaName">WAKULIMATEST</entry>
+<entry key="CountryCode">254</entry>
+<entry key="XapiPassword">ACdFgyoXow8uEp5NQ6xqXQ==</entry>
+<entry key="DatabaseUrl">jdbc:oracle:thin:@192.168.1.51:1521/wkltspdb</entry>
+<entry key="EnableDebug">Yes</entry>
+</properties>

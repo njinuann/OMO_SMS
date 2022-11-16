@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<!-- 编辑使用 XMLSpy v2006 U (http://www.altova.com) 由 any (any) -->
+<xs:schema xmlns:tns="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:q1="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common" xmlns:q2="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common" xmlns:q3="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Enums" xmlns:q4="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common" xmlns:q5="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common" xmlns:q6="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Enums" xmlns:q7="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Enums" xmlns:q8="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Enums" targetNamespace="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" elementFormDefault="qualified">
+	<xs:import namespace="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common" schemaLocation="VMT2C4FSPService1.xsd"/>
+	<xs:import namespace="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Enums" schemaLocation="VMT2C4FSPService.xsd"/>
+	<xs:complexType name="VMTInitiatedTransferFundsRequest" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountRequestBase">
+				<xs:sequence>
+					<xs:element name="FSILinkType" type="xs:string"/>
+					<xs:element name="FIAccountNumber" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="Amount" type="xs:decimal">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="VMTInitiatedTransferFundsRequest" type="tns:VMTInitiatedTransferFundsRequest" nillable="true"/>
+	<xs:complexType name="AccountRequestBase">
+		<xs:sequence>
+			<xs:element name="BankShortCode" type="xs:string" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FSIIdentityId" type="q1:FSIIdentityIdentifier" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MessageId" type="q2:MessageIdentifier" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionId" type="xs:long">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionReceiptNumber" type="xs:string" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionTypeName" type="q3:TransactionType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AccountRequestBase" type="tns:AccountRequestBase" nillable="true"/>
+	<xs:complexType name="VMTInitiatedTransferFundsResponse" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountResponseBase">
+				<xs:sequence>
+					<xs:element name="Amount" type="xs:decimal">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Balance" type="xs:decimal"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="VMTInitiatedTransferFundsResponse" type="tns:VMTInitiatedTransferFundsResponse" nillable="true"/>
+	<xs:complexType name="AccountResponseBase">
+		<xs:sequence>
+			<xs:element name="AdditionalInformation" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="BankResponseCode" type="xs:string" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BankShortCode" type="xs:string" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FSIIdentityId" type="q4:FSIIdentityIdentifier" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MessageId" type="q5:MessageIdentifier" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TimeStamp" type="xs:dateTime">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionId" type="xs:long">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionReceiptNumber" type="xs:string" nillable="true">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TransactionTypeName" type="q6:TransactionType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AccountResponseBase" type="tns:AccountResponseBase" nillable="true"/>
+	<xs:complexType name="GetAccountBalanceRequest" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountRequestBase">
+				<xs:sequence>
+					<xs:element name="FSILinkType" type="xs:string"/>
+					<xs:element name="FIAccountNumber" type="xs:string" nillable="true" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="GetAccountBalanceRequest" type="tns:GetAccountBalanceRequest" nillable="true"/>
+	<xs:complexType name="GetAccountBalanceResponse" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountResponseBase">
+				<xs:sequence>
+					<xs:element name="Balance" type="xs:decimal"/>
+					<xs:element name="LoanBalance" type="xs:decimal" minOccurs="0"/>
+					<xs:element name="LoanPayByDate" type="xs:date" nillable="true" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="GetAccountBalanceResponse" type="tns:GetAccountBalanceResponse" nillable="true"/>
+	<xs:complexType name="GetAccountTransactionListRequest" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountRequestBase">
+				<xs:sequence>
+					<xs:element name="FSILinkType" type="xs:string"/>
+					<xs:element name="FIAccountNumber" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="MaximumNumberOfTransactions" type="xs:int">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="GetAccountTransactionListRequest" type="tns:GetAccountTransactionListRequest" nillable="true"/>
+	<xs:complexType name="GetAccountTransactionListResponse" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountResponseBase">
+				<xs:sequence>
+					<xs:element name="FormattedStatement" type="xs:string" nillable="true"/>
+					<xs:element name="HasTransactionEntries" type="xs:boolean" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="GetAccountTransactionListResponse" type="tns:GetAccountTransactionListResponse" nillable="true"/>
+	<xs:complexType name="ActivateRequest" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountRequestBase">
+				<xs:sequence>
+					<xs:element name="Address1" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="Address2" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="CityTown" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="CustomerTier" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="DateOfBirth" type="xs:dateTime" nillable="true" minOccurs="0"/>
+					<xs:element name="FirstName" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="IdReference" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="IdType" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="LastName" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="MiddleName" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="POBox" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="PostalCode" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="FSILinkType" type="xs:string"/>
+					<xs:element name="SimAppTransId" type="xs:long">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="CompanyUniqueIdentifier" type="xs:string" minOccurs="0"/>
+					<xs:element name="Region" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ActivateRequest" type="tns:ActivateRequest" nillable="true"/>
+	<xs:complexType name="ActivateResponse" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountResponseBase">
+				<xs:sequence>
+					<xs:element name="SavingsAccountNumber" type="xs:string" nillable="true" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ActivateResponse" type="tns:ActivateResponse" nillable="true"/>
+	<xs:complexType name="RequestLoanRequest" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountRequestBase">
+				<xs:sequence>
+					<xs:element name="FSILinkType" type="xs:string"/>
+					<xs:element name="Amount" type="xs:decimal">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="SimAppTransId" type="xs:long">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="RequestLoanRequest" type="tns:RequestLoanRequest" nillable="true"/>
+	<xs:complexType name="RequestLoanResponse" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountResponseBase">
+				<xs:sequence>
+					<xs:element name="LoanBalance" type="xs:decimal" minOccurs="0"/>
+					<xs:element name="LoanDueDate" type="xs:date" minOccurs="0"/>
+					<xs:element name="MaxQualifyAmount" type="xs:decimal" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="RequestLoanResponse" type="tns:RequestLoanResponse" nillable="true"/>
+	<xs:complexType name="PaybackLoanRequest" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountRequestBase">
+				<xs:sequence>
+					<xs:element name="FSILinkType" type="xs:string"/>
+					<xs:element name="FIAccountNumber" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="Amount" type="xs:decimal">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PaybackLoanRequest" type="tns:PaybackLoanRequest" nillable="true"/>
+	<xs:complexType name="PaybackLoanResponse" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountResponseBase">
+				<xs:sequence>
+					<xs:element name="AmountPaid" type="xs:decimal">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Balance" type="xs:decimal"/>
+					<xs:element name="IsFullyRepaid" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="IsOverpaid" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="LoanPaybackDate" type="xs:dateTime" nillable="true" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PaybackLoanResponse" type="tns:PaybackLoanResponse" nillable="true"/>
+	<xs:complexType name="TransactionStateNotification" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountRequestBase">
+				<xs:sequence>
+					<xs:element name="IsComplete" type="xs:boolean"/>
+					<xs:element name="TransactionState" type="q7:TransactionState" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TransactionStateNotification" type="tns:TransactionStateNotification" nillable="true"/>
+	<xs:complexType name="PaybackLoanSavingRequest" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountRequestBase">
+				<xs:sequence>
+					<xs:element name="FSILinkType" type="xs:string"/>
+					<xs:element name="FIAccountNumber" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="Amount" type="xs:decimal">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PaybackLoanSavingRequest" type="tns:PaybackLoanSavingRequest" nillable="true"/>
+	<xs:complexType name="PaybackLoanSavingResponse" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountResponseBase">
+				<xs:sequence>
+					<xs:element name="AmountPaid" type="xs:decimal"/>
+					<xs:element name="IsFullyRepaid" type="xs:boolean"/>
+					<xs:element name="IsOverpaid" type="xs:boolean"/>
+					<xs:element name="LoanBalance" type="xs:decimal"/>
+					<xs:element name="LoanPayByDate" type="xs:date" nillable="true" minOccurs="0"/>
+					<xs:element name="SavingBalance" type="xs:decimal"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PaybackLoanSavingResponse" type="tns:PaybackLoanSavingResponse" nillable="true"/>
+	<xs:complexType name="LoanAccountMiniStatementRequest" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountRequestBase">
+				<xs:sequence>
+					<xs:element name="FSILinkType" type="xs:string"/>
+					<xs:element name="FIAccountNumber" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="MaximumNumberOfTransactions" type="xs:int">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LoanAccountMiniStatementRequest" type="tns:LoanAccountMiniStatementRequest" nillable="true"/>
+	<xs:complexType name="LoanAccountMiniStatementResponse" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountResponseBase">
+				<xs:sequence>
+					<xs:element name="FormattedStatement" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="HasTransactionEntries" type="xs:boolean"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LoanAccountMiniStatementResponse" type="tns:LoanAccountMiniStatementResponse" nillable="true"/>
+	<xs:complexType name="GetLoanCreditLimitRequest" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountRequestBase">
+				<xs:sequence>
+					<xs:element name="FSILinkType" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="GetLoanCreditLimitRequest" type="tns:GetLoanCreditLimitRequest" nillable="true"/>
+	<xs:complexType name="GetLoanCreditLimitResponse" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountResponseBase">
+				<xs:sequence>
+					<xs:element name="CreditStatus" type="q8:CreditState"/>
+					<xs:element name="ExistingLoanBalance" type="xs:decimal" minOccurs="0"/>
+					<xs:element name="ExistingLoanPayByDate" type="xs:date" nillable="true" minOccurs="0"/>
+					<xs:element name="MaxQualifyAmount" type="xs:decimal"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="GetLoanCreditLimitResponse" type="tns:GetLoanCreditLimitResponse" nillable="true"/>
+	<xs:complexType name="ActivateGroupFSIRequest" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountRequestBase">
+				<xs:sequence>
+					<xs:element name="GroupName" type="xs:string"/>
+					<xs:element name="GroupDescription" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="GroupSponsor" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="GroupType" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="GroupTier" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="MSISDNofPrimaryGroupContact">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:minLength value="4"/>
+								<xs:maxLength value="16"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="AdditionalContactNumber" nillable="true" minOccurs="0">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:minLength value="4"/>
+								<xs:maxLength value="16"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:element>
+					<xs:element name="FirstName" type="xs:string" nillable="true"/>
+					<xs:element name="MiddleName" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="LastName" type="xs:string" nillable="true"/>
+					<xs:element name="IdType" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="IdReference" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="DateOfBirth" type="xs:dateTime" nillable="true" minOccurs="0"/>
+					<xs:element name="CustomerTier" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="POBox" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="Address1" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="Address2" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="CityTown" type="xs:string" nillable="true" minOccurs="0"/>
+					<xs:element name="NumberOfGroupMembers" type="xs:integer"/>
+					<xs:element name="FSILinkType" type="xs:string"/>
+					<xs:element name="SimAppTransId" type="xs:long">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ActivateGroupFSIRequest" type="tns:ActivateGroupFSIRequest" nillable="true"/>
+	<xs:complexType name="ActivateGroupFSIResponse" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountResponseBase">
+				<xs:sequence>
+					<xs:element name="FSILinkType" type="xs:string"/>
+					<xs:element name="FIAccountNumber" type="xs:string" nillable="true" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ActivateGroupFSIResponse" type="tns:ActivateGroupFSIResponse" nillable="true"/>
+	<xs:complexType name="GroupMemberKYC">
+		<xs:sequence>
+			<xs:element name="GroupMemberMSISDN">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="4"/>
+						<xs:maxLength value="16"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="FirstName" type="xs:string" nillable="true"/>
+			<xs:element name="MiddleName" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="LastName" type="xs:string" nillable="true"/>
+			<xs:element name="IdType" type="xs:string" nillable="true"/>
+			<xs:element name="IdReference" type="xs:string" nillable="true"/>
+			<xs:element name="DateOfBirth" type="xs:dateTime" nillable="true" minOccurs="0"/>
+			<xs:element name="CustomerTier" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="POBox" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Address1" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Address2" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="CityTown" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="PostalCode" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NotifyGroupMemberKYCRequest" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountRequestBase">
+				<xs:sequence>
+					<xs:element name="AddOrRemoveGroupMembers" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Add or Remove</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="NumberOfGroupMembers" type="xs:int"/>
+					<xs:element name="GroupMemberList">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="GroupMember" type="tns:GroupMemberKYC" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="NotifyGroupMemberKYCRequest" type="tns:NotifyGroupMemberKYCRequest" nillable="true"/>
+	<xs:complexType name="NotifyGroupMemberKYCResponse" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:AccountResponseBase"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="NotifyGroupMemberKYCResponse" type="tns:NotifyGroupMemberKYCResponse" nillable="true"/>
+</xs:schema>

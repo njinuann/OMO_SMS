@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="IVMT2C4FSPService" targetNamespace="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/Imports">
+      <xsd:import schemaLocation="VMT2C4FSPService4.xsd" namespace="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService" />
+      <xsd:import schemaLocation="VMT2C4FSPService5.xsd" namespace="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" />
+      <xsd:import schemaLocation="VMT2C4FSPService3.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="VMT2C4FSPService2.xsd" namespace="http://VMTComponentModel/InterfaceSpecification/FSPDefined/Messages/C4/" />
+      <xsd:import schemaLocation="VMT2C4FSPService1.xsd" namespace="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Common" />
+      <xsd:import schemaLocation="VMT2C4FSPService.xsd" namespace="http://schemas.datacontract.org/2004/07/VMT.BankingIntegration.FSIC4Simulator.Enums" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_InputMessage">
+    <wsdl:part name="parameters" element="tns:VMTInitiatedSavingsWithdrawal" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VMTInitiatedSavingsWithdrawalResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_FailureRequestMessage_MissingInformationFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q1:FailureRequestMessage_MissingInformation" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_FailureCustomerNotRecognizedFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q2:FailureCustomerNotRecognized" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_FailureRequestMessage_InvalidFormatFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q3:FailureRequestMessage_InvalidFormat" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_FailureDuplicateMessageFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q4:FailureDuplicateMessage" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_FailureUnableToProcessRequestFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q5:FailureUnableToProcessRequest" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_FailureInsufficientFundsFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q6:FailureInsufficientFunds" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_FailureSavingsAccountWithdrawalDeclinedFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q7:FailureSavingsAccountWithdrawalDeclined" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsDeposit_InputMessage">
+    <wsdl:part name="parameters" element="tns:VMTInitiatedSavingsDeposit" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsDeposit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:VMTInitiatedSavingsDepositResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsDeposit_FailureMaxLimitBreachedFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q8:FailureMaxLimitBreached" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsDeposit_FailureCustomerNotRecognizedFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q9:FailureCustomerNotRecognized" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsDeposit_FailureSavingsAccountDepositDeclinedFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q10:FailureSavingsAccountDepositDeclined" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsDeposit_FailureRequestMessage_InvalidFormatFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q11:FailureRequestMessage_InvalidFormat" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsDeposit_FailureRequestMessage_MissingInformationFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q12:FailureRequestMessage_MissingInformation" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsDeposit_FailureUnableToProcessRequestFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q13:FailureUnableToProcessRequest" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_VMTInitiatedSavingsDeposit_FailureDuplicateMessageFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q14:FailureDuplicateMessage" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetAccountBalance_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountBalance" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetAccountBalance_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountBalanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetAccountBalance_FailureRequestMessage_MissingInformationFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q15:FailureRequestMessage_MissingInformation" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetAccountBalance_FailureCustomerNotRecognizedFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q16:FailureCustomerNotRecognized" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetAccountBalance_FailureRequestMessage_InvalidFormatFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q17:FailureRequestMessage_InvalidFormat" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetAccountBalance_FailureUnableToProcessRequestFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q18:FailureUnableToProcessRequest" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetAccountBalance_FailureSavingsAccountBalanceDeclinedFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q19:FailureSavingsAccountBalanceDeclined" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetAccountTransactionList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountTransactionList" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetAccountTransactionList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAccountTransactionListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetAccountTransactionList_FailureRequestMessage_InvalidFormatFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q20:FailureRequestMessage_InvalidFormat" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetAccountTransactionList_FailureRequestMessage_MissingInformationFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q21:FailureRequestMessage_MissingInformation" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetAccountTransactionList_FailureUnableToProcessRequestFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q22:FailureUnableToProcessRequest" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetAccountTransactionList_FailureCustomerNotRecognizedFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q23:FailureCustomerNotRecognized" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetAccountTransactionList_FailureMiniStatementDeclinedFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q24:FailureMiniStatementDeclined" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_ActivateAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateAccount" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_ActivateAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_ActivateAccount_FailureRequestMessage_InvalidFormatFault_FaultMessage">
+    <wsdl:part xmlns:q25="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q25:FailureRequestMessage_InvalidFormat" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_ActivateAccount_FailureUnableToProcessRequestFault_FaultMessage">
+    <wsdl:part xmlns:q26="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q26:FailureUnableToProcessRequest" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_ActivateAccount_FailureDuplicateMessageFault_FaultMessage">
+    <wsdl:part xmlns:q27="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q27:FailureDuplicateMessage" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_ActivateAccount_FailureAccountActivationDeclinedFault_FaultMessage">
+    <wsdl:part xmlns:q28="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q28:FailureAccountActivationDeclined" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_ActivateAccount_FailureAccountAlreadyExistsFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q29:FailureAccountAlreadyExists" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_ActivateAccount_FailureRequestMessage_MissingInformationFault_FaultMessage">
+    <wsdl:part xmlns:q30="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q30:FailureRequestMessage_MissingInformation" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanRequest_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoanRequest" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanRequest_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoanRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanRequest_FailureCustomerNotRecognizedFault_FaultMessage">
+    <wsdl:part xmlns:q31="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q31:FailureCustomerNotRecognized" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanRequest_FailureRequestMessage_InvalidFormatFault_FaultMessage">
+    <wsdl:part xmlns:q32="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q32:FailureRequestMessage_InvalidFormat" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanRequest_FailureRequestMessage_MissingInformationFault_FaultMessage">
+    <wsdl:part xmlns:q33="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q33:FailureRequestMessage_MissingInformation" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanRequest_FailureRequestLoanDeclinedFault_FaultMessage">
+    <wsdl:part xmlns:q34="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q34:FailureRequestLoanDeclined" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanRequest_FailureDuplicateMessageFault_FaultMessage">
+    <wsdl:part xmlns:q35="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q35:FailureDuplicateMessage" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanRequest_FailureExistingLoanRequestInProgressFault_FaultMessage">
+    <wsdl:part xmlns:q36="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q36:FailureExistingLoanRequestInProgress" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanRequest_FailureUnableToProcessRequestFault_FaultMessage">
+    <wsdl:part xmlns:q37="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q37:FailureUnableToProcessRequest" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoan_InputMessage">
+    <wsdl:part name="parameters" element="tns:PaybackLoan" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoan_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PaybackLoanResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoan_FailurePayLoanDeclinedFault_FaultMessage">
+    <wsdl:part xmlns:q38="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q38:FailurePayLoanDeclined" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoan_FailureCustomerNotRecognizedFault_FaultMessage">
+    <wsdl:part xmlns:q39="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q39:FailureCustomerNotRecognized" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoan_FailureUnableToProcessRequestFault_FaultMessage">
+    <wsdl:part xmlns:q40="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q40:FailureUnableToProcessRequest" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoan_FailureDuplicateMessageFault_FaultMessage">
+    <wsdl:part xmlns:q41="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q41:FailureDuplicateMessage" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoan_FailureRequestMessage_InvalidFormatFault_FaultMessage">
+    <wsdl:part xmlns:q42="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q42:FailureRequestMessage_InvalidFormat" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoan_FailureRequestMessage_MissingInformationFault_FaultMessage">
+    <wsdl:part xmlns:q43="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q43:FailureRequestMessage_MissingInformation" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_NotifyTransactionState_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyTransactionState" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_NotifyTransactionState_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyTransactionStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_NotifyTransactionState_FailureCustomerNotRecognizedFault_FaultMessage">
+    <wsdl:part xmlns:q44="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q44:FailureCustomerNotRecognized" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_NotifyTransactionState_FailureDuplicateMessageFault_FaultMessage">
+    <wsdl:part xmlns:q45="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q45:FailureDuplicateMessage" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_NotifyTransactionState_FailureUnableToProcessRequestFault_FaultMessage">
+    <wsdl:part xmlns:q46="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q46:FailureUnableToProcessRequest" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_NotifyTransactionState_FailureRequestMessage_MissingInformationFault_FaultMessage">
+    <wsdl:part xmlns:q47="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q47:FailureRequestMessage_MissingInformation" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_NotifyTransactionState_FailureRequestMessage_InvalidFormatFault_FaultMessage">
+    <wsdl:part xmlns:q48="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q48:FailureRequestMessage_InvalidFormat" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoanSaving_InputMessage">
+    <wsdl:part name="parameters" element="tns:PaybackLoanSaving" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoanSaving_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PaybackLoanSavingResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoanSaving_FailureCustomerNotRecognizedFault_FaultMessage">
+    <wsdl:part xmlns:q49="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q49:FailureCustomerNotRecognized" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoanSaving_FailureInsufficientFundsFault_FaultMessage">
+    <wsdl:part xmlns:q50="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q50:FailureInsufficientFunds" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoanSaving_FailureUnableToProcessRequestFault_FaultMessage">
+    <wsdl:part xmlns:q51="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q51:FailureUnableToProcessRequest" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoanSaving_FailureLoanAccountDoesNotExistsFault_FaultMessage">
+    <wsdl:part xmlns:q52="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q52:FailureLoanAccountDoesNotExists" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoanSaving_FailurePayLoanSavingDeclinedFault_FaultMessage">
+    <wsdl:part xmlns:q53="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q53:FailurePayLoanSavingDeclined" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoanSaving_FailureRequestMessage_InvalidFormatFault_FaultMessage">
+    <wsdl:part xmlns:q54="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q54:FailureRequestMessage_InvalidFormat" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_PaybackLoanSaving_FailureRequestMessage_MissingInformationFault_FaultMessage">
+    <wsdl:part xmlns:q55="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q55:FailureRequestMessage_MissingInformation" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanMiniStatement_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoanMiniStatement" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanMiniStatement_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoanMiniStatementResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanMiniStatement_FailureUnableToProcessRequestFault_FaultMessage">
+    <wsdl:part xmlns:q56="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q56:FailureUnableToProcessRequest" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanMiniStatement_FailureLoanMiniStatementDeclinedFault_FaultMessage">
+    <wsdl:part xmlns:q57="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q57:FailureLoanMiniStatementDeclined" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanMiniStatement_FailureRequestMessage_MissingInformationFault_FaultMessage">
+    <wsdl:part xmlns:q58="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q58:FailureRequestMessage_MissingInformation" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanMiniStatement_FailureLoanAccountDoesNotExistsFault_FaultMessage">
+    <wsdl:part xmlns:q59="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q59:FailureLoanAccountDoesNotExists" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanMiniStatement_FailureCustomerNotRecognizedFault_FaultMessage">
+    <wsdl:part xmlns:q60="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q60:FailureCustomerNotRecognized" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_LoanMiniStatement_FailureRequestMessage_InvalidFormatFault_FaultMessage">
+    <wsdl:part xmlns:q61="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q61:FailureRequestMessage_InvalidFormat" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetLoanCreditLimit_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoanCreditLimit" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetLoanCreditLimit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLoanCreditLimitResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetLoanCreditLimit_FailureLoanCreditLimitDeclinedFault_FaultMessage">
+    <wsdl:part xmlns:q62="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q62:FailureLoanCreditLimitDeclined" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetLoanCreditLimit_FailureCustomerNotRecognizedFault_FaultMessage">
+    <wsdl:part xmlns:q63="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q63:FailureCustomerNotRecognized" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetLoanCreditLimit_FailureRequestMessage_MissingInformationFault_FaultMessage">
+    <wsdl:part xmlns:q64="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q64:FailureRequestMessage_MissingInformation" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetLoanCreditLimit_FailureUnableToProcessRequestFault_FaultMessage">
+    <wsdl:part xmlns:q65="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q65:FailureUnableToProcessRequest" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_GetLoanCreditLimit_FailureRequestMessage_InvalidFormatFault_FaultMessage">
+    <wsdl:part xmlns:q66="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q66:FailureRequestMessage_InvalidFormat" />
+  </wsdl:message>
+
+  <wsdl:message name="IVMT2C4FSPService_ActivateGroupAccount_InputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateGroupAccount" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_ActivateGroupAccount_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ActivateGroupAccountResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_ActivateGroupAccount_FailureRequestMessage_InvalidFormatFault_FaultMessage">
+    <wsdl:part xmlns:q67="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q67:FailureRequestMessage_InvalidFormat" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_ActivateGroupAccount_FailureUnableToProcessRequestFault_FaultMessage">
+    <wsdl:part xmlns:q68="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q68:FailureUnableToProcessRequest" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_ActivateGroupAccount_FailureDuplicateMessageFault_FaultMessage">
+    <wsdl:part xmlns:q69="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q69:FailureDuplicateMessage" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_ActivateGroupAccount_FailureAccountActivationDeclinedFault_FaultMessage">
+    <wsdl:part xmlns:q70="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q70:FailureAccountActivationDeclined" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_ActivateGroupAccount_FailureAccountAlreadyExistsFault_FaultMessage">
+    <wsdl:part xmlns:q71="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q71:FailureAccountAlreadyExists" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_ActivateGroupAccount_FailureRequestMessage_MissingInformationFault_FaultMessage">
+    <wsdl:part xmlns:q72="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q72:FailureRequestMessage_MissingInformation" />
+  </wsdl:message>
+
+  <wsdl:message name="IVMT2C4FSPService_NotifyGroupMemberKYC_InputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyGroupMemberKYC" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_NotifyGroupMemberKYC_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NotifyGroupMemberKYCResponse" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_NotifyGroupMemberKYC_FailureRequestMessage_InvalidFormatFault_FaultMessage">
+    <wsdl:part xmlns:q73="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q73:FailureRequestMessage_InvalidFormat" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_NotifyGroupMemberKYC_FailureUnableToProcessRequestFault_FaultMessage">
+    <wsdl:part xmlns:q74="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q74:FailureUnableToProcessRequest" />
+  </wsdl:message>
+  <wsdl:message name="IVMT2C4FSPService_NotifyGroupMemberKYC_FailureRequestMessage_MissingInformationFault_FaultMessage">
+    <wsdl:part xmlns:q75="http://VMTComponentModel/InterfaceSpecification/C4FSPOriginating/Exceptions/" name="detail" element="q75:FailureRequestMessage_MissingInformation" />
+  </wsdl:message>
+
+  <wsdl:portType name="IVMT2C4FSPService">
+    <wsdl:operation name="VMTInitiatedSavingsWithdrawal">
+      <wsdl:input wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsWithdrawal" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_InputMessage" />
+      <wsdl:output wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsWithdrawalResponse" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsWithdrawalFailureRequestMessage_MissingInformationFault" name="FailureRequestMessage_MissingInformationFault" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_FailureRequestMessage_MissingInformationFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsWithdrawalFailureCustomerNotRecognizedFault" name="FailureCustomerNotRecognizedFault" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_FailureCustomerNotRecognizedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsWithdrawalFailureRequestMessage_InvalidFormatFault" name="FailureRequestMessage_InvalidFormatFault" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_FailureRequestMessage_InvalidFormatFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsWithdrawalFailureDuplicateMessageFault" name="FailureDuplicateMessageFault" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_FailureDuplicateMessageFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsWithdrawalFailureUnableToProcessRequestFault" name="FailureUnableToProcessRequestFault" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_FailureUnableToProcessRequestFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsWithdrawalFailureInsufficientFundsFault" name="FailureInsufficientFundsFault" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_FailureInsufficientFundsFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsWithdrawalFailureSavingsAccountWithdrawalDeclinedFault" name="FailureSavingsAccountWithdrawalDeclinedFault" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsWithdrawal_FailureSavingsAccountWithdrawalDeclinedFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="VMTInitiatedSavingsDeposit">
+      <wsdl:input wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsDeposit" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsDeposit_InputMessage" />
+      <wsdl:output wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsDepositResponse" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsDeposit_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsDepositFailureMaxLimitBreachedFault" name="FailureMaxLimitBreachedFault" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsDeposit_FailureMaxLimitBreachedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsDepositFailureCustomerNotRecognizedFault" name="FailureCustomerNotRecognizedFault" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsDeposit_FailureCustomerNotRecognizedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsDepositFailureSavingsAccountDepositDeclinedFault" name="FailureSavingsAccountDepositDeclinedFault" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsDeposit_FailureSavingsAccountDepositDeclinedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsDepositFailureRequestMessage_InvalidFormatFault" name="FailureRequestMessage_InvalidFormatFault" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsDeposit_FailureRequestMessage_InvalidFormatFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsDepositFailureRequestMessage_MissingInformationFault" name="FailureRequestMessage_MissingInformationFault" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsDeposit_FailureRequestMessage_MissingInformationFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsDepositFailureUnableToProcessRequestFault" name="FailureUnableToProcessRequestFault" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsDeposit_FailureUnableToProcessRequestFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsDepositFailureDuplicateMessageFault" name="FailureDuplicateMessageFault" message="tns:IVMT2C4FSPService_VMTInitiatedSavingsDeposit_FailureDuplicateMessageFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountBalance">
+      <wsdl:input wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountBalance" message="tns:IVMT2C4FSPService_GetAccountBalance_InputMessage" />
+      <wsdl:output wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountBalanceResponse" message="tns:IVMT2C4FSPService_GetAccountBalance_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountBalanceFailureRequestMessage_MissingInformationFault" name="FailureRequestMessage_MissingInformationFault" message="tns:IVMT2C4FSPService_GetAccountBalance_FailureRequestMessage_MissingInformationFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountBalanceFailureCustomerNotRecognizedFault" name="FailureCustomerNotRecognizedFault" message="tns:IVMT2C4FSPService_GetAccountBalance_FailureCustomerNotRecognizedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountBalanceFailureRequestMessage_InvalidFormatFault" name="FailureRequestMessage_InvalidFormatFault" message="tns:IVMT2C4FSPService_GetAccountBalance_FailureRequestMessage_InvalidFormatFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountBalanceFailureUnableToProcessRequestFault" name="FailureUnableToProcessRequestFault" message="tns:IVMT2C4FSPService_GetAccountBalance_FailureUnableToProcessRequestFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountBalanceFailureSavingsAccountBalanceDeclinedFault" name="FailureSavingsAccountBalanceDeclinedFault" message="tns:IVMT2C4FSPService_GetAccountBalance_FailureSavingsAccountBalanceDeclinedFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountTransactionList">
+      <wsdl:input wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountTransactionList" message="tns:IVMT2C4FSPService_GetAccountTransactionList_InputMessage" />
+      <wsdl:output wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountTransactionListResponse" message="tns:IVMT2C4FSPService_GetAccountTransactionList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountTransactionListFailureRequestMessage_InvalidFormatFault" name="FailureRequestMessage_InvalidFormatFault" message="tns:IVMT2C4FSPService_GetAccountTransactionList_FailureRequestMessage_InvalidFormatFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountTransactionListFailureRequestMessage_MissingInformationFault" name="FailureRequestMessage_MissingInformationFault" message="tns:IVMT2C4FSPService_GetAccountTransactionList_FailureRequestMessage_MissingInformationFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountTransactionListFailureUnableToProcessRequestFault" name="FailureUnableToProcessRequestFault" message="tns:IVMT2C4FSPService_GetAccountTransactionList_FailureUnableToProcessRequestFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountTransactionListFailureCustomerNotRecognizedFault" name="FailureCustomerNotRecognizedFault" message="tns:IVMT2C4FSPService_GetAccountTransactionList_FailureCustomerNotRecognizedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountTransactionListFailureMiniStatementDeclinedFault" name="FailureMiniStatementDeclinedFault" message="tns:IVMT2C4FSPService_GetAccountTransactionList_FailureMiniStatementDeclinedFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ActivateAccount">
+      <wsdl:input wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateAccount" message="tns:IVMT2C4FSPService_ActivateAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateAccountResponse" message="tns:IVMT2C4FSPService_ActivateAccount_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateAccountFailureRequestMessage_InvalidFormatFault" name="FailureRequestMessage_InvalidFormatFault" message="tns:IVMT2C4FSPService_ActivateAccount_FailureRequestMessage_InvalidFormatFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateAccountFailureUnableToProcessRequestFault" name="FailureUnableToProcessRequestFault" message="tns:IVMT2C4FSPService_ActivateAccount_FailureUnableToProcessRequestFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateAccountFailureDuplicateMessageFault" name="FailureDuplicateMessageFault" message="tns:IVMT2C4FSPService_ActivateAccount_FailureDuplicateMessageFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateAccountFailureAccountActivationDeclinedFault" name="FailureAccountActivationDeclinedFault" message="tns:IVMT2C4FSPService_ActivateAccount_FailureAccountActivationDeclinedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateAccountFailureAccountAlreadyExistsFault" name="FailureAccountAlreadyExistsFault" message="tns:IVMT2C4FSPService_ActivateAccount_FailureAccountAlreadyExistsFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateAccountFailureRequestMessage_MissingInformationFault" name="FailureRequestMessage_MissingInformationFault" message="tns:IVMT2C4FSPService_ActivateAccount_FailureRequestMessage_MissingInformationFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoanRequest">
+      <wsdl:input wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanRequest" message="tns:IVMT2C4FSPService_LoanRequest_InputMessage" />
+      <wsdl:output wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanRequestResponse" message="tns:IVMT2C4FSPService_LoanRequest_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanRequestFailureCustomerNotRecognizedFault" name="FailureCustomerNotRecognizedFault" message="tns:IVMT2C4FSPService_LoanRequest_FailureCustomerNotRecognizedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanRequestFailureRequestMessage_InvalidFormatFault" name="FailureRequestMessage_InvalidFormatFault" message="tns:IVMT2C4FSPService_LoanRequest_FailureRequestMessage_InvalidFormatFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanRequestFailureRequestMessage_MissingInformationFault" name="FailureRequestMessage_MissingInformationFault" message="tns:IVMT2C4FSPService_LoanRequest_FailureRequestMessage_MissingInformationFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanRequestFailureRequestLoanDeclinedFault" name="FailureRequestLoanDeclinedFault" message="tns:IVMT2C4FSPService_LoanRequest_FailureRequestLoanDeclinedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanRequestFailureDuplicateMessageFault" name="FailureDuplicateMessageFault" message="tns:IVMT2C4FSPService_LoanRequest_FailureDuplicateMessageFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanRequestFailureExistingLoanRequestInProgressFault" name="FailureExistingLoanRequestInProgressFault" message="tns:IVMT2C4FSPService_LoanRequest_FailureExistingLoanRequestInProgressFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanRequestFailureUnableToProcessRequestFault" name="FailureUnableToProcessRequestFault" message="tns:IVMT2C4FSPService_LoanRequest_FailureUnableToProcessRequestFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PaybackLoan">
+      <wsdl:input wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoan" message="tns:IVMT2C4FSPService_PaybackLoan_InputMessage" />
+      <wsdl:output wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanResponse" message="tns:IVMT2C4FSPService_PaybackLoan_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanFailurePayLoanDeclinedFault" name="FailurePayLoanDeclinedFault" message="tns:IVMT2C4FSPService_PaybackLoan_FailurePayLoanDeclinedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanFailureCustomerNotRecognizedFault" name="FailureCustomerNotRecognizedFault" message="tns:IVMT2C4FSPService_PaybackLoan_FailureCustomerNotRecognizedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanFailureUnableToProcessRequestFault" name="FailureUnableToProcessRequestFault" message="tns:IVMT2C4FSPService_PaybackLoan_FailureUnableToProcessRequestFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanFailureDuplicateMessageFault" name="FailureDuplicateMessageFault" message="tns:IVMT2C4FSPService_PaybackLoan_FailureDuplicateMessageFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanFailureRequestMessage_InvalidFormatFault" name="FailureRequestMessage_InvalidFormatFault" message="tns:IVMT2C4FSPService_PaybackLoan_FailureRequestMessage_InvalidFormatFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanFailureRequestMessage_MissingInformationFault" name="FailureRequestMessage_MissingInformationFault" message="tns:IVMT2C4FSPService_PaybackLoan_FailureRequestMessage_MissingInformationFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotifyTransactionState">
+      <wsdl:input wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/NotifyTransactionState" message="tns:IVMT2C4FSPService_NotifyTransactionState_InputMessage" />
+      <wsdl:output wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/NotifyTransactionStateResponse" message="tns:IVMT2C4FSPService_NotifyTransactionState_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/NotifyTransactionStateFailureCustomerNotRecognizedFault" name="FailureCustomerNotRecognizedFault" message="tns:IVMT2C4FSPService_NotifyTransactionState_FailureCustomerNotRecognizedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/NotifyTransactionStateFailureDuplicateMessageFault" name="FailureDuplicateMessageFault" message="tns:IVMT2C4FSPService_NotifyTransactionState_FailureDuplicateMessageFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/NotifyTransactionStateFailureUnableToProcessRequestFault" name="FailureUnableToProcessRequestFault" message="tns:IVMT2C4FSPService_NotifyTransactionState_FailureUnableToProcessRequestFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/NotifyTransactionStateFailureRequestMessage_MissingInformationFault" name="FailureRequestMessage_MissingInformationFault" message="tns:IVMT2C4FSPService_NotifyTransactionState_FailureRequestMessage_MissingInformationFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/NotifyTransactionStateFailureRequestMessage_InvalidFormatFault" name="FailureRequestMessage_InvalidFormatFault" message="tns:IVMT2C4FSPService_NotifyTransactionState_FailureRequestMessage_InvalidFormatFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PaybackLoanSaving">
+      <wsdl:input wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanSaving" message="tns:IVMT2C4FSPService_PaybackLoanSaving_InputMessage" />
+      <wsdl:output wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanSavingResponse" message="tns:IVMT2C4FSPService_PaybackLoanSaving_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanSavingFailureCustomerNotRecognizedFault" name="FailureCustomerNotRecognizedFault" message="tns:IVMT2C4FSPService_PaybackLoanSaving_FailureCustomerNotRecognizedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanSavingFailureInsufficientFundsFault" name="FailureInsufficientFundsFault" message="tns:IVMT2C4FSPService_PaybackLoanSaving_FailureInsufficientFundsFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanSavingFailureUnableToProcessRequestFault" name="FailureUnableToProcessRequestFault" message="tns:IVMT2C4FSPService_PaybackLoanSaving_FailureUnableToProcessRequestFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanSavingFailureLoanAccountDoesNotExistsFault" name="FailureLoanAccountDoesNotExistsFault" message="tns:IVMT2C4FSPService_PaybackLoanSaving_FailureLoanAccountDoesNotExistsFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanSavingFailurePayLoanSavingDeclinedFault" name="FailurePayLoanSavingDeclinedFault" message="tns:IVMT2C4FSPService_PaybackLoanSaving_FailurePayLoanSavingDeclinedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanSavingFailureRequestMessage_InvalidFormatFault" name="FailureRequestMessage_InvalidFormatFault" message="tns:IVMT2C4FSPService_PaybackLoanSaving_FailureRequestMessage_InvalidFormatFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanSavingFailureRequestMessage_MissingInformationFault" name="FailureRequestMessage_MissingInformationFault" message="tns:IVMT2C4FSPService_PaybackLoanSaving_FailureRequestMessage_MissingInformationFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoanMiniStatement">
+      <wsdl:input wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanMiniStatement" message="tns:IVMT2C4FSPService_LoanMiniStatement_InputMessage" />
+      <wsdl:output wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanMiniStatementResponse" message="tns:IVMT2C4FSPService_LoanMiniStatement_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanMiniStatementFailureUnableToProcessRequestFault" name="FailureUnableToProcessRequestFault" message="tns:IVMT2C4FSPService_LoanMiniStatement_FailureUnableToProcessRequestFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanMiniStatementFailureLoanMiniStatementDeclinedFault" name="FailureLoanMiniStatementDeclinedFault" message="tns:IVMT2C4FSPService_LoanMiniStatement_FailureLoanMiniStatementDeclinedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanMiniStatementFailureRequestMessage_MissingInformationFault" name="FailureRequestMessage_MissingInformationFault" message="tns:IVMT2C4FSPService_LoanMiniStatement_FailureRequestMessage_MissingInformationFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanMiniStatementFailureLoanAccountDoesNotExistsFault" name="FailureLoanAccountDoesNotExistsFault" message="tns:IVMT2C4FSPService_LoanMiniStatement_FailureLoanAccountDoesNotExistsFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanMiniStatementFailureCustomerNotRecognizedFault" name="FailureCustomerNotRecognizedFault" message="tns:IVMT2C4FSPService_LoanMiniStatement_FailureCustomerNotRecognizedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanMiniStatementFailureRequestMessage_InvalidFormatFault" name="FailureRequestMessage_InvalidFormatFault" message="tns:IVMT2C4FSPService_LoanMiniStatement_FailureRequestMessage_InvalidFormatFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLoanCreditLimit">
+      <wsdl:input wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetLoanCreditLimit" message="tns:IVMT2C4FSPService_GetLoanCreditLimit_InputMessage" />
+      <wsdl:output wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetLoanCreditLimitResponse" message="tns:IVMT2C4FSPService_GetLoanCreditLimit_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetLoanCreditLimitFailureLoanCreditLimitDeclinedFault" name="FailureLoanCreditLimitDeclinedFault" message="tns:IVMT2C4FSPService_GetLoanCreditLimit_FailureLoanCreditLimitDeclinedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetLoanCreditLimitFailureCustomerNotRecognizedFault" name="FailureCustomerNotRecognizedFault" message="tns:IVMT2C4FSPService_GetLoanCreditLimit_FailureCustomerNotRecognizedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetLoanCreditLimitFailureRequestMessage_MissingInformationFault" name="FailureRequestMessage_MissingInformationFault" message="tns:IVMT2C4FSPService_GetLoanCreditLimit_FailureRequestMessage_MissingInformationFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetLoanCreditLimitFailureUnableToProcessRequestFault" name="FailureUnableToProcessRequestFault" message="tns:IVMT2C4FSPService_GetLoanCreditLimit_FailureUnableToProcessRequestFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetLoanCreditLimitFailureRequestMessage_InvalidFormatFault" name="FailureRequestMessage_InvalidFormatFault" message="tns:IVMT2C4FSPService_GetLoanCreditLimit_FailureRequestMessage_InvalidFormatFault_FaultMessage" />
+    </wsdl:operation>
+
+    <wsdl:operation name="ActivateGroupAccount">
+      <wsdl:input wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateGroupAccount" message="tns:IVMT2C4FSPService_ActivateGroupAccount_InputMessage" />
+      <wsdl:output wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateGroupAccountResponse" message="tns:IVMT2C4FSPService_ActivateGroupAccount_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateGroupAccountFailureRequestMessage_InvalidFormatFault" name="FailureRequestMessage_InvalidFormatFault" message="tns:IVMT2C4FSPService_ActivateGroupAccount_FailureRequestMessage_InvalidFormatFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateGroupAccountFailureUnableToProcessRequestFault" name="FailureUnableToProcessRequestFault" message="tns:IVMT2C4FSPService_ActivateGroupAccount_FailureUnableToProcessRequestFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateGroupAccountFailureDuplicateMessageFault" name="FailureDuplicateMessageFault" message="tns:IVMT2C4FSPService_ActivateGroupAccount_FailureDuplicateMessageFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateGroupAccountFailureAccountActivationDeclinedFault" name="FailureAccountActivationDeclinedFault" message="tns:IVMT2C4FSPService_ActivateGroupAccount_FailureAccountActivationDeclinedFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateGroupAccountFailureAccountAlreadyExistsFault" name="FailureAccountAlreadyExistsFault" message="tns:IVMT2C4FSPService_ActivateGroupAccount_FailureAccountAlreadyExistsFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateGroupAccountFailureRequestMessage_MissingInformationFault" name="FailureRequestMessage_MissingInformationFault" message="tns:IVMT2C4FSPService_ActivateGroupAccount_FailureRequestMessage_MissingInformationFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NotifyGroupMemberKYC">
+      <wsdl:input wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/NotifyGroupMemberKYC" message="tns:IVMT2C4FSPService_NotifyGroupMemberKYC_InputMessage" />
+      <wsdl:output wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/NotifyGroupMemberKYCResponse" message="tns:IVMT2C4FSPService_NotifyGroupMemberKYC_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/NotifyGroupMemberKYCFailureRequestMessage_InvalidFormatFault" name="FailureRequestMessage_InvalidFormatFault" message="tns:IVMT2C4FSPService_NotifyGroupMemberKYC_FailureRequestMessage_InvalidFormatFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/NotifyGroupMemberKYCFailureUnableToProcessRequestFault" name="FailureUnableToProcessRequestFault" message="tns:IVMT2C4FSPService_NotifyGroupMemberKYC_FailureUnableToProcessRequestFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/NotifyGroupMemberKYCFailureRequestMessage_MissingInformationFault" name="FailureRequestMessage_MissingInformationFault" message="tns:IVMT2C4FSPService_NotifyGroupMemberKYC_FailureRequestMessage_MissingInformationFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="VMT2C4FSP" type="tns:IVMT2C4FSPService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="VMTInitiatedSavingsWithdrawal">
+      <soap:operation soapAction="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsWithdrawal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FailureRequestMessage_MissingInformationFault">
+        <soap:fault use="literal" name="FailureRequestMessage_MissingInformationFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureCustomerNotRecognizedFault">
+        <soap:fault use="literal" name="FailureCustomerNotRecognizedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_InvalidFormatFault">
+        <soap:fault use="literal" name="FailureRequestMessage_InvalidFormatFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureDuplicateMessageFault">
+        <soap:fault use="literal" name="FailureDuplicateMessageFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureUnableToProcessRequestFault">
+        <soap:fault use="literal" name="FailureUnableToProcessRequestFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureInsufficientFundsFault">
+        <soap:fault use="literal" name="FailureInsufficientFundsFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureSavingsAccountWithdrawalDeclinedFault">
+        <soap:fault use="literal" name="FailureSavingsAccountWithdrawalDeclinedFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="VMTInitiatedSavingsDeposit">
+      <soap:operation soapAction="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/VMTInitiatedSavingsDeposit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FailureMaxLimitBreachedFault">
+        <soap:fault use="literal" name="FailureMaxLimitBreachedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureCustomerNotRecognizedFault">
+        <soap:fault use="literal" name="FailureCustomerNotRecognizedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureSavingsAccountDepositDeclinedFault">
+        <soap:fault use="literal" name="FailureSavingsAccountDepositDeclinedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_InvalidFormatFault">
+        <soap:fault use="literal" name="FailureRequestMessage_InvalidFormatFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_MissingInformationFault">
+        <soap:fault use="literal" name="FailureRequestMessage_MissingInformationFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureUnableToProcessRequestFault">
+        <soap:fault use="literal" name="FailureUnableToProcessRequestFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureDuplicateMessageFault">
+        <soap:fault use="literal" name="FailureDuplicateMessageFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountBalance">
+      <soap:operation soapAction="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountBalance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FailureRequestMessage_MissingInformationFault">
+        <soap:fault use="literal" name="FailureRequestMessage_MissingInformationFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureCustomerNotRecognizedFault">
+        <soap:fault use="literal" name="FailureCustomerNotRecognizedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_InvalidFormatFault">
+        <soap:fault use="literal" name="FailureRequestMessage_InvalidFormatFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureUnableToProcessRequestFault">
+        <soap:fault use="literal" name="FailureUnableToProcessRequestFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureSavingsAccountBalanceDeclinedFault">
+        <soap:fault use="literal" name="FailureSavingsAccountBalanceDeclinedFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAccountTransactionList">
+      <soap:operation soapAction="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetAccountTransactionList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FailureRequestMessage_InvalidFormatFault">
+        <soap:fault use="literal" name="FailureRequestMessage_InvalidFormatFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_MissingInformationFault">
+        <soap:fault use="literal" name="FailureRequestMessage_MissingInformationFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureUnableToProcessRequestFault">
+        <soap:fault use="literal" name="FailureUnableToProcessRequestFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureCustomerNotRecognizedFault">
+        <soap:fault use="literal" name="FailureCustomerNotRecognizedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureMiniStatementDeclinedFault">
+        <soap:fault use="literal" name="FailureMiniStatementDeclinedFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ActivateAccount">
+      <soap:operation soapAction="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FailureRequestMessage_InvalidFormatFault">
+        <soap:fault use="literal" name="FailureRequestMessage_InvalidFormatFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureUnableToProcessRequestFault">
+        <soap:fault use="literal" name="FailureUnableToProcessRequestFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureDuplicateMessageFault">
+        <soap:fault use="literal" name="FailureDuplicateMessageFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureAccountActivationDeclinedFault">
+        <soap:fault use="literal" name="FailureAccountActivationDeclinedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureAccountAlreadyExistsFault">
+        <soap:fault use="literal" name="FailureAccountAlreadyExistsFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_MissingInformationFault">
+        <soap:fault use="literal" name="FailureRequestMessage_MissingInformationFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="LoanRequest">
+      <soap:operation soapAction="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FailureCustomerNotRecognizedFault">
+        <soap:fault use="literal" name="FailureCustomerNotRecognizedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_InvalidFormatFault">
+        <soap:fault use="literal" name="FailureRequestMessage_InvalidFormatFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_MissingInformationFault">
+        <soap:fault use="literal" name="FailureRequestMessage_MissingInformationFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestLoanDeclinedFault">
+        <soap:fault use="literal" name="FailureRequestLoanDeclinedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureDuplicateMessageFault">
+        <soap:fault use="literal" name="FailureDuplicateMessageFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureExistingLoanRequestInProgressFault">
+        <soap:fault use="literal" name="FailureExistingLoanRequestInProgressFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureUnableToProcessRequestFault">
+        <soap:fault use="literal" name="FailureUnableToProcessRequestFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PaybackLoan">
+      <soap:operation soapAction="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoan" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FailurePayLoanDeclinedFault">
+        <soap:fault use="literal" name="FailurePayLoanDeclinedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureCustomerNotRecognizedFault">
+        <soap:fault use="literal" name="FailureCustomerNotRecognizedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureUnableToProcessRequestFault">
+        <soap:fault use="literal" name="FailureUnableToProcessRequestFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureDuplicateMessageFault">
+        <soap:fault use="literal" name="FailureDuplicateMessageFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_InvalidFormatFault">
+        <soap:fault use="literal" name="FailureRequestMessage_InvalidFormatFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_MissingInformationFault">
+        <soap:fault use="literal" name="FailureRequestMessage_MissingInformationFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyTransactionState">
+      <soap:operation soapAction="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/NotifyTransactionState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FailureCustomerNotRecognizedFault">
+        <soap:fault use="literal" name="FailureCustomerNotRecognizedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureDuplicateMessageFault">
+        <soap:fault use="literal" name="FailureDuplicateMessageFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureUnableToProcessRequestFault">
+        <soap:fault use="literal" name="FailureUnableToProcessRequestFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_MissingInformationFault">
+        <soap:fault use="literal" name="FailureRequestMessage_MissingInformationFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_InvalidFormatFault">
+        <soap:fault use="literal" name="FailureRequestMessage_InvalidFormatFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="PaybackLoanSaving">
+      <soap:operation soapAction="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/PaybackLoanSaving" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FailureCustomerNotRecognizedFault">
+        <soap:fault use="literal" name="FailureCustomerNotRecognizedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureInsufficientFundsFault">
+        <soap:fault use="literal" name="FailureInsufficientFundsFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureUnableToProcessRequestFault">
+        <soap:fault use="literal" name="FailureUnableToProcessRequestFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureLoanAccountDoesNotExistsFault">
+        <soap:fault use="literal" name="FailureLoanAccountDoesNotExistsFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailurePayLoanSavingDeclinedFault">
+        <soap:fault use="literal" name="FailurePayLoanSavingDeclinedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_InvalidFormatFault">
+        <soap:fault use="literal" name="FailureRequestMessage_InvalidFormatFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_MissingInformationFault">
+        <soap:fault use="literal" name="FailureRequestMessage_MissingInformationFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="LoanMiniStatement">
+      <soap:operation soapAction="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/LoanMiniStatement" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FailureUnableToProcessRequestFault">
+        <soap:fault use="literal" name="FailureUnableToProcessRequestFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureLoanMiniStatementDeclinedFault">
+        <soap:fault use="literal" name="FailureLoanMiniStatementDeclinedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_MissingInformationFault">
+        <soap:fault use="literal" name="FailureRequestMessage_MissingInformationFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureLoanAccountDoesNotExistsFault">
+        <soap:fault use="literal" name="FailureLoanAccountDoesNotExistsFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureCustomerNotRecognizedFault">
+        <soap:fault use="literal" name="FailureCustomerNotRecognizedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_InvalidFormatFault">
+        <soap:fault use="literal" name="FailureRequestMessage_InvalidFormatFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetLoanCreditLimit">
+      <soap:operation soapAction="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/GetLoanCreditLimit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FailureLoanCreditLimitDeclinedFault">
+        <soap:fault use="literal" name="FailureLoanCreditLimitDeclinedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureCustomerNotRecognizedFault">
+        <soap:fault use="literal" name="FailureCustomerNotRecognizedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_MissingInformationFault">
+        <soap:fault use="literal" name="FailureRequestMessage_MissingInformationFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureUnableToProcessRequestFault">
+        <soap:fault use="literal" name="FailureUnableToProcessRequestFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_InvalidFormatFault">
+        <soap:fault use="literal" name="FailureRequestMessage_InvalidFormatFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+
+    <wsdl:operation name="ActivateGroupAccount">
+      <soap:operation soapAction="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/ActivateGroupAccount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FailureRequestMessage_InvalidFormatFault">
+        <soap:fault use="literal" name="FailureRequestMessage_InvalidFormatFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureUnableToProcessRequestFault">
+        <soap:fault use="literal" name="FailureUnableToProcessRequestFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureDuplicateMessageFault">
+        <soap:fault use="literal" name="FailureDuplicateMessageFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureAccountActivationDeclinedFault">
+        <soap:fault use="literal" name="FailureAccountActivationDeclinedFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureAccountAlreadyExistsFault">
+        <soap:fault use="literal" name="FailureAccountAlreadyExistsFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_MissingInformationFault">
+        <soap:fault use="literal" name="FailureRequestMessage_MissingInformationFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="NotifyGroupMemberKYC">
+      <soap:operation soapAction="http://VMTComponentModel/InterfaceSpecification/Interfaces/C4/VMTtoFSPService/IVMT2C4FSPService/NotifyGroupMemberKYC" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FailureRequestMessage_InvalidFormatFault">
+        <soap:fault use="literal" name="FailureRequestMessage_InvalidFormatFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureUnableToProcessRequestFault">
+        <soap:fault use="literal" name="FailureUnableToProcessRequestFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="FailureRequestMessage_MissingInformationFault">
+        <soap:fault use="literal" name="FailureRequestMessage_MissingInformationFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="IVMT2C4FSPService">
+    <wsdl:port name="VMT2C4FSP" binding="tns:VMT2C4FSP">
+      <soap:address location="http://localhost:555/VMT2C4FSPService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
