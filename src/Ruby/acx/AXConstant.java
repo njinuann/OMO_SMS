@@ -18,7 +18,11 @@ public class AXConstant
 {
     public static final String ISO_APPROVED = "00";
     public static final BigDecimal HUNDRED = new BigDecimal(100);
-    public static final BigDecimal POINTONE = new BigDecimal(0.1).setScale(1, RoundingMode.DOWN);
+    public static final BigDecimal POINTONE = new BigDecimal(0.1).setScale(1, RoundingMode.DOWN);    
+    public static final BigDecimal FIFTY = new BigDecimal(50);
+     public static final BigDecimal TWO = new BigDecimal(2).setScale(0, RoundingMode.DOWN);
+    public static final BigDecimal THREE = new BigDecimal(3).setScale(0, RoundingMode.DOWN);
+    public static final BigDecimal MILLION = new BigDecimal(1000000).setScale(0, RoundingMode.DOWN);
     public static final String XAPI_APPROVED = "00";
     public static final String XAPI_FAILED = "01";
     public static final SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
@@ -27,4 +31,8 @@ public class AXConstant
     public static final SimpleDateFormat cbsDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     public static final SimpleDateFormat statementDateFormat = new SimpleDateFormat("dd/MM/yy");
     public static final SimpleDateFormat keyDateFormat = new SimpleDateFormat("yyMMddHHmmssSSS");
+    public static final SimpleDateFormat spotDateFormat = new SimpleDateFormat("MM/dd/yy");
+    public static final SimpleDateFormat standardDateFormat = new SimpleDateFormat("dd-MM-yyyy"); 
+    
+    public static final SimpleDateFormat displayDateFormat2 = new SimpleDateFormat("dd-MMM-yyyy");
 }

@@ -21,6 +21,7 @@ import javax.xml.bind.JAXBElement;
  */
 public abstract class APLog
 {
+
     public abstract void logDebug(Object event);
 
     public abstract void logEvent(Object event);
@@ -32,6 +33,8 @@ public abstract class APLog
     public abstract void setCall(String callRef, Object callObject);
 
     public abstract void setCall(String callRef, Object callObject, String prefix);
+
+    public abstract void setCall(String callRef, Object callObject, long position);
 
     public abstract void setCall(String callRef, Object callObject, boolean replace);
 
@@ -223,4 +226,30 @@ public abstract class APLog
     {
         return capitalize(text, true);
     }
+
+    public void setRequest(Object request)
+    {
+        setCall("request", request, 6);
+    }
+
+    public void setResponse(Object response)
+    {
+        setCall("response", response);
+    }
+
+    public void setRecord(Object record)
+    {
+        setCall("record", record);
+    }
+
+    public void setResult(String result)
+    {
+        setCall("result", checkBlank(result));
+    }
+
+    public void setDuration(String duration)
+    {
+        setCall("duration", checkBlank(duration));
+    }
+ 
 }

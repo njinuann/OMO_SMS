@@ -24,6 +24,7 @@ public class TXCharge implements Serializable
     private ArrayList<TCSplit> splitList = new ArrayList<>();
     private String chargeLedger;
     private String scheme;
+    private String code;
 
     /**
      * @return the chargeLedger
@@ -151,5 +152,21 @@ public class TXCharge implements Serializable
     public void setTaxAmount(BigDecimal taxAmount)
     {
         this.taxAmount = taxAmount;
+    }
+
+    /**
+     * @return the code
+     */
+    public String getCode()
+    {
+        return code;
+    }
+
+    /**
+     * @param code the code to set
+     */
+    public void setCode(String code)
+    {
+        this.code = code;
     }
 }

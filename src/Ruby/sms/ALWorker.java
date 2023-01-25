@@ -22,6 +22,7 @@ import Ruby.model.CNCustomer;
 import Ruby.model.MXAlert;
 import Ruby.model.MXMessage;
 import Ruby.model.TCSplit;
+import static Ruby.sms.ALProcessor.getdClient;
 import com.mashape.unirest.http.Unirest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -58,10 +59,9 @@ public class ALWorker extends Thread
     @Override
     public void run()
     {
-        String alertCode = mXAlert.getAlertCode();
+        String alertCode = mXAlert.getAlertCode();        
         try
         {
-
             ALProcessor.runningAlerts.put(alertCode, new Date());
             APMain.smsLog.logEvent("===<" + mXAlert.getAlertCode() + ", " + mXAlert.getStatus() + ">===");
 
@@ -286,7 +286,7 @@ public class ALWorker extends Thread
                 {
                     ex = null;
                 }
-                if ("LA".equals(alert.getAlertType()) || "LD".equals(alert.getAlertType()))
+                if ("LA".equals(alert.getAlertType()) || "LD".equals(alert.getAlertType()) || "GR".equals(alert.getAlertType()))
                 {
                     message.setLoanDetail(getdClient().queryLoanDetail(getdClient().queryLoanAccount(message.getAcctNo())));
                 }
@@ -497,7 +497,7 @@ public class ALWorker extends Thread
                         replacement = getWorker().checkBlank(getWorker().protectField(mXMessage.getContra(), 4, 5), "<>");
                         break;
                     case "{NAME}":
-                        replacement = getWorker().checkBlank(getWorker().truncateName(mXMessage.getCustName(), 1), "<>");
+                        replacement = getWorker().checkBlank(getWorker().truncateName(mXMessage.getCustName(), 2), "<>");
                         break;
                     case "{DATE}":
                         replacement = getWorker().checkBlank(getWorker().formatDisplayDate(mXMessage.getTxnDate()), "<>");
@@ -542,11 +542,11 @@ public class ALWorker extends Thread
                         replacement = getWorker().formatAmount(mXMessage.getRate());
                         break;
                     case "{ORIGINATOR}":
-                        replacement = getWorker().checkBlank(getWorker().truncateName(mXMessage.getOriginator(), 1), getWorker().truncateName(mXMessage.getCustName(), 1));
+                        replacement = getWorker().checkBlank(getWorker().truncateName(mXMessage.getOriginator(), 2), getWorker().truncateName(mXMessage.getCustName(), 2));
                         break;
-                     case "{GUARANTOR}":
-                        replacement = getWorker().checkBlank(getWorker().truncateName(mXMessage.getGuarantor(), 1), "<>");
-                        break;    
+                    case "{GUARANTOR}":
+                        replacement = getWorker().checkBlank(getWorker().truncateName(mXMessage.getGuarantor(), 2), "<>");
+                        break;
                 }
                 message = message.replaceAll(holder.replace("{", "\\{").replace("}", "\\}"), getWorker().cleanField(replacement, false));
             }

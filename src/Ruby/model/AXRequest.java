@@ -6,8 +6,10 @@
 package Ruby.model;
 
 import Ruby.acx.TXType;
+import Ruby.acx.TXType;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  *
@@ -15,6 +17,7 @@ import java.math.BigDecimal;
  */
 public class AXRequest implements Serializable
 {
+
     private String channel;
     private Long channelId;
     private String txnCode;
@@ -43,6 +46,15 @@ public class AXRequest implements Serializable
     private String vmtNumber;
     private boolean setBalance = true;
     private boolean inverted;
+    private Date startDate;
+    private Date endDate;
+    private String module;
+    private USRole role = new USRole();
+    private Ruby.enu.TXType type = Ruby.enu.TXType.Unknown;
+    private String alertCode;
+    private String accessCode;    
+    private CNCustomer customer = new CNCustomer();
+    private Integer pages = 0;
 
     /**
      * @return the reference
@@ -490,5 +502,149 @@ public class AXRequest implements Serializable
     public void setCustName(String custName)
     {
         this.custName = custName;
+    }
+
+    /**
+     * @return the startDate
+     */
+    public Date getStartDate()
+    {
+        return startDate;
+    }
+
+    /**
+     * @param startDate the startDate to set
+     */
+    public void setStartDate(Date startDate)
+    {
+        this.startDate = startDate;
+    }
+
+    /**
+     * @return the endDate
+     */
+    public Date getEndDate()
+    {
+        return endDate;
+    }
+
+    /**
+     * @param endDate the endDate to set
+     */
+    public void setEndDate(Date endDate)
+    {
+        this.endDate = endDate;
+    }
+
+    /**
+     * @return the module
+     */
+    public String getModule()
+    {
+        return module;
+    }
+
+    /**
+     * @param module the module to set
+     */
+    public void setModule(String module)
+    {
+        this.module = module;
+    }
+
+    /**
+     * @return the role
+     */
+    public USRole getRole()
+    {
+        return role;
+    }
+
+    /**
+     * @param role the role to set
+     */
+    public void setRole(USRole role)
+    {
+        this.role = role;
+    }
+
+    /**
+     * @return the type
+     */
+    public Ruby.enu.TXType getType()
+    {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(Ruby.enu.TXType type)
+    {
+        this.type = type;
+    }
+
+    /**
+     * @return the alertCode
+     */
+    public String getAlertCode()
+    {
+        return alertCode;
+    }
+
+    /**
+     * @param alertCode the alertCode to set
+     */
+    public void setAlertCode(String alertCode)
+    {
+        this.alertCode = alertCode;
+    }
+
+    /**
+     * @return the accessCode
+     */
+    public String getAccessCode()
+    {
+        return accessCode;
+    }
+
+    /**
+     * @param accessCode the accessCode to set
+     */
+    public void setAccessCode(String accessCode)
+    {
+        this.accessCode = accessCode;
+    }
+
+    /**
+     * @return the customer
+     */
+    public CNCustomer getCustomer()
+    {
+        return customer;
+    }
+
+    /**
+     * @param customer the customer to set
+     */
+    public void setCustomer(CNCustomer customer)
+    {
+        this.customer = customer;
+    }
+
+    /**
+     * @return the pages
+     */
+    public Integer getPages()
+    {
+        return pages;
+    }
+
+    /**
+     * @param pages the pages to set
+     */
+    public void setPages(Integer pages)
+    {
+        this.pages = pages;
     }
 }

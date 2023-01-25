@@ -21,6 +21,7 @@ import java.util.Date;
  */
 public class AXLogger extends APLog
 {
+
     private String indent = "\t";
     private final Long maxSize = 10485760L;
     private final AXFile brFile = new AXFile();
@@ -101,9 +102,9 @@ public class AXLogger extends APLog
                 logEvent.append("\r\n").append("</event>\r\n");
             }
             new Thread(()
-                    -> 
-                    {
-                        writeToLog(logEvent.toString(), event instanceof Throwable);
+                    ->
+            {
+                writeToLog(logEvent.toString(), event instanceof Throwable);
             }).start();
             if (event instanceof AXCaller)
             {
@@ -307,6 +308,12 @@ public class AXLogger extends APLog
         logEvent("<" + callRef + ">" + checkBlank(prefix, "") + convertToString(callObject) + "</" + callRef + ">");
     }
 
+    @Override
+    public void setCall(String callRef, Object callObject, long position)
+    {
+        setCall(callRef, callObject, false);
+    }
+
     /**
      * @return the indent
      */
@@ -322,4 +329,5 @@ public class AXLogger extends APLog
     {
         this.indent = indent;
     }
+
 }

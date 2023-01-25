@@ -15,9 +15,12 @@ import Ruby.model.AXPayment;
 import Ruby.model.AXTxn;
 import Ruby.acx.APLog;
 import Ruby.acx.ATBox;
+import Ruby.acx.AXConstant;
 import Ruby.acx.AXCrypt;
 import Ruby.acx.AXCryptNew;
 import Ruby.acx.AXWorker;
+import Ruby.est.ESController;
+import Ruby.model.AXChannel;
 import Ruby.model.AXCharge;
 import Ruby.model.TCScheme;
 import Ruby.model.AXSetting;
@@ -39,6 +42,8 @@ import Ruby.model.BNUser;
 import Ruby.model.CAEvent;
 import Ruby.model.CMChannel;
 import Ruby.model.CNScheme;
+import Ruby.model.ESRecord;
+import Ruby.model.ESTask;
 import Ruby.model.LNDetail;
 import Ruby.model.MXAlert;
 import Ruby.model.MXMessage;
@@ -68,17 +73,17 @@ import java.util.TreeMap;
  */
 public final class DBClient
 {
-    
+
     private ATBox box;
     private Connection connection;
     private CallableStatement alertStatement;
     private AXCryptNew aXCryptNew = new AXCryptNew();
-    
+
     public DBClient(ATBox box)
     {
         setBox(box);
     }
-    
+
     private void connectToDB()
     {
         try
@@ -93,17 +98,17 @@ public final class DBClient
             getLog().logEvent(ex);
         }
     }
-    
+
     public Object[][] executeQueryToArray(String query)
     {
         return rsToArray(executeQuery(query, true));
     }
-    
+
     public ResultSet executeQueryToResultSet(String query)
     {
         return executeQuery(query, true);
     }
-    
+
     public int getRowCount(ResultSet rs)
     {
         int records = 0;
@@ -119,7 +124,7 @@ public final class DBClient
         }
         return records;
     }
-    
+
     private Object[][] rsToArray(ResultSet rs)
     {
         if (rs != null)
@@ -147,10 +152,10 @@ public final class DBClient
                 closeResult(rs);
             }
         }
-        
+
         return new Object[0][0];
     }
-    
+
     public void closeResult(ResultSet rs)
     {
         try
@@ -162,7 +167,7 @@ public final class DBClient
             getLog().logEvent(ex);
         }
     }
-    
+
     private ResultSet executeQuery(String query, boolean retry)
     {
         try
@@ -192,17 +197,40 @@ public final class DBClient
         }
         return null;
     }
-    
+
+    public Object[][] executeQuery(String query)
+    {
+        try ( ResultSet rs = executeQueryToResultSet(query))
+        {
+            int row = 0, records = getRowCount(rs), fields = rs.getMetaData().getColumnCount();
+            Object[][] results = (records == 0) ? new Object[0][0] : new Object[records][fields];
+            while (rs.next())
+            {
+                for (int col = 0; col < fields; col++)
+                {
+                    results[row][col] = rs.getObject(col + 1);
+                }
+                row++;
+            }
+            return results;
+        }
+        catch (Exception ex)
+        {
+            getLog().logEvent(ex);
+        }
+        return new Object[0][0];
+    }
+
     private boolean isRecoverable(Exception ex)
     {
         return ex instanceof SQLRecoverableException || String.valueOf(ex.getMessage()).contains("ORA-01000") || String.valueOf(ex.getMessage()).contains("Closed ");
     }
-    
+
     public boolean isConnected() throws SQLException
     {
         return getConnection() != null ? !getConnection().isClosed() : false;
     }
-    
+
     public void checkConnection()
     {
         try
@@ -217,7 +245,7 @@ public final class DBClient
             getLog().logEvent(ex);
         }
     }
-    
+
     public boolean executeUpdate(String update, boolean retry)
     {
         try
@@ -227,7 +255,7 @@ public final class DBClient
             if (isConnected())
             {
                 update = update.replaceAll("'null'", "NULL").replaceAll("'NULL'", "NULL");
-                try (Statement statement = getConnection().createStatement())
+                try ( Statement statement = getConnection().createStatement())
                 {
                     statement.executeUpdate(update);
                 }
@@ -249,7 +277,7 @@ public final class DBClient
         }
         return false;
     }
-    
+
     public void dispose()
     {
         try
@@ -269,7 +297,7 @@ public final class DBClient
             setConnection(null);
         }
     }
-    
+
     public CNAccount unmaskLedger(String glAccount, CNBranch cNBranch)
     {
         CNAccount cNAccount = new CNAccount();
@@ -280,11 +308,184 @@ public final class DBClient
         }
         return cNAccount;
     }
-    
+
+    public ArrayList<CNAccount> queryNowAccounts()
+    {
+        ArrayList<CNAccount> accounts = new ArrayList<>();
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.CREATE_DT, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, E.CRNCY_CD, C.PROD_CAT_TY, NVL(" + APController.coreSchemaName + ".CALCULATE_AVAIL_BALANCE_EB(C.ACCT_ID),0) AS BALANCE, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M, " + APController.coreSchemaName + ".CURRENCY E WHERE M.CUST_ID=C.CUST_ID AND C.CRNCY_ID=E.CRNCY_ID AND C.ACCT_ID IN (SELECT A.PARENT_ID FROM " + APController.coreSchemaName + ".UDS_FIELD_VALUE A WHERE A.FIELD_ID=" + ESController.nowFieldId + " AND A.REC_ST='A' AND A.FIELD_VALUE='" + ESController.yesValueId + "')"))
+        {
+            if (rs != null)
+            {
+                while (rs.next())
+                {
+                    CNAccount cNAccount = new CNAccount();
+                    cNAccount.setAcctId(rs.getLong("ACCT_ID"));
+                    cNAccount.setCustId(rs.getLong("CUST_ID"));
+                    cNAccount.setBranch(queryBranch(rs.getLong("MAIN_BRANCH_ID")));
+                    cNAccount.setProductId(rs.getLong("PROD_ID"));
+                    cNAccount.setAccountNumber(rs.getString("ACCT_NO"));
+                    cNAccount.setAccountType(rs.getString("PROD_CAT_TY"));
+                    cNAccount.setBalance(rs.getBigDecimal("BALANCE"));
+                    cNAccount.setClearedBalance(rs.getBigDecimal("BALANCE"));
+                    cNAccount.setAccountName(getWorker().cleanSpaces(rs.getString("ACCT_NM")));
+                    cNAccount.setCurrency(queryCurrency(rs.getString("CRNCY_CD")));
+                    cNAccount.setShortName(cNAccount.getAccountName());
+                    cNAccount.setOpenDate(rs.getDate("CREATE_DT"));
+                    cNAccount.setCustCat(rs.getString("CUST_CAT"));
+                    cNAccount.setStatus(rs.getString("REC_ST"));
+                    accounts.add(cNAccount);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            getLog().logEvent(ex);
+        }
+        return accounts;
+    }
+
+    public ArrayList<CNAccount> queryCycleAccounts(ESTask task)
+    {
+        String filter = "";
+        ArrayList<CNAccount> accounts = new ArrayList<>();
+        switch (task.getFilterBy())
+        {
+            case "AN":
+                filter = " UNION SELECT ACCT_ID FROM " + APController.coreSchemaName + ".ACCOUNT WHERE ACCT_NO IN (" + getWorker().createCsvList(task.getFilters()) + ") AND REC_ST IN ('A','D') AND ACCT_ID NOT IN (SELECT D.PARENT_ID FROM " + APController.coreSchemaName + ".V_UDS_FIELD_VALUE D, " + APController.coreSchemaName + ".CUSTOM_LIST_ITEM L WHERE D.CUSTOM_LIST_TY_ID=L.CUSTOM_LIST_ID AND L.CUSTOM_LIST_ITEM_ID=D.FIELD_VALUE AND D.FIELD_ID=" + ESController.cycleFieldId + " AND D.REC_ST='A' AND L.CUSTOM_LIST_ITEM_CD='N')";
+                break;
+            case "AP":
+                filter = " UNION SELECT ACCT_ID FROM " + APController.coreSchemaName + ".ACCOUNT WHERE PROD_ID IN (" + getWorker().createCsvList(task.getFilters()) + ") AND REC_ST IN ('A','D') AND ACCT_ID NOT IN (SELECT D.PARENT_ID FROM " + APController.coreSchemaName + ".V_UDS_FIELD_VALUE D, " + APController.coreSchemaName + ".CUSTOM_LIST_ITEM L WHERE D.CUSTOM_LIST_TY_ID=L.CUSTOM_LIST_ID AND L.CUSTOM_LIST_ITEM_ID=D.FIELD_VALUE AND D.FIELD_ID=" + ESController.cycleFieldId + " AND D.REC_ST='A' AND L.CUSTOM_LIST_ITEM_CD='N')";
+                break;
+        }
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.CREATE_DT, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, E.CRNCY_CD, C.CRNCY_ID, C.PROD_CAT_TY, NVL(" + APController.coreSchemaName + ".CALCULATE_AVAIL_BALANCE_EB(C.ACCT_ID),0) AS BALANCE, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M, " + APController.coreSchemaName + ".CURRENCY E WHERE M.CUST_ID=C.CUST_ID AND C.CRNCY_ID=E.CRNCY_ID AND C.ACCT_ID IN (SELECT D.PARENT_ID FROM " + APController.coreSchemaName + ".V_UDS_FIELD_VALUE D, " + APController.coreSchemaName + ".CUSTOM_LIST_ITEM L WHERE D.CUSTOM_LIST_TY_ID=L.CUSTOM_LIST_ID AND L.CUSTOM_LIST_ITEM_ID=D.FIELD_VALUE AND D.FIELD_ID=" + ESController.cycleFieldId + " AND D.REC_ST='A' AND L.CUSTOM_LIST_ITEM_CD='" + task.getCycle() + "'" + filter + ")"))
+        {
+            if (rs != null)
+            {
+                while (rs.next())
+                {
+                    CNAccount cNAccount = new CNAccount();
+                    cNAccount.setAcctId(rs.getLong("ACCT_ID"));
+                    cNAccount.setCustId(rs.getLong("CUST_ID"));
+                    cNAccount.setBranch(queryBranch(rs.getLong("MAIN_BRANCH_ID")));
+                    cNAccount.setProductId(rs.getLong("PROD_ID"));
+                    cNAccount.setAccountNumber(rs.getString("ACCT_NO"));
+                    cNAccount.setAccountType(rs.getString("PROD_CAT_TY"));
+                    cNAccount.setBalance(rs.getBigDecimal("BALANCE"));
+                    cNAccount.setAccountName(getWorker().cleanSpaces(rs.getString("ACCT_NM")));
+                    cNAccount.setCurrency(queryCurrency(rs.getString("CRNCY_CD")));
+                    cNAccount.setShortName(cNAccount.getAccountName());
+                    cNAccount.setOpenDate(rs.getDate("CREATE_DT"));
+                    cNAccount.setCustCat(rs.getString("CUST_CAT"));
+                    cNAccount.setStatus(rs.getString("REC_ST"));
+                    accounts.add(cNAccount);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            getLog().logEvent(ex);
+        }
+        return accounts;
+    }
+
+    public boolean isDue(Long accountId, Long datefieldId, Date minDate)
+    {
+        return checkExists("SELECT A.PARENT_ID FROM " + APController.coreSchemaName + ".UDS_FIELD_VALUE A WHERE A.PARENT_ID=" + accountId + " AND A.FIELD_ID=" + datefieldId + " AND A.REC_ST='A' AND (A.FIELD_VALUE IS NULL OR TO_DATE(A.FIELD_VALUE,'DD/MM/YYYY')<=" + convertToOracleDate(minDate) + ")");
+    }
+
+    public Date queryCustomDate(Long fieldId, Long parentId, Date defaultDate)
+    {
+        try ( ResultSet rs = executeQueryToResultSet("SELECT A.UDS_FIELD_VALUE_ID, A.FIELD_ID, A.PARENT_ID, TO_DATE(A.FIELD_VALUE,'DD/MM/YYYY') AS FIELD_VALUE, A.REC_ST FROM " + APController.coreSchemaName + ".V_UDS_FIELD_VALUE A WHERE A.FIELD_ID=" + fieldId + " AND A.PARENT_ID=" + parentId + " AND A.REC_ST='A'"))
+        {
+            if (rs != null && rs.next())
+            {
+                return getWorker().checkBlank(rs.getDate("FIELD_VALUE"), defaultDate);
+            }
+        }
+        catch (Exception ex)
+        {
+            getLog().logEvent(ex);
+        }
+        return defaultDate;
+    }
+
+    public <T> T queryCustomField(Long fieldId, Long parentId, T defaultValue)
+    {
+        T value = defaultValue;
+        try ( ResultSet rs = executeQueryToResultSet("SELECT A.UDS_FIELD_VALUE_ID, A.FIELD_ID, A.PARENT_ID, A.FIELD_VALUE, A.REC_ST FROM " + APController.coreSchemaName + ".V_UDS_FIELD_VALUE A WHERE A.FIELD_ID=" + fieldId + " AND A.PARENT_ID=" + parentId + " AND A.REC_ST='A'"))
+        {
+            if (rs != null && rs.next())
+            {
+                value = (T) rs.getObject("FIELD_VALUE");
+            }
+        }
+        catch (Exception ex)
+        {
+            getLog().logEvent(ex);
+        }
+        return getWorker().checkBlank(value, defaultValue);
+    }
+
+    public CNCustomer queryCustomer(String customerNumber)
+    {
+        CNCustomer cNCustomer = new CNCustomer();
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.CUST_ID, C.CUST_NO, C.MAIN_BRANCH_ID, C.CUST_CAT, INITCAP(C.CUST_NM) AS CUST_NM, (SELECT IDENT_NO FROM " + APController.coreSchemaName + ".V_CUSTOMER_IDENTIFICATION WHERE CUST_ID=C.CUST_ID AND IDENT_ID=391 AND REC_ST='A' AND ROWNUM=1) AS IDENT_NO FROM " + APController.coreSchemaName + ".CUSTOMER C WHERE TO_NUMBER(C.CUST_NO)=" + getWorker().convertToType(customerNumber, Long.class)))
+        {
+            if (rs != null && rs.next())
+            {
+                cNCustomer.setCustId(rs.getLong("CUST_ID"));
+                cNCustomer.setBuId(rs.getLong("MAIN_BRANCH_ID"));
+                cNCustomer.setCustNo(rs.getString("CUST_NO"));
+                cNCustomer.setCustCat(rs.getString("CUST_CAT"));
+                cNCustomer.setCustName(rs.getString("CUST_NM"));
+                cNCustomer.setMobileNumber(queryMobileContact(cNCustomer.getCustId()));
+                cNCustomer.setIdentity(rs.getString("IDENT_NO"));
+            }
+        }
+        catch (Exception ex)
+        {
+            getLog().logEvent(ex);
+        }
+        return cNCustomer;
+    }
+
+    public CNCustomer queryCustomer(Long custId)
+    {
+        CNCustomer cNCustomer = new CNCustomer();
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.CUST_ID, C.CUST_NO, C.MAIN_BRANCH_ID, C.CUST_CAT, INITCAP(C.CUST_NM) AS CUST_NM, (SELECT IDENT_NO FROM " + APController.coreSchemaName + ".V_CUSTOMER_IDENTIFICATION WHERE CUST_ID=C.CUST_ID AND IDENT_ID=391 AND REC_ST='A' AND ROWNUM=1) AS IDENT_NO FROM " + APController.coreSchemaName + ".CUSTOMER C WHERE C.CUST_ID=" + custId))
+        {
+            if (rs != null && rs.next())
+            {
+                cNCustomer.setCustId(rs.getLong("CUST_ID"));
+                cNCustomer.setBuId(rs.getLong("MAIN_BRANCH_ID"));
+                cNCustomer.setCustNo(rs.getString("CUST_NO"));
+                cNCustomer.setCustCat(rs.getString("CUST_CAT"));
+                cNCustomer.setCustName(rs.getString("CUST_NM"));
+                cNCustomer.setMobileNumber(queryMobileContact(cNCustomer.getCustId()));
+                cNCustomer.setIdentity(rs.getString("IDENT_NO"));
+            }
+        }
+        catch (Exception ex)
+        {
+            getLog().logEvent(ex);
+        }
+        return cNCustomer;
+    }
+
+    public Long nextStatementId()
+    {
+        return nextSequenceId("SEQ_PHS_EST_LOG");
+    }
+
+    public boolean saveStatementLog(ESRecord record)
+    {
+        return executeUpdate("INSERT INTO " + APController.cmSchemaName + ".PHS_EST_LOG(REC_ID, CREATE_DT, TASK, ACCOUNT, START_DT, END_DT, ADDRESS, CHARGE, CHG_ID, REC_ST) VALUES(" + record.getRecId() + ", SYSDATE, '" + record.getTask() + "', '" + record.getAccount() + "', " + convertToOracleDate(record.getStartDt()) + ", " + convertToOracleDate(record.getEndDt()) + ", '" + record.getAddress() + "', " + record.getCharge() + ", " + record.getChgId() + ", '" + record.getStatus() + "')", true);
+    }
+
     public CNBranch queryChannelBranch(Long channelId)
     {
         CNBranch cNBranch = new CNBranch();
-        try (ResultSet rs = executeQueryToResultSet("SELECT ORIGIN_BU_ID FROM " + APController.coreSchemaName + ".SERVICE_CHANNEL WHERE CHANNEL_ID=" + channelId))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT ORIGIN_BU_ID FROM " + APController.coreSchemaName + ".SERVICE_CHANNEL WHERE CHANNEL_ID=" + channelId))
         {
             if (rs != null && rs.next())
             {
@@ -297,11 +498,11 @@ public final class DBClient
         }
         return cNBranch;
     }
-    
+
     public Long queryIdentityXref(Long customerTypeId, Long identityId)
     {
         Long identityXrefId = null;
-        try (ResultSet rs = executeQueryToResultSet("SELECT CUST_IDENT_XREF_ID FROM " + APController.coreSchemaName + ".CUSTOMER_IDENTIFICATION_XREF WHERE CUST_TY_ID=" + customerTypeId + " AND IDENT_ID=" + identityId))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT CUST_IDENT_XREF_ID FROM " + APController.coreSchemaName + ".CUSTOMER_IDENTIFICATION_XREF WHERE CUST_TY_ID=" + customerTypeId + " AND IDENT_ID=" + identityId))
         {
             if (rs != null && rs.next())
             {
@@ -314,11 +515,11 @@ public final class DBClient
         }
         return identityXrefId;
     }
-    
+
     public Long queryWorkflowItemId(Long custId)
     {
         Long workflowItemId = 0L;
-        try (ResultSet rs = executeQueryToResultSet("SELECT WORK_ITEM_ID FROM " + APController.coreSchemaName + ".WF_WORK_ITEM WHERE CUST_ID=" + custId + " ORDER BY WORK_ITEM_ID DESC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT WORK_ITEM_ID FROM " + APController.coreSchemaName + ".WF_WORK_ITEM WHERE CUST_ID=" + custId + " ORDER BY WORK_ITEM_ID DESC"))
         {
             if (rs != null && rs.next())
             {
@@ -331,11 +532,11 @@ public final class DBClient
         }
         return workflowItemId;
     }
-    
+
     public boolean checkExists(String query)
     {
         boolean exists = false;
-        try (ResultSet rs = executeQueryToResultSet(query))
+        try ( ResultSet rs = executeQueryToResultSet(query))
         {
             exists = rs.next();
         }
@@ -345,12 +546,12 @@ public final class DBClient
         }
         return exists;
     }
-    
+
     public AXUser loginAdminUser(String loginId, String password, String role)
     {
-        
+
         AXUser user = new AXUser();
-        try (ResultSet rs = executeQueryToResultSet("SELECT A.EMP_NO FROM " + APController.coreSchemaName + ".SYSUSER A, " + APController.coreSchemaName + ".SYSPWD_HIST B WHERE A.LOGIN_ID='" + loginId + "' AND B.SYSUSER_ID=A.SYSUSER_ID AND A.REC_ST=B.REC_ST AND B.PASSWD='" + aXCryptNew.encrypt(password) + "' AND B.REC_ST='A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT A.EMP_NO FROM " + APController.coreSchemaName + ".SYSUSER A, " + APController.coreSchemaName + ".SYSPWD_HIST B WHERE A.LOGIN_ID='" + loginId + "' AND B.SYSUSER_ID=A.SYSUSER_ID AND A.REC_ST=B.REC_ST AND B.PASSWD='" + aXCryptNew.encrypt(password) + "' AND B.REC_ST='A'"))
         {
             if (rs != null && rs.next())
             {
@@ -371,11 +572,11 @@ public final class DBClient
         }
         return user;
     }
-    
+
     public <T> T queryParameter(String code, Class<T> clazz)
     {
         T value = null;
-        try (ResultSet rs = executeQueryToResultSet("SELECT PARAM_VALUE FROM " + APController.coreSchemaName + ".CTRL_PARAMETER WHERE PARAM_CD = '" + code + "'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT PARAM_VALUE FROM " + APController.coreSchemaName + ".CTRL_PARAMETER WHERE PARAM_CD = '" + code + "'"))
         {
             if (rs != null && rs.next())
             {
@@ -388,26 +589,26 @@ public final class DBClient
         }
         return value;
     }
-    
+
     public boolean isDuplicate(Long channelId, String accountNumber, String referenceNumber, BigDecimal amount, String debitCredit)
     {
         return checkExists("SELECT ACCT_NO FROM " + APController.coreSchemaName + ".DEPOSIT_ACCOUNT_HISTORY WHERE CHANNEL_ID=" + channelId + " AND ACCT_NO='" + accountNumber + "' AND TRAN_DT>=SYSDATE-30 AND TRAN_REF_TXT='" + referenceNumber + "' AND DR_CR_IND='" + debitCredit + "' AND TXN_AMT=" + amount);
     }
-    
+
     public boolean isLedgerDuplicate(Long channelId, String accountNumber, String referenceNumber, BigDecimal amount, String debitCredit)
     {
         return checkExists("SELECT GL_ACCT_NO FROM " + APController.coreSchemaName + ".GL_ACCOUNT_HISTORY WHERE CHANNEL_ID=" + channelId + " AND GL_ACCT_NO='" + accountNumber + "' AND TRAN_DT>=SYSDATE-30 AND TRAN_REF_TXT='" + referenceNumber + "' AND DR_CR_IND='" + debitCredit + "' AND TXN_AMT=" + amount);
     }
-    
+
     public boolean isAccountValid(String accountNumber)
     {
         return checkExists("SELECT ACCT_NO FROM " + APController.coreSchemaName + ".V_ACCOUNTS WHERE PROD_CAT_TY='DP' AND ACCT_NO='" + accountNumber + "' AND REC_ST IN ('A')");
     }
-    
+
     public String queryTxnResponse(Long channelId, String txnRef)
     {
         String respCode = null;
-        try (ResultSet rs = executeQueryToResultSet("SELECT XAPI_CODE FROM " + APController.cmSchemaName + ".PHL_TXN_LOG WHERE TXN_REF='" + txnRef + "' AND TXN_DATE>=SYSDATE-30 AND CHANNEL_ID = " + channelId))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT XAPI_CODE FROM " + APController.cmSchemaName + ".PHL_TXN_LOG WHERE TXN_REF='" + txnRef + "' AND TXN_DATE>=SYSDATE-30 AND CHANNEL_ID = " + channelId))
         {
             if (rs != null && rs.next())
             {
@@ -420,13 +621,13 @@ public final class DBClient
         }
         return respCode;
     }
-    
+
     public CNUser queryChannelUser(Long schemeId, String accessCode)
     {
         CNUser cNUser = new CNUser();
         if (!getWorker().isBlank(accessCode))
         {
-            try (ResultSet rs = executeQueryToResultSet("SELECT U.CUST_CHANNEL_USER_ID, U.CUST_ID, U.CUST_CHANNEL_ID, U.ACCESS_CD, INITCAP(U.ACCESS_NM) AS ACCESS_NM, U.PASSWORD, U.PWD_RESET_FG, U.CHANNEL_ID, U.CHANNEL_SCHEME_ID, U.LOCKED_FG, NVL(U.RANDOM_SEED, 0) AS PIN_TRIES, NVL(U.RANDOM_NO_SEED, 0) AS PUK_TRIES, U.SECURITY_CD, U.QUIZ_CD FROM " + APController.coreSchemaName + ".CUSTOMER_CHANNEL C, " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER U WHERE C.CUST_ID=U.CUST_ID AND C.CUST_CHANNEL_ID=U.CUST_CHANNEL_ID AND U.CHANNEL_SCHEME_ID=" + schemeId + " AND U.ACCESS_CD='" + accessCode + "' AND U.REC_ST='A'"))
+            try ( ResultSet rs = executeQueryToResultSet("SELECT U.CUST_CHANNEL_USER_ID, U.CUST_ID, U.CUST_CHANNEL_ID, U.ACCESS_CD, INITCAP(U.ACCESS_NM) AS ACCESS_NM, U.PASSWORD, U.PWD_RESET_FG, U.CHANNEL_ID, U.CHANNEL_SCHEME_ID, U.LOCKED_FG, NVL(U.RANDOM_SEED, 0) AS PIN_TRIES, NVL(U.RANDOM_NO_SEED, 0) AS PUK_TRIES, U.SECURITY_CD, U.QUIZ_CD FROM " + APController.coreSchemaName + ".CUSTOMER_CHANNEL C, " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER U WHERE C.CUST_ID=U.CUST_ID AND C.CUST_CHANNEL_ID=U.CUST_CHANNEL_ID AND U.CHANNEL_SCHEME_ID=" + schemeId + " AND U.ACCESS_CD='" + accessCode + "' AND U.REC_ST='A'"))
             {
                 if (rs != null && rs.next())
                 {
@@ -456,11 +657,11 @@ public final class DBClient
         }
         return cNUser;
     }
-    
+
     public ArrayList<CNAccount> queryAccounts(CNUser cNUser)
     {
         ArrayList<CNAccount> accounts = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, NVL(A.SHORT_NAME, C.ACCT_NO) AS SHORT_NAME, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".CUST_CHANNEL_ACCOUNT A, " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE A.ACCT_ID=C.ACCT_ID AND A.REC_ST='A' AND A.CHANNEL_ID=" + cNUser.getChannelId() + " AND A.CUST_ID=C.CUST_ID AND M.CUST_ID=C.CUST_ID AND A.CUST_ID=" + cNUser.getCustId()))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, NVL(A.SHORT_NAME, C.ACCT_NO) AS SHORT_NAME, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".CUST_CHANNEL_ACCOUNT A, " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE A.ACCT_ID=C.ACCT_ID AND A.REC_ST='A' AND A.CHANNEL_ID=" + cNUser.getChannelId() + " AND A.CUST_ID=C.CUST_ID AND M.CUST_ID=C.CUST_ID AND A.CUST_ID=" + cNUser.getCustId()))
         {
             if (rs != null)
             {
@@ -476,11 +677,11 @@ public final class DBClient
         }
         return accounts;
     }
-    
+
     public CNAccount queryAccount(Long channelId, Long custId, Long accountId)
     {
         CNAccount account = new CNAccount();
-        try (ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, NVL(A.SHORT_NAME, C.ACCT_NO) AS SHORT_NAME, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".CUST_CHANNEL_ACCOUNT A, " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE A.ACCT_ID=C.ACCT_ID AND A.REC_ST='A' AND A.CHANNEL_ID=" + channelId + " AND A.CUST_ID=C.CUST_ID AND M.CUST_ID=C.CUST_ID AND A.CUST_ID=" + custId + " AND A.ACCT_ID=" + accountId))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, NVL(A.SHORT_NAME, C.ACCT_NO) AS SHORT_NAME, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".CUST_CHANNEL_ACCOUNT A, " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE A.ACCT_ID=C.ACCT_ID AND A.REC_ST='A' AND A.CHANNEL_ID=" + channelId + " AND A.CUST_ID=C.CUST_ID AND M.CUST_ID=C.CUST_ID AND A.CUST_ID=" + custId + " AND A.ACCT_ID=" + accountId))
         {
             if (rs != null && rs.next())
             {
@@ -493,7 +694,7 @@ public final class DBClient
         }
         if (getWorker().isBlank(account.getAccountNumber()) && (Objects.equals(ALController.channelId, channelId)))
         {
-            try (ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, NVL(A.SHORT_NAME, C.ACCT_NO) AS SHORT_NAME, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".CUST_CHANNEL_ACCOUNT A, " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE A.ACCT_ID=C.ACCT_ID AND A.REC_ST='A' AND A.CHANNEL_ID=" + channelId + " AND A.CUST_ID=C.CUST_ID AND M.CUST_ID=C.CUST_ID AND A.CUST_ID IN (SELECT GROUP_CUST_ID FROM " + APController.coreSchemaName + ".GROUP_MEMBER WHERE MEMBER_CUST_ID=" + custId + " AND REC_ST='A') AND A.ACCT_ID=" + accountId))
+            try ( ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, NVL(A.SHORT_NAME, C.ACCT_NO) AS SHORT_NAME, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".CUST_CHANNEL_ACCOUNT A, " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE A.ACCT_ID=C.ACCT_ID AND A.REC_ST='A' AND A.CHANNEL_ID=" + channelId + " AND A.CUST_ID=C.CUST_ID AND M.CUST_ID=C.CUST_ID AND A.CUST_ID IN (SELECT GROUP_CUST_ID FROM " + APController.coreSchemaName + ".GROUP_MEMBER WHERE MEMBER_CUST_ID=" + custId + " AND REC_ST='A') AND A.ACCT_ID=" + accountId))
             {
                 if (rs != null && rs.next())
                 {
@@ -507,7 +708,7 @@ public final class DBClient
         }
         return account;
     }
-    
+
     private CNAccount readAccount(final ResultSet rs) throws SQLException
     {
         CNAccount cNAccount = new CNAccount();
@@ -524,11 +725,11 @@ public final class DBClient
         cNAccount.setProductDesc(queryProductDesc(rs.getLong("PROD_ID")));
         return cNAccount;
     }
-    
+
     public ArrayList<CNAccount> queryDepositAccounts(Long custId)
     {
         ArrayList<CNAccount> accounts = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, C.CRNCY_ID, C.PROD_CAT_TY, S.CLEARED_BAL, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".DEPOSIT_ACCOUNT_SUMMARY S, " + APController.coreSchemaName + ".CUSTOMER M WHERE M.CUST_ID=C.CUST_ID AND C.CUST_ID=" + custId + " AND S.ACCT_NO=C.ACCT_NO AND C.REC_ST='A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, C.CRNCY_ID, C.PROD_CAT_TY, S.CLEARED_BAL, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".DEPOSIT_ACCOUNT_SUMMARY S, " + APController.coreSchemaName + ".CUSTOMER M WHERE M.CUST_ID=C.CUST_ID AND C.CUST_ID=" + custId + " AND S.ACCT_NO=C.ACCT_NO AND C.REC_ST='A'"))
         {
             if (rs != null)
             {
@@ -544,11 +745,11 @@ public final class DBClient
         }
         return accounts;
     }
-    
+
     public String queryProductDesc(Long prodId)
     {
         String proddsc = "";
-        try (ResultSet rs = executeQueryToResultSet("SELECT PROD_DESC FROM " + APController.coreSchemaName + ".PRODUCT "
+        try ( ResultSet rs = executeQueryToResultSet("SELECT PROD_DESC FROM " + APController.coreSchemaName + ".PRODUCT "
                 + "WHERE PROD_ID=" + prodId + " AND  REC_ST='A'"))
         {
             if (rs != null)
@@ -565,11 +766,11 @@ public final class DBClient
         }
         return proddsc;
     }
-    
+
     public CNAccount queryChargeAccount(CNUser cNUser)
     {
         CNAccount cNAccount = new CNAccount();
-        try (ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER_CHANNEL L, " + APController.coreSchemaName + ".CUSTOMER M WHERE M.CUST_ID=C.CUST_ID AND C.ACCT_ID=L.CHRG_ACCT_ID AND L.CUST_CHANNEL_ID=" + cNUser.getCustChannelId()))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER_CHANNEL L, " + APController.coreSchemaName + ".CUSTOMER M WHERE M.CUST_ID=C.CUST_ID AND C.ACCT_ID=L.CHRG_ACCT_ID AND L.CUST_CHANNEL_ID=" + cNUser.getCustChannelId()))
         {
             if (rs != null && rs.next())
             {
@@ -582,18 +783,18 @@ public final class DBClient
         }
         return cNAccount;
     }
-    
+
     public CNAccount queryDepositAccount(String accountNumber)
     {
         return queryDepositAccount(accountNumber, true);
     }
-    
+
     public CNAccount queryDepositAccount(String accountNumber, boolean checkOld)
     {
         CNAccount cNAccount = new CNAccount();
         if (!getWorker().isBlank(accountNumber))
         {
-            try (ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE M.CUST_ID=C.CUST_ID AND C.ACCT_NO='" + accountNumber + "'"))
+            try ( ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE M.CUST_ID=C.CUST_ID AND C.ACCT_NO='" + accountNumber + "'"))
             {
                 if (rs != null && rs.next())
                 {
@@ -611,11 +812,11 @@ public final class DBClient
         }
         return cNAccount;
     }
-    
+
     private CNAccount queryEquinoxAccount(String accountNumber, boolean retry)
     {
         CNAccount cNAccount = new CNAccount();
-        try (ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE M.CUST_ID=C.CUST_ID AND C.OLD_ACCT_NO IN ('" + accountNumber + "', '" + getWorker().formatEquinoxAccount(accountNumber) + "', '" + getWorker().formatEquinoxAccount("0" + accountNumber) + "', '" + getWorker().formatEquinoxAccount("00" + accountNumber) + "', '" + getWorker().formatEquinoxAccount("000" + accountNumber) + "')"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE M.CUST_ID=C.CUST_ID AND C.OLD_ACCT_NO IN ('" + accountNumber + "', '" + getWorker().formatEquinoxAccount(accountNumber) + "', '" + getWorker().formatEquinoxAccount("0" + accountNumber) + "', '" + getWorker().formatEquinoxAccount("00" + accountNumber) + "', '" + getWorker().formatEquinoxAccount("000" + accountNumber) + "')"))
         {
             if (rs != null && rs.next())
             {
@@ -632,11 +833,11 @@ public final class DBClient
         }
         return cNAccount;
     }
-    
+
     public CNAccount queryDepositAccount(Long accountId)
     {
         CNAccount cNAccount = new CNAccount();
-        try (ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE M.CUST_ID=C.CUST_ID AND C.ACCT_ID=" + accountId))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE M.CUST_ID=C.CUST_ID AND C.ACCT_ID=" + accountId))
         {
             if (rs != null && rs.next())
             {
@@ -649,11 +850,11 @@ public final class DBClient
         }
         return cNAccount;
     }
-    
+
     public ArrayList<CNAccount> queryCycleAccounts(Long datefieldId, Date minDate)
     {
         ArrayList<CNAccount> accounts = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE M.CUST_ID=C.CUST_ID AND C.ACCT_ID IN (SELECT A.PARENT_ID FROM " + APController.coreSchemaName + ".UDS_FIELD_VALUE A WHERE A.FIELD_ID=" + datefieldId + " AND A.REC_ST='A' AND (TO_DATE(A.FIELD_VALUE,'DD/MM/YYYY')<=" + getWorker().convertToOracleDate(minDate) + " OR A.FIELD_VALUE IS NULL))"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE M.CUST_ID=C.CUST_ID AND C.ACCT_ID IN (SELECT A.PARENT_ID FROM " + APController.coreSchemaName + ".UDS_FIELD_VALUE A WHERE A.FIELD_ID=" + datefieldId + " AND A.REC_ST='A' AND (TO_DATE(A.FIELD_VALUE,'DD/MM/YYYY')<=" + getWorker().convertToOracleDate(minDate) + " OR A.FIELD_VALUE IS NULL))"))
         {
             if (rs != null)
             {
@@ -669,11 +870,11 @@ public final class DBClient
         }
         return accounts;
     }
-    
+
     public ArrayList<CNAccount> queryNowAccounts(Long nowfieldId, Long fieldValue)
     {
         ArrayList<CNAccount> accounts = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE M.CUST_ID=C.CUST_ID AND C.ACCT_ID IN (SELECT A.PARENT_ID FROM " + APController.coreSchemaName + ".UDS_FIELD_VALUE A WHERE A.FIELD_ID=" + nowfieldId + " AND A.REC_ST='A' AND A.FIELD_VALUE='" + fieldValue + "')"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, C.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M WHERE M.CUST_ID=C.CUST_ID AND C.ACCT_ID IN (SELECT A.PARENT_ID FROM " + APController.coreSchemaName + ".UDS_FIELD_VALUE A WHERE A.FIELD_ID=" + nowfieldId + " AND A.REC_ST='A' AND A.FIELD_VALUE='" + fieldValue + "')"))
         {
             if (rs != null)
             {
@@ -689,13 +890,13 @@ public final class DBClient
         }
         return accounts;
     }
-    
+
     public CNAccount queryLoanAccount(String accountNumber)
     {
         CNAccount cNAccount = new CNAccount();
         if (!getWorker().isBlank(accountNumber))
         {
-            try (ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, E.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST "
+            try ( ResultSet rs = executeQueryToResultSet("SELECT C.ACCT_ID, C.CUST_ID, C.MAIN_BRANCH_ID, C.PROD_ID, C.ACCT_NO, INITCAP(C.ACCT_NM) AS ACCT_NM, E.CRNCY_ID, C.PROD_CAT_TY, M.CUST_CAT, C.REC_ST "
                     + "FROM " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CURRENCY E, " + APController.coreSchemaName + ".CUSTOMER M WHERE M.CUST_ID=C.CUST_ID AND C.ACCT_NO='" + accountNumber + "' AND C.REC_ST='A' AND C.PROD_CAT_TY='LN' AND C.CRNCY_ID = E.CRNCY_ID"))
             {
                 if (rs != null && rs.next())
@@ -710,13 +911,13 @@ public final class DBClient
         }
         return cNAccount;
     }
-    
+
     public CNAccount queryGLAccount(String accountNumber)
     {
         CNAccount cNAccount = new CNAccount();
         if (!getWorker().isBlank(accountNumber))
         {
-            try (ResultSet rs = executeQueryToResultSet("SELECT C.GL_ACCT_ID, C.GL_ACCT_NO, C.ACCT_DESC, C.BU_ID, C.REC_ST FROM " + APController.coreSchemaName + ".GL_ACCOUNT C WHERE C.GL_ACCT_NO='" + accountNumber + "'"))
+            try ( ResultSet rs = executeQueryToResultSet("SELECT C.GL_ACCT_ID, C.GL_ACCT_NO, C.ACCT_DESC, C.BU_ID, C.REC_ST FROM " + APController.coreSchemaName + ".GL_ACCOUNT C WHERE C.GL_ACCT_NO='" + accountNumber + "'"))
             {
                 if (rs != null && rs.next())
                 {
@@ -737,11 +938,11 @@ public final class DBClient
         }
         return cNAccount;
     }
-    
+
     public LNDetail queryLoanDetail(CNAccount cNAccount)
     {
         LNDetail lNDetail = new LNDetail();
-        try (ResultSet rs = executeQueryToResultSet("SELECT * FROM (SELECT A.ACCT_NO, PI.PRINCIPAL_REPAY_ACCT_ID RPMT_ACCT_ID, (SELECT NVL(SUM(RT.REPMNT_AMT),0) FROM " + APController.coreSchemaName + ".LN_ACCT_REPMNT_EVENT RT WHERE RT.ACCT_ID=R.ACCT_ID AND RT.DUE_DT=R.DUE_DT AND RT.REC_ST IN ('N','P')) AS REPMNT_AMT, R.DUE_DT, Y.CRNCY_CD, (SELECT NVL(SUM(RM.AMT_UNPAID),0) FROM " + APController.coreSchemaName + ".LN_ACCT_REPMNT_EVENT RM WHERE RM.EVENT_TYPE IN('PRINCIPAL','CHARGE','INTEREST') AND RM.DUE_DT < (SELECT TO_DATE(DISPLAY_VALUE,'DD/MM/YYYY') FROM " + APController.coreSchemaName + ".CTRL_PARAMETER WHERE PARAM_CD = 'S02') AND RM.ACCT_ID = A.ACCT_ID AND RM.REC_ST IN ('P','N')) AS AMT_UNPAID, NVL(Q.CLEARED_BAL,0) AS CLEARED_BAL FROM " + APController.coreSchemaName + ".ACCOUNT A LEFT OUTER JOIN " + APController.coreSchemaName + ".LOAN_ACCOUNT_PAYMENT_INFO PI ON PI.ACCT_ID=A.ACCT_ID, " + APController.coreSchemaName + ".CUSTOMER C, " + APController.coreSchemaName + ".LN_ACCT_REPMNT_EVENT R, " + APController.coreSchemaName + ".LOAN_ACCOUNT_SUMMARY Q, " + APController.coreSchemaName + ".BUSINESS_UNIT B, " + APController.coreSchemaName + ".CURRENCY Y WHERE C.CUST_ID = A.CUST_ID AND B.BU_ID = A.MAIN_BRANCH_ID AND A.ACCT_ID = R.ACCT_ID AND Y.CRNCY_ID = A.CRNCY_ID AND R.EVENT_TYPE IN('PRINCIPAL') AND R.REC_ST IN ('P','N') AND A.REC_ST in ('A','C','D','I') AND Q.LAST_DISBURSEMENT_DT IS NOT NULL AND Q.ACCT_ID = A.ACCT_ID AND A.ACCT_NO = '" + cNAccount.getAccountNumber() + "' ORDER BY R.DUE_DT ASC) WHERE ROWNUM=1"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT * FROM (SELECT A.ACCT_NO, PI.PRINCIPAL_REPAY_ACCT_ID RPMT_ACCT_ID, (SELECT NVL(SUM(RT.REPMNT_AMT),0) FROM " + APController.coreSchemaName + ".LN_ACCT_REPMNT_EVENT RT WHERE RT.ACCT_ID=R.ACCT_ID AND RT.DUE_DT=R.DUE_DT AND RT.REC_ST IN ('N','P')) AS REPMNT_AMT, R.DUE_DT, Y.CRNCY_CD, (SELECT NVL(SUM(RM.AMT_UNPAID),0) FROM " + APController.coreSchemaName + ".LN_ACCT_REPMNT_EVENT RM WHERE RM.EVENT_TYPE IN('PRINCIPAL','CHARGE','INTEREST') AND RM.DUE_DT < (SELECT TO_DATE(DISPLAY_VALUE,'DD/MM/YYYY') FROM " + APController.coreSchemaName + ".CTRL_PARAMETER WHERE PARAM_CD = 'S02') AND RM.ACCT_ID = A.ACCT_ID AND RM.REC_ST IN ('P','N')) AS AMT_UNPAID, NVL(Q.CLEARED_BAL,0) AS CLEARED_BAL FROM " + APController.coreSchemaName + ".ACCOUNT A LEFT OUTER JOIN " + APController.coreSchemaName + ".LOAN_ACCOUNT_PAYMENT_INFO PI ON PI.ACCT_ID=A.ACCT_ID, " + APController.coreSchemaName + ".CUSTOMER C, " + APController.coreSchemaName + ".LN_ACCT_REPMNT_EVENT R, " + APController.coreSchemaName + ".LOAN_ACCOUNT_SUMMARY Q, " + APController.coreSchemaName + ".BUSINESS_UNIT B, " + APController.coreSchemaName + ".CURRENCY Y WHERE C.CUST_ID = A.CUST_ID AND B.BU_ID = A.MAIN_BRANCH_ID AND A.ACCT_ID = R.ACCT_ID AND Y.CRNCY_ID = A.CRNCY_ID AND R.EVENT_TYPE IN('PRINCIPAL') AND R.REC_ST IN ('P','N') AND A.REC_ST in ('A','C','D','I') AND Q.LAST_DISBURSEMENT_DT IS NOT NULL AND Q.ACCT_ID = A.ACCT_ID AND A.ACCT_NO = '" + cNAccount.getAccountNumber() + "' ORDER BY R.DUE_DT ASC) WHERE ROWNUM=1"))
         {
             if (rs != null && rs.next())
             {
@@ -760,7 +961,7 @@ public final class DBClient
         }
         return lNDetail;
     }
-    
+
     private CNCustomer readCustomer(final ResultSet rs) throws SQLException
     {
         CNCustomer cNCustomer = new CNCustomer();
@@ -772,11 +973,11 @@ public final class DBClient
         cNCustomer.setMobileNumber(queryMobileContact(cNCustomer.getCustId()));
         return cNCustomer;
     }
-    
+
     public CNCustomer queryCustomerByNumber(String customerNumber)
     {
         CNCustomer cNCustomer = new CNCustomer();
-        try (ResultSet rs = executeQueryToResultSet("SELECT C.CUST_ID, C.CUST_NO, C.MAIN_BRANCH_ID, C.CUST_CAT, C.CUST_NM FROM " + APController.coreSchemaName + ".CUSTOMER C WHERE C.CUST_NO LIKE '%" + customerNumber + "'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.CUST_ID, C.CUST_NO, C.MAIN_BRANCH_ID, C.CUST_CAT, C.CUST_NM FROM " + APController.coreSchemaName + ".CUSTOMER C WHERE C.CUST_NO LIKE '%" + customerNumber + "'"))
         {
             if (rs != null && rs.next())
             {
@@ -789,11 +990,11 @@ public final class DBClient
         }
         return cNCustomer;
     }
-    
+
     public CNCustomer queryCustomerById(Long custId)
     {
         CNCustomer cNCustomer = new CNCustomer();
-        try (ResultSet rs = executeQueryToResultSet("SELECT C.CUST_ID, C.CUST_NO, C.MAIN_BRANCH_ID, C.CUST_CAT, C.CUST_NM FROM " + APController.coreSchemaName + ".CUSTOMER C WHERE C.CUST_ID=" + custId))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.CUST_ID, C.CUST_NO, C.MAIN_BRANCH_ID, C.CUST_CAT, C.CUST_NM FROM " + APController.coreSchemaName + ".CUSTOMER C WHERE C.CUST_ID=" + custId))
         {
             if (rs != null && rs.next())
             {
@@ -806,11 +1007,11 @@ public final class DBClient
         }
         return cNCustomer;
     }
-    
+
     public CNCustomer queryCustomerByAccessCode(Long schemeId, String accessCode)
     {
         CNCustomer cNCustomer = new CNCustomer();
-        try (ResultSet rs = executeQueryToResultSet("SELECT C.CUST_ID, C.CUST_NO, C.MAIN_BRANCH_ID, C.CUST_CAT, C.CUST_NM FROM " + APController.coreSchemaName + ".CUSTOMER C, " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER U WHERE C.CUST_ID=U.CUST_ID AND U.CHANNEL_SCHEME_ID = " + schemeId + " AND U.ACCESS_CD='" + accessCode + "' AND U.REC_ST IN ('A','S')"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.CUST_ID, C.CUST_NO, C.MAIN_BRANCH_ID, C.CUST_CAT, C.CUST_NM FROM " + APController.coreSchemaName + ".CUSTOMER C, " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER U WHERE C.CUST_ID=U.CUST_ID AND U.CHANNEL_SCHEME_ID = " + schemeId + " AND U.ACCESS_CD='" + accessCode + "' AND U.REC_ST IN ('A','S')"))
         {
             if (rs != null && rs.next())
             {
@@ -823,11 +1024,11 @@ public final class DBClient
         }
         return cNCustomer;
     }
-    
+
     public ArrayList<String> queryActiveAccessCodes(Long schemeId, Long custId)
     {
         ArrayList<String> accessCodes = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT U.ACCESS_CD FROM " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER U WHERE U.CUST_ID=" + custId + " AND U.CHANNEL_SCHEME_ID = " + schemeId + " AND U.REC_ST IN ('A')"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT U.ACCESS_CD FROM " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER U WHERE U.CUST_ID=" + custId + " AND U.CHANNEL_SCHEME_ID = " + schemeId + " AND U.REC_ST IN ('A')"))
         {
             if (rs != null)
             {
@@ -843,11 +1044,11 @@ public final class DBClient
         }
         return accessCodes;
     }
-    
+
     public HashMap<Long, CLItem> queryCustomListItems(Long listId)
     {
         HashMap<Long, CLItem> itemsList = new HashMap<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT ROWNUM, CUSTOM_LIST_ITEM_ID, CUSTOM_LIST_ITEM_CD, INITCAP(CUSTOM_LIST_ITEM_DESC) AS CUSTOM_LIST_ITEM_DESC FROM " + APController.coreSchemaName + ".CUSTOM_LIST_ITEM WHERE CUSTOM_LIST_ID=" + listId))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT ROWNUM, CUSTOM_LIST_ITEM_ID, CUSTOM_LIST_ITEM_CD, INITCAP(CUSTOM_LIST_ITEM_DESC) AS CUSTOM_LIST_ITEM_DESC FROM " + APController.coreSchemaName + ".CUSTOM_LIST_ITEM WHERE CUSTOM_LIST_ID=" + listId))
         {
             if (rs != null)
             {
@@ -863,7 +1064,7 @@ public final class DBClient
         }
         return itemsList;
     }
-    
+
     public boolean upsertCustomField(Long fieldId, Long parentId, String fieldValue)
     {
         if (executeUpdate("MERGE INTO " + APController.coreSchemaName + ".UDS_FIELD_VALUE D USING (SELECT " + queryCustomEntityId() + " AS UDS_FIELD_VALUE_ID, " + fieldId + " AS FIELD_ID, " + parentId + " AS PARENT_ID, '" + fieldValue + "' AS FIELD_VALUE, 'A' AS REC_ST, 1 AS VERSION_NO, SYSDATE AS ROW_TS, 'SYSTEM' AS USER_ID, SYSDATE AS CREATE_DT, 'SYSTEM' AS CREATED_BY, SYSDATE AS SYS_CREATE_TS FROM DUAL) S ON (D.FIELD_ID = S.FIELD_ID AND D.PARENT_ID=S.PARENT_ID) WHEN MATCHED THEN UPDATE SET D.FIELD_VALUE = S.FIELD_VALUE WHEN NOT MATCHED THEN INSERT (UDS_FIELD_VALUE_ID, FIELD_ID, PARENT_ID, FIELD_VALUE, REC_ST, VERSION_NO, ROW_TS, USER_ID, CREATE_DT, CREATED_BY, SYS_CREATE_TS) VALUES(S.UDS_FIELD_VALUE_ID, S.FIELD_ID, S.PARENT_ID, S.FIELD_VALUE, S.REC_ST, S.VERSION_NO, S.ROW_TS, S.USER_ID, S.CREATE_DT, S.CREATED_BY, S.SYS_CREATE_TS)", true))
@@ -872,11 +1073,11 @@ public final class DBClient
         }
         return false;
     }
-    
+
     public CNAccount queryChannelLedger(Long channelId, CNBranch cNBranch)
     {
         String drContraGL = null;
-        try (ResultSet rs = executeQueryToResultSet("SELECT GL_DR_ACCT FROM " + APController.coreSchemaName + ".SERVICE_CHANNEL WHERE CHANNEL_ID=" + channelId))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT GL_DR_ACCT FROM " + APController.coreSchemaName + ".SERVICE_CHANNEL WHERE CHANNEL_ID=" + channelId))
         {
             if (rs != null && rs.next())
             {
@@ -889,16 +1090,16 @@ public final class DBClient
         }
         return unmaskLedger(drContraGL, cNBranch);
     }
-    
+
     private boolean updateCustomEntityId()
     {
         return executeUpdate("UPDATE " + APController.coreSchemaName + ".ENTITY SET NEXT_NO=(SELECT MAX(UDS_FIELD_VALUE_ID)+1 FROM " + APController.coreSchemaName + ".UDS_FIELD_VALUE) WHERE ENTITY_NM = 'UDS_FIELD_VALUE'", true);
     }
-    
+
     private Long queryCustomEntityId()
     {
         Long entityId = 0L;
-        try (ResultSet rs = executeQueryToResultSet("SELECT MAX(UDS_FIELD_VALUE_ID)+1 AS NEXT_NO FROM " + APController.coreSchemaName + ".UDS_FIELD_VALUE"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT MAX(UDS_FIELD_VALUE_ID)+1 AS NEXT_NO FROM " + APController.coreSchemaName + ".UDS_FIELD_VALUE"))
         {
             if (rs != null && rs.next())
             {
@@ -911,11 +1112,11 @@ public final class DBClient
         }
         return entityId;
     }
-    
+
     private Long nextSequenceId(String sequence)
     {
         Long seqId = null;
-        try (ResultSet rs = executeQueryToResultSet("SELECT " + APController.cmSchemaName + "." + sequence + ".NEXTVAL FROM DUAL"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT " + APController.cmSchemaName + "." + sequence + ".NEXTVAL FROM DUAL"))
         {
             if (rs != null && rs.next())
             {
@@ -928,7 +1129,7 @@ public final class DBClient
         }
         return seqId;
     }
-    
+
     private boolean saveTiers(String parentKey, HashMap<BigDecimal, AXTier> tiers)
     {
         boolean RC = deleteTiers(parentKey);
@@ -938,16 +1139,16 @@ public final class DBClient
         }
         return RC;
     }
-    
+
     private boolean deleteTiers(String parentKey)
     {
         return executeUpdate("DELETE " + APController.cmSchemaName + ".PHC_TIER WHERE PARENT_KEY='" + parentKey + "'", true);
     }
-    
+
     private HashMap<BigDecimal, AXTier> queryTiers(String parentKey)
     {
         HashMap<BigDecimal, AXTier> tiers = new HashMap<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT REC_ID, PARENT_KEY, TIER_MAX, TIER_VALUE FROM " + APController.cmSchemaName + ".PHC_TIER WHERE PARENT_KEY='" + parentKey + "' ORDER BY TIER_MAX ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_ID, PARENT_KEY, TIER_MAX, TIER_VALUE FROM " + APController.cmSchemaName + ".PHC_TIER WHERE PARENT_KEY='" + parentKey + "' ORDER BY TIER_MAX ASC"))
         {
             if (rs != null)
             {
@@ -967,11 +1168,11 @@ public final class DBClient
         }
         return tiers;
     }
-    
+
     private HashMap<Long, TCDeduction> queryDeductions(String parentKey)
     {
         HashMap<Long, TCDeduction> deductions = new HashMap<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT REC_ID, PARENT_KEY, BASIS, DESCRIPTION, ACCOUNT, VALUE_TYPE, VALUE FROM " + APController.cmSchemaName + ".PHC_DEDUCTION WHERE PARENT_KEY='" + parentKey + "' ORDER BY REC_ID ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_ID, PARENT_KEY, BASIS, DESCRIPTION, ACCOUNT, VALUE_TYPE, VALUE FROM " + APController.cmSchemaName + ".PHC_DEDUCTION WHERE PARENT_KEY='" + parentKey + "' ORDER BY REC_ID ASC"))
         {
             if (rs != null)
             {
@@ -994,14 +1195,20 @@ public final class DBClient
         }
         return deductions;
     }
-    
+
+    public boolean isAlertDatePast(MXAlert mXAlert)
+    {
+        System.err.println("SELECT ACCT_NO FROM " + APController.coreSchemaName + ".PHA_ALERT WHERE NEXT_DATE < " + getSystemDate() + " AND ALERT_CODE='" + mXAlert.getAlertCode() + "' AND REC_ST IN ('A')");
+        return checkExists("SELECT ACCT_NO FROM " + APController.coreSchemaName + ".PHA_ALERT WHERE NEXT_DATE < " + getSystemDate() + " AND ALERT_CODE='" + mXAlert.getAlertCode() + "' AND REC_ST IN ('A')");
+    }
+
     public boolean upsertAlert(MXAlert mXAlert)
     {
         return checkExists("SELECT ALERT_CODE FROM " + APController.cmSchemaName + ".PHA_ALERT WHERE ALERT_CODE='" + mXAlert.getAlertCode() + "'")
                 ? updateAlert(mXAlert)
                 : saveAlert(mXAlert);
     }
-    
+
     private boolean saveAlert(MXAlert mXAlert)
     {
         if (executeUpdate("INSERT INTO " + APController.cmSchemaName + ".PHA_ALERT(REC_ID, ALERT_CODE, CREATE_DT, ALERT_TYPE, ALERT_DESC, PRIORITY, RUN_TIME, CHRG_CODE, FREQUENCY, ALERT_DAYS, NEXT_DATE, LAST_DATE, EXPIRY_DATE, FILTER_BY, REC_ST) VALUES(" + APController.cmSchemaName + ".SEQ_PHA_ALERT.NEXTVAL, '" + mXAlert.getAlertCode() + "', SYSDATE, '" + mXAlert.getAlertType() + "', '" + mXAlert.getDescription() + "', " + mXAlert.getPriority() + ", '" + mXAlert.getRunTime() + "', '" + mXAlert.getChargeCode() + "', '" + mXAlert.getFrequency() + "', '" + mXAlert.getAlertDays() + "', " + getWorker().convertToOracleDate(mXAlert.getNextDate()) + ", " + getWorker().convertToOracleDate(mXAlert.getPreviousDate()) + ", " + getWorker().convertToOracleDate(mXAlert.getExpiryDate()) + ", '" + mXAlert.getFilterBy() + "', '" + mXAlert.getStatus() + "')", true))
@@ -1010,7 +1217,7 @@ public final class DBClient
         }
         return false;
     }
-    
+
     private boolean updateAlert(MXAlert mXAlert)
     {
         if (executeUpdate("UPDATE " + APController.cmSchemaName + ".PHA_ALERT SET ALERT_CODE='" + mXAlert.getAlertCode() + "', ALERT_TYPE='" + mXAlert.getAlertType() + "', ALERT_DESC='" + mXAlert.getDescription() + "', PRIORITY=" + mXAlert.getPriority() + ", RUN_TIME='" + mXAlert.getRunTime() + "', CHRG_CODE='" + mXAlert.getChargeCode() + "', FREQUENCY='" + mXAlert.getFrequency() + "', NEXT_DATE=" + getWorker().convertToOracleDate(mXAlert.getNextDate()) + ", LAST_DATE=" + getWorker().convertToOracleDate(mXAlert.getPreviousDate()) + ", EXPIRY_DATE=" + getWorker().convertToOracleDate(mXAlert.getExpiryDate()) + ", FILTER_BY='" + mXAlert.getFilterBy() + "', REC_ST='" + mXAlert.getStatus() + "' WHERE ALERT_CODE='" + mXAlert.getAlertCode() + "'", true))
@@ -1019,57 +1226,63 @@ public final class DBClient
         }
         return false;
     }
-    
+
     public boolean pushAlertDate(MXAlert mXAlert)
     {
         return executeUpdate("UPDATE " + APController.cmSchemaName + ".PHA_ALERT SET NEXT_DATE=" + getWorker().convertToOracleDate(mXAlert.getNextDate()) + ", LAST_DATE=" + getWorker().convertToOracleDate(mXAlert.getPreviousDate()) + ", REC_ST='" + mXAlert.getStatus() + "' WHERE ALERT_CODE='" + mXAlert.getAlertCode() + "'", true);
     }
-    
+
+    public boolean updateAlertDate(MXAlert mXAlert)
+    {
+        System.err.println("UPDATE " + APController.cmSchemaName + ".PHA_ALERT SET NEXT_DATE=" + getWorker().convertToOracleDate(getSystemDate()) + ", LAST_DATE=" + getWorker().convertToOracleDate(mXAlert.getPreviousDate()) + ", REC_ST='" + mXAlert.getStatus() + "' WHERE ALERT_CODE='" + mXAlert.getAlertCode() + "'");
+        return executeUpdate("UPDATE " + APController.cmSchemaName + ".PHA_ALERT SET NEXT_DATE=" + getWorker().convertToOracleDate(getSystemDate()) + ", LAST_DATE=" + getWorker().convertToOracleDate(mXAlert.getPreviousDate()) + ", REC_ST='" + mXAlert.getStatus() + "' WHERE ALERT_CODE='" + mXAlert.getAlertCode() + "'", true);
+    }
+
     public boolean updateAlertStatus(MXAlert mXAlert)
     {
         return executeUpdate("UPDATE " + APController.cmSchemaName + ".PHA_ALERT SET REC_ST='" + mXAlert.getStatus() + "' WHERE ALERT_CODE='" + mXAlert.getAlertCode() + "'", true);
     }
-    
+
     public boolean upsertSetting(AXSetting setting)
     {
         return checkExists("SELECT CODE FROM " + APController.cmSchemaName + ".PHL_SETTING WHERE CODE='" + setting.getCode() + "' AND CHANNEL='" + setting.getChannel() + "'") ? updateSetting(setting) : saveSetting(setting);
     }
-    
+
     public boolean saveSetting(AXSetting setting)
     {
         return executeUpdate("INSERT INTO " + APController.cmSchemaName + ".PHL_SETTING(CODE, VALUE, CHANNEL, DESCRIPTION, SYS_USER, SYS_DATE) VALUES('" + setting.getCode() + "', '" + (setting.isEncrypted() && !getCrypt().isEncrypted(setting.getValue()) ? getCrypt().encrypt(setting.getValue()) : setting.getValue()) + "', '" + setting.getChannel() + "', '" + setting.getDescription() + "', '" + setting.getSysUser() + "', SYSDATE)", true);
     }
-    
+
     public boolean updateSetting(AXSetting setting)
     {
         return executeUpdate("UPDATE " + APController.cmSchemaName + ".PHL_SETTING SET VALUE='" + (setting.isEncrypted() && !getCrypt().isEncrypted(setting.getValue()) ? getCrypt().encrypt(setting.getValue()) : setting.getValue()) + "', DESCRIPTION='" + setting.getDescription() + "', SYS_USER='" + setting.getSysUser() + "', SYS_DATE=SYSDATE WHERE CODE='" + setting.getCode() + "' AND CHANNEL='" + setting.getChannel() + "'", true);
     }
-    
+
     public boolean deleteSetting(AXSetting setting)
     {
         return executeUpdate("DELETE " + APController.cmSchemaName + ".PHL_SETTING WHERE CODE='" + setting.getCode() + "' AND CHANNEL='" + setting.getChannel() + "'", true);
     }
-    
+
     public boolean upsertTxn(AXTxn axTxn)
     {
         return getWorker().isBlank(axTxn.getRecId()) ? saveTxn(axTxn) : updateTxn(axTxn);
     }
-    
+
     private boolean saveTxn(AXTxn axTxn)
     {
         return executeUpdate("INSERT INTO " + APController.cmSchemaName + ".PHL_TXN_LOG(REC_ID, TXN_REF, TXN_DATE, CHANNEL_ID, CHANNEL, CLIENT, TXN_CODE, TXN_TYPE, BU_ID, ACQUIRER, TERMINAL, ADVICE, ONUS, ACCESS_CD, ACCOUNT, CONTRA, CURRENCY, AMOUNT, DESCRIPTION, DETAIL, CHARGE_LEDGER, CHARGE, TXN_ID, CHG_ID, BALANCE, XAPI_CODE, RESULT, RESP_CODE, REC_ST) "
                 + "VALUES(" + APController.cmSchemaName + ".SEQ_PHL_TXN_LOG.NEXTVAL, '" + axTxn.getTxnRef() + "', SYSDATE, " + axTxn.getChannelId() + ", '" + axTxn.getChannel() + "', '" + axTxn.getClient() + "', '" + axTxn.getTxnCode() + "', '" + axTxn.getTxnType() + "', " + axTxn.getBuId() + ", '" + axTxn.getAcquirer() + "', '" + axTxn.getTerminal() + "', '" + axTxn.getAdvice() + "', '" + axTxn.getOnus() + "', '" + axTxn.getAccessCd() + "', '" + axTxn.getAccount() + "', '" + axTxn.getContra() + "', '" + axTxn.getCurrency() + "', " + axTxn.getAmount() + ", '" + axTxn.getDescription() + "', '" + axTxn.getDetail() + "', '" + axTxn.getChargeLedger() + "', " + axTxn.getCharge() + ", " + axTxn.getTxnId() + ", " + axTxn.getChgId() + ", " + axTxn.getBalance() + ", '" + axTxn.getXapiCode() + "', '" + axTxn.getResult() + "', '" + axTxn.getRespCode() + "', '" + axTxn.getRecSt() + "')", true);
     }
-    
+
     public boolean updateTxn(AXTxn axTxn)
     {
         return executeUpdate("UPDATE " + APController.cmSchemaName + ".PHL_TXN_LOG SET BALANCE=" + axTxn.getBalance() + ", REC_ST='" + axTxn.getRecSt() + "' WHERE REC_ID=" + axTxn.getRecId(), true);
     }
-    
+
     public TreeMap<String, MXAlert> queryAlerts()
     {
         TreeMap<String, MXAlert> alerts = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-        try (ResultSet rs = executeQueryToResultSet("SELECT REC_ID, ALERT_CODE, ALERT_TYPE, ALERT_DESC, PRIORITY, RUN_TIME, CHRG_CODE, FREQUENCY, ALERT_DAYS, NEXT_DATE, LAST_DATE, EXPIRY_DATE, FILTER_BY, REC_ST FROM " + APController.cmSchemaName + ".PHA_ALERT ORDER BY ALERT_CODE ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_ID, ALERT_CODE, ALERT_TYPE, ALERT_DESC, PRIORITY, RUN_TIME, CHRG_CODE, FREQUENCY, ALERT_DAYS, NEXT_DATE, LAST_DATE, EXPIRY_DATE, FILTER_BY, REC_ST FROM " + APController.cmSchemaName + ".PHA_ALERT ORDER BY ALERT_CODE ASC"))
         {
             if (rs != null)
             {
@@ -1102,11 +1315,11 @@ public final class DBClient
         }
         return alerts;
     }
-    
+
     public TreeMap<String, AXSetting> querySettings(String module)
     {
         TreeMap<String, AXSetting> settings = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-        try (ResultSet rs = executeQueryToResultSet("SELECT CODE, VALUE, CHANNEL, DESCRIPTION, SYS_USER, SYS_DATE FROM " + APController.cmSchemaName + ".PHL_SETTING WHERE CHANNEL LIKE '" + module + "' ORDER BY CODE ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT CODE, VALUE, CHANNEL, DESCRIPTION, SYS_USER, SYS_DATE FROM " + APController.cmSchemaName + ".PHL_SETTING WHERE CHANNEL LIKE '" + module + "' ORDER BY CODE ASC"))
         {
             if (rs != null)
             {
@@ -1130,22 +1343,22 @@ public final class DBClient
         }
         return settings;
     }
-    
+
     public boolean upsertTerminal(AXTerminal terminal)
     {
         return checkExists("SELECT REC_CD FROM " + APController.cmSchemaName + ".PHT_TERMINAL WHERE REC_CD='" + terminal.getTerminalId() + "' AND CHANNEL='" + terminal.getChannel() + "'") ? updateTerminal(terminal) : saveTerminal(terminal);
     }
-    
+
     private boolean saveTerminal(AXTerminal terminal)
     {
         return executeUpdate("INSERT INTO " + APController.cmSchemaName + ".PHT_TERMINAL(REC_CD, CHANNEL, SCHEME, LOCATION, OPERATOR, BU_NO, SYS_USER, SYS_DATE, REC_ST) VALUES('" + terminal.getTerminalId() + "', '" + terminal.getChannel() + "', '" + terminal.getScheme() + "', '" + terminal.getLocation().replaceAll("'", "''") + "', '" + terminal.getOperator() + "', '" + terminal.getBuCode() + "', '" + terminal.getSysUser() + "', SYSDATE, '" + terminal.getStatus() + "')", true) && saveTerminalAccounts(terminal);
     }
-    
+
     private boolean updateTerminal(AXTerminal terminal)
     {
         return executeUpdate("UPDATE " + APController.cmSchemaName + ".PHT_TERMINAL SET CHANNEL='" + terminal.getChannel() + "', SCHEME='" + terminal.getScheme() + "', LOCATION='" + terminal.getLocation() + "', OPERATOR='" + terminal.getOperator() + "', BU_NO='" + terminal.getBuCode() + "', SYS_USER='" + terminal.getSysUser() + "', SYS_DATE=SYSDATE, REC_ST='" + terminal.getStatus() + "' WHERE REC_CD='" + terminal.getTerminalId() + "'", true) ? saveTerminalAccounts(terminal) : false;
     }
-    
+
     private boolean saveTerminalAccounts(AXTerminal terminal)
     {
         boolean RC = deleteTerminalAccounts(terminal);
@@ -1155,16 +1368,16 @@ public final class DBClient
         }
         return RC;
     }
-    
+
     private boolean deleteTerminalAccounts(AXTerminal terminal)
     {
         return executeUpdate("DELETE " + APController.cmSchemaName + ".PHT_ACCOUNT WHERE PARENT_KEY='" + terminal.getTerminalId() + "'", true);
     }
-    
+
     public TreeMap<String, AXTerminal> queryTerminals(String channel)
     {
         TreeMap<String, AXTerminal> terminals = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-        try (ResultSet rs = executeQueryToResultSet("SELECT REC_CD, CHANNEL, SCHEME, LOCATION, OPERATOR, BU_NO, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHT_TERMINAL WHERE CHANNEL='" + channel + "' ORDER BY REC_CD ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_CD, CHANNEL, SCHEME, LOCATION, OPERATOR, BU_NO, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHT_TERMINAL WHERE CHANNEL='" + channel + "' ORDER BY REC_CD ASC"))
         {
             if (rs != null)
             {
@@ -1200,11 +1413,11 @@ public final class DBClient
         }
         return terminals;
     }
-    
+
     public AXTerminal queryTerminal(String channel, String terminalId, boolean retry)
     {
         AXTerminal terminal = new AXTerminal();
-        try (ResultSet rs = executeQueryToResultSet("SELECT REC_CD, CHANNEL, SCHEME, LOCATION, OPERATOR, BU_NO, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHT_TERMINAL WHERE CHANNEL='" + channel + "' AND REC_CD='" + terminalId + "' AND REC_ST='A' ORDER BY REC_CD ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_CD, CHANNEL, SCHEME, LOCATION, OPERATOR, BU_NO, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHT_TERMINAL WHERE CHANNEL='" + channel + "' AND REC_CD='" + terminalId + "' AND REC_ST='A' ORDER BY REC_CD ASC"))
         {
             if (rs != null && rs.next())
             {
@@ -1230,11 +1443,11 @@ public final class DBClient
         }
         return terminal;
     }
-    
+
     public HashMap<String, CNAccount> queryTerminalAccounts(String terminalId, boolean retry)
     {
         HashMap<String, CNAccount> accounts = new HashMap<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT REC_ID, CURRENCY, ACCOUNT FROM " + APController.cmSchemaName + ".PHT_ACCOUNT WHERE PARENT_KEY='" + terminalId + "' ORDER BY REC_ID ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_ID, CURRENCY, ACCOUNT FROM " + APController.cmSchemaName + ".PHT_ACCOUNT WHERE PARENT_KEY='" + terminalId + "' ORDER BY REC_ID ASC"))
         {
             if (rs != null)
             {
@@ -1254,10 +1467,10 @@ public final class DBClient
         }
         return accounts;
     }
-    
+
     public void updateXapiErrors()
     {
-        try (ResultSet rs = executeQueryToResultSet("SELECT ERROR_CODE, ERROR_DESC FROM " + APController.coreSchemaName + ".ERROR_CODE_DESCRIPTION_REF ORDER BY ERROR_CODE ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT ERROR_CODE, ERROR_DESC FROM " + APController.coreSchemaName + ".ERROR_CODE_DESCRIPTION_REF ORDER BY ERROR_CODE ASC"))
         {
             if (rs != null)
             {
@@ -1275,11 +1488,11 @@ public final class DBClient
             getLog().logEvent(ex);
         }
     }
-    
+
     public HashMap<String, String> queryTemplates(String channel, String parentKey)
     {
         HashMap<String, String> templates = new HashMap<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT LANG_CODE, TEMPLATE FROM " + APController.cmSchemaName + ".PHL_TEMPLATE WHERE CHANNEL='" + channel + "' AND PARENT_KEY='" + parentKey + "' ORDER BY LANG_CODE ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT LANG_CODE, TEMPLATE FROM " + APController.cmSchemaName + ".PHL_TEMPLATE WHERE CHANNEL='" + channel + "' AND PARENT_KEY='" + parentKey + "' ORDER BY LANG_CODE ASC"))
         {
             if (rs != null)
             {
@@ -1298,11 +1511,11 @@ public final class DBClient
         }
         return templates;
     }
-    
+
     public ArrayList<String> queryFilters(String channel, String parentKey)
     {
         ArrayList<String> filters = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT DISTINCT FILTER FROM " + APController.cmSchemaName + ".PHL_FILTER WHERE CHANNEL='" + channel + "' AND PARENT_KEY='" + parentKey + "'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT DISTINCT FILTER FROM " + APController.cmSchemaName + ".PHL_FILTER WHERE CHANNEL='" + channel + "' AND PARENT_KEY='" + parentKey + "'"))
         {
             if (rs != null)
             {
@@ -1321,7 +1534,7 @@ public final class DBClient
         }
         return filters;
     }
-    
+
     private boolean saveTemplates(String channel, String parentKey, HashMap<String, String> templates)
     {
         boolean RC = false;
@@ -1335,12 +1548,12 @@ public final class DBClient
         }
         return RC;
     }
-    
+
     private boolean deleteTemplates(String channel, String parentKey)
     {
         return executeUpdate("DELETE " + APController.cmSchemaName + ".PHL_TEMPLATE WHERE CHANNEL='" + channel + "' AND PARENT_KEY='" + parentKey + "'", true);
     }
-    
+
     private boolean saveFilters(String channel, String parentKey, ArrayList<String> filters)
     {
         boolean RC = deleteFilters(channel, parentKey);
@@ -1350,31 +1563,31 @@ public final class DBClient
         }
         return RC;
     }
-    
+
     private boolean deleteFilters(String channel, String parentKey)
     {
         return executeUpdate("DELETE " + APController.cmSchemaName + ".PHL_FILTER WHERE CHANNEL='" + channel + "' AND PARENT_KEY='" + parentKey + "'", true);
     }
-    
+
     public boolean deleteAlert(MXAlert mXAlert)
     {
         return deleteTemplates(ALController.channel, mXAlert.getAlertCode()) && deleteFilters(ALController.channel, mXAlert.getAlertCode()) && executeUpdate("DELETE " + APController.cmSchemaName + ".PHA_ALERT WHERE ALERT_CODE='" + mXAlert.getAlertCode() + "'", true);
     }
-    
+
     public boolean saveSplit(AXSplit split)
     {
         return executeUpdate("INSERT INTO " + APController.cmSchemaName + ".PHC_SPLIT(REC_ID, TXN_DT, TXN_REF, CHANNEL, DR_ACCT, CR_ACCT, CURRENCY, AMOUNT, DESCRIPTION, REVERSAL, REC_ST) VALUES(" + APController.cmSchemaName + ".SEQ_PHC_SPLIT.NEXTVAL, SYSDATE, '" + split.getTxnRef() + "', '" + split.getChannel() + "', '" + split.getDebitAccount() + "', '" + split.getCreditAccount() + "', '" + split.getCurrency() + "', " + split.getAmount() + ", '" + split.getDescription() + "', '" + split.getReversal() + "', '" + split.getStatus() + "')", true);
     }
-    
+
     public boolean updateSplit(AXSplit split, String status)
     {
         return executeUpdate("UPDATE " + APController.cmSchemaName + ".PHC_SPLIT SET REC_ST='" + status + "' WHERE REC_ID=" + split.getRecId(), true);
     }
-    
+
     public ArrayList<AXSplit> querySplits()
     {
         ArrayList<AXSplit> splits = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT REC_ID, TXN_DT, TXN_REF, CHANNEL, DR_ACCT, CR_ACCT, CURRENCY, AMOUNT, DESCRIPTION, REVERSAL, REC_ST FROM " + APController.cmSchemaName + ".PHC_SPLIT WHERE REC_ST IN ('P') AND ROWNUM<=5000"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_ID, TXN_DT, TXN_REF, CHANNEL, DR_ACCT, CR_ACCT, CURRENCY, AMOUNT, DESCRIPTION, REVERSAL, REC_ST FROM " + APController.cmSchemaName + ".PHC_SPLIT WHERE REC_ST IN ('P') AND ROWNUM<=5000"))
         {
             if (rs != null)
             {
@@ -1402,11 +1615,11 @@ public final class DBClient
         }
         return splits;
     }
-    
+
     public ArrayList<GPSplit> queryGroupSplits()
     {
         ArrayList<GPSplit> splits = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT CHANNEL, DR_ACCT, CR_ACCT, CURRENCY, SUM(AMOUNT) AS AMOUNT, DESCRIPTION, TRUNC(TXN_DT) AS TXN_DT, REVERSAL FROM " + APController.cmSchemaName + ".PHC_SPLIT WHERE REC_ST IN ('P') AND TRUNC(TXN_DT)<=TRUNC(SYSDATE-1) GROUP BY CHANNEL, DR_ACCT, CR_ACCT, CURRENCY, DESCRIPTION, TRUNC(TXN_DT), REVERSAL"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT CHANNEL, DR_ACCT, CR_ACCT, CURRENCY, SUM(AMOUNT) AS AMOUNT, DESCRIPTION, TRUNC(TXN_DT) AS TXN_DT, REVERSAL FROM " + APController.cmSchemaName + ".PHC_SPLIT WHERE REC_ST IN ('P') AND TRUNC(TXN_DT)<=TRUNC(SYSDATE-1) GROUP BY CHANNEL, DR_ACCT, CR_ACCT, CURRENCY, DESCRIPTION, TRUNC(TXN_DT), REVERSAL"))
         {
             if (rs != null)
             {
@@ -1431,21 +1644,21 @@ public final class DBClient
         }
         return splits;
     }
-    
+
     public boolean updateGroupSplit(GPSplit split, String status)
     {
         return executeUpdate("UPDATE " + APController.cmSchemaName + ".PHC_SPLIT SET REC_ST='" + status + "' WHERE CHANNEL='" + split.getChannel() + "' AND DR_ACCT='" + split.getDebitAccount() + "' AND CR_ACCT='" + split.getCreditAccount() + "' AND CURRENCY='" + split.getCurrency() + "' AND DESCRIPTION='" + split.getDescription() + "' AND REVERSAL='" + split.getReversal() + "' AND TRUNC(TXN_DT)=" + getWorker().convertToOracleDate(split.getTxnDate()), true);
     }
-    
+
     public boolean moveCustomerWFItem(Long custId, Long newBuId)
     {
         return executeUpdate("UPDATE " + APController.coreSchemaName + ".WF_WORK_ITEM SET BU_ID=" + newBuId + " WHERE WORK_ITEM_ID=(SELECT MAX(WORK_ITEM_ID) FROM " + APController.coreSchemaName + ".WF_WORK_ITEM WHERE CUST_ID=" + custId + ")", true);
     }
-    
+
     public CFValue queryCustomField(Long fieldId, Long parentId)
     {
         CFValue cFValue = new CFValue();
-        try (ResultSet rs = executeQueryToResultSet("SELECT A.UDS_FIELD_VALUE_ID, A.FIELD_ID, A.PARENT_ID, A.FIELD_VALUE, A.REC_ST FROM " + APController.coreSchemaName + ".V_UDS_FIELD_VALUE A WHERE A.FIELD_ID=" + fieldId + " AND A.PARENT_ID=" + parentId + " AND A.REC_ST='A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT A.UDS_FIELD_VALUE_ID, A.FIELD_ID, A.PARENT_ID, A.FIELD_VALUE, A.REC_ST FROM " + APController.coreSchemaName + ".V_UDS_FIELD_VALUE A WHERE A.FIELD_ID=" + fieldId + " AND A.PARENT_ID=" + parentId + " AND A.REC_ST='A'"))
         {
             if (rs != null && rs.next())
             {
@@ -1462,11 +1675,11 @@ public final class DBClient
         }
         return cFValue;
     }
-    
+
     public ArrayList<String> queryContacts(Long custId, String contactType)
     {
         ArrayList<String> contacts = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT O.CONTACT FROM " + APController.coreSchemaName + ".V_CUSTOMER_CONTACT_MODE O WHERE O.CUST_ID = " + custId + " AND O.CONTACT_MODE_CAT_CD IN ('" + contactType + "')"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT O.CONTACT FROM " + APController.coreSchemaName + ".V_CUSTOMER_CONTACT_MODE O WHERE O.CUST_ID = " + custId + " AND O.CONTACT_MODE_CAT_CD IN ('" + contactType + "')"))
         {
             if (rs != null)
             {
@@ -1482,11 +1695,11 @@ public final class DBClient
         }
         return contacts;
     }
-    
+
     public String queryMobileContact(Long custId)
     {
         String contact = null;
-        try (ResultSet rs = executeQueryToResultSet("SELECT NVL((SELECT U.ACCESS_CD FROM " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER U WHERE U.CUST_ID = " + custId + " AND U.CHANNEL_ID=" + ALController.channelId + " AND U.USER_CAT_CD='PER' AND U.REC_ST='A' AND ROWNUM=1),(SELECT O.CONTACT FROM " + APController.coreSchemaName + ".V_CUSTOMER_CONTACT_MODE O WHERE O.CUST_ID = " + custId + " AND O.CONTACT_MODE_CAT_CD IN ('MOBPHONE','TELPHONE') AND ROWNUM=1)) AS CONTACT FROM DUAL"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT NVL((SELECT U.ACCESS_CD FROM " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER U WHERE U.CUST_ID = " + custId + " AND U.CHANNEL_ID=" + ALController.channelId + " AND U.USER_CAT_CD='PER' AND U.REC_ST='A' AND ROWNUM=1),(SELECT O.CONTACT FROM " + APController.coreSchemaName + ".V_CUSTOMER_CONTACT_MODE O WHERE O.CUST_ID = " + custId + " AND O.CONTACT_MODE_CAT_CD IN ('MOBPHONE','TELPHONE') AND ROWNUM=1)) AS CONTACT FROM DUAL"))
         {
             if (rs != null && rs.next())
             {
@@ -1499,11 +1712,11 @@ public final class DBClient
         }
         return contact;
     }
-    
+
     public CNCurrency queryCurrency(Long currencyId)
     {
         CNCurrency cNCurrency = new CNCurrency();
-        try (ResultSet rs = executeQueryToResultSet("SELECT CRNCY_ID, CRNCY_CD, INITCAP(CRNCY_NM) AS CRNCY_NM, CRNCY_POSN FROM " + APController.coreSchemaName + ".CURRENCY WHERE CRNCY_ID=" + currencyId + " AND REC_ST='A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT CRNCY_ID, CRNCY_CD, INITCAP(CRNCY_NM) AS CRNCY_NM, CRNCY_POSN FROM " + APController.coreSchemaName + ".CURRENCY WHERE CRNCY_ID=" + currencyId + " AND REC_ST='A'"))
         {
             if (rs != null && rs.next())
             {
@@ -1519,11 +1732,11 @@ public final class DBClient
         }
         return cNCurrency;
     }
-    
+
     public CNCurrency queryCurrency(String currencyCode)
     {
         CNCurrency cNCurrency = new CNCurrency();
-        try (ResultSet rs = executeQueryToResultSet("SELECT CRNCY_ID, CRNCY_CD, INITCAP(CRNCY_NM) AS CRNCY_NM, CRNCY_POSN FROM " + APController.coreSchemaName + ".CURRENCY WHERE CRNCY_CD='" + currencyCode + "' AND REC_ST='A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT CRNCY_ID, CRNCY_CD, INITCAP(CRNCY_NM) AS CRNCY_NM, CRNCY_POSN FROM " + APController.coreSchemaName + ".CURRENCY WHERE CRNCY_CD='" + currencyCode + "' AND REC_ST='A'"))
         {
             if (rs != null && rs.next())
             {
@@ -1539,11 +1752,11 @@ public final class DBClient
         }
         return cNCurrency;
     }
-    
+
     public ArrayList<CNCurrency> queryCurrencies()
     {
         ArrayList<CNCurrency> currencies = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT CRNCY_ID, CRNCY_CD, INITCAP(CRNCY_NM) AS CRNCY_NM, CRNCY_POSN FROM " + APController.coreSchemaName + ".CURRENCY WHERE REC_ST='A' ORDER BY CRNCY_ID"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT CRNCY_ID, CRNCY_CD, INITCAP(CRNCY_NM) AS CRNCY_NM, CRNCY_POSN FROM " + APController.coreSchemaName + ".CURRENCY WHERE REC_ST='A' ORDER BY CRNCY_ID"))
         {
             if (rs != null)
             {
@@ -1564,11 +1777,11 @@ public final class DBClient
         }
         return currencies;
     }
-    
+
     public HashMap<String, BigDecimal> queryCustomerChannelLimits(Long custChannelId, Long currencyId)
     {
         HashMap<String, BigDecimal> limits = new HashMap<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT LIMIT_TY_CD, DAILY_LIMIT FROM " + APController.coreSchemaName + ".CUST_CHANNEL_LIMIT WHERE CUST_CHANNEL_ID=" + custChannelId + " AND DAILY_LIMIT IS NOT NULL AND LIMIT_CRNCY_ID=" + currencyId + " AND REC_ST='A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT LIMIT_TY_CD, DAILY_LIMIT FROM " + APController.coreSchemaName + ".CUST_CHANNEL_LIMIT WHERE CUST_CHANNEL_ID=" + custChannelId + " AND DAILY_LIMIT IS NOT NULL AND LIMIT_CRNCY_ID=" + currencyId + " AND REC_ST='A'"))
         {
             if (rs != null)
             {
@@ -1584,11 +1797,11 @@ public final class DBClient
         }
         return limits;
     }
-    
+
     public BNUser queryBankUser(String userName, String password, Long channelId)
     {
         BNUser user = new BNUser();
-        try (ResultSet rs = executeQueryToResultSet("SELECT A.SYSUSER_ID, A.LOGIN_ID, A.FIRST_NM || ' ' || A.LAST_NM AS NAME, A.EMP_NO, A.MAIN_BRANCH_ID, A.BU_NM, A.ROLE_ID, A.ROLE_NM FROM " + APController.coreSchemaName + ".V_SYSUSER A, " + APController.coreSchemaName + ".SYSPWD_HIST B WHERE A.LOCKED_FG='N' AND A.LOGIN_ID='" + userName + "' AND B.SYSUSER_ID=A.SYSUSER_ID AND A.REC_ST=B.REC_ST AND B.PASSWD='" + getCrypt().encrypt(password) + "' AND B.REC_ST='A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT A.SYSUSER_ID, A.LOGIN_ID, A.FIRST_NM || ' ' || A.LAST_NM AS NAME, A.EMP_NO, A.MAIN_BRANCH_ID, A.BU_NM, A.ROLE_ID, A.ROLE_NM FROM " + APController.coreSchemaName + ".V_SYSUSER A, " + APController.coreSchemaName + ".SYSPWD_HIST B WHERE A.LOCKED_FG='N' AND A.LOGIN_ID='" + userName + "' AND B.SYSUSER_ID=A.SYSUSER_ID AND A.REC_ST=B.REC_ST AND B.PASSWD='" + getCrypt().encrypt(password) + "' AND B.REC_ST='A'"))
         {
             if (rs != null)
             {
@@ -1612,11 +1825,57 @@ public final class DBClient
         }
         return user;
     }
-    
+
+    public AXChannel queryChannel(Long channelId)
+    {
+        AXChannel channel = new AXChannel();
+        try ( ResultSet rs = executeQueryToResultSet("SELECT CHANNEL_ID, CHANNEL_CD, CHANNEL_DESC, GL_DR_ACCT, GL_CR_ACCT, PREV_DR_LIMIT, PREV_CR_LIMIT, ORIGIN_BU_ID, REC_ST FROM " + APController.coreSchemaName + ".SERVICE_CHANNEL WHERE CHANNEL_ID=" + channelId))
+        {
+            if (rs != null && rs.next())
+            {
+                channel.setId(rs.getLong("CHANNEL_ID"));
+                channel.setCode(rs.getString("CHANNEL_CD"));
+                channel.setName(rs.getString("CHANNEL_DESC"));
+                channel.setDebitContra(rs.getString("GL_DR_ACCT"));
+                channel.setCreditContra(rs.getString("GL_CR_ACCT"));
+                channel.setDebitLimit(rs.getBigDecimal("PREV_DR_LIMIT"));
+                channel.setCreditLimit(rs.getBigDecimal("PREV_CR_LIMIT"));
+                channel.setBranch(queryBranch(rs.getLong("ORIGIN_BU_ID")));
+                channel.setStatus(rs.getString("REC_ST"));
+            }
+        }
+        catch (Exception ex)
+        {
+            getLog().logEvent(ex);
+        }
+        return channel;
+    }
+
+    public CNBranch queryBranch(Long buId)
+    {
+        CNBranch cNBranch = new CNBranch();
+        try ( ResultSet rs = executeQueryToResultSet("SELECT BU_ID, BU_NO, BU_NM, GL_PREFIX_CD, REC_ST FROM " + APController.coreSchemaName + ".BUSINESS_UNIT WHERE REC_ST='A' AND BU_ID=" + buId))
+        {
+            if (rs != null && rs.next())
+            {
+                cNBranch.setBuId(rs.getLong("BU_ID"));
+                cNBranch.setBuCode(rs.getString("BU_NO"));
+                cNBranch.setBuName(rs.getString("BU_NM"));
+                cNBranch.setGlPrefix(rs.getString("GL_PREFIX_CD"));
+                cNBranch.setStatus(rs.getString("REC_ST"));
+            }
+        }
+        catch (Exception ex)
+        {
+            getLog().logEvent(ex);
+        }
+        return cNBranch;
+    }
+
     public ArrayList<USRole> queryUserRoles(BNUser user, Long channelId)
     {
         ArrayList<USRole> roles = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT USER_ID, LOGIN_ID, BU_ID, BU_CD, BU_NAME, USER_ROLE_ID, BU_ROLE_ID, SUPERVISOR_FLAG, BUSINESS_ROLE_ID, BU_ROLE_NAME, BUSINESS_ROLE_NM, DEFAULT_ROLE_FLAG FROM " + APController.coreSchemaName + ".V_USER_ROLE WHERE USER_ID=" + user.getUserId() + " AND REC_ST='A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT USER_ID, LOGIN_ID, BU_ID, BU_CD, BU_NAME, USER_ROLE_ID, BU_ROLE_ID, SUPERVISOR_FLAG, BUSINESS_ROLE_ID, BU_ROLE_NAME, BUSINESS_ROLE_NM, DEFAULT_ROLE_FLAG FROM " + APController.coreSchemaName + ".V_USER_ROLE WHERE USER_ID=" + user.getUserId() + " AND REC_ST='A'"))
         {
             if (rs != null)
             {
@@ -1655,11 +1914,11 @@ public final class DBClient
         }
         return roles;
     }
-    
+
     public ArrayList<USRole> queryUserRoles(Long userId, Long channelId)
     {
         ArrayList<USRole> roles = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT USER_ID, LOGIN_ID, BU_ID, BU_CD, BU_NAME, USER_ROLE_ID, BU_ROLE_ID, SUPERVISOR_FLAG, BUSINESS_ROLE_ID, BU_ROLE_NAME, BUSINESS_ROLE_NM, DEFAULT_ROLE_FLAG FROM " + APController.coreSchemaName + ".V_USER_ROLE WHERE USER_ID=" + userId + " AND REC_ST='A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT USER_ID, LOGIN_ID, BU_ID, BU_CD, BU_NAME, USER_ROLE_ID, BU_ROLE_ID, SUPERVISOR_FLAG, BUSINESS_ROLE_ID, BU_ROLE_NAME, BUSINESS_ROLE_NM, DEFAULT_ROLE_FLAG FROM " + APController.coreSchemaName + ".V_USER_ROLE WHERE USER_ID=" + userId + " AND REC_ST='A'"))
         {
             if (rs != null)
             {
@@ -1688,11 +1947,11 @@ public final class DBClient
         }
         return roles;
     }
-    
+
     public ArrayList<TLDrawer> queryUserDrawers(Long userId, Long userRoleId)
     {
         ArrayList<TLDrawer> drawers = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT V.DRAWER_ID, V.DRAWER_NO, R.GL_ACCT_NO, R.LAST_DRAWER_OPEN_DT, V.REC_ST FROM " + APController.coreSchemaName + ".V_DRAWER_USER_ROLES V, " + APController.coreSchemaName + ".DRAWER R WHERE R.DRAWER_ID=V.DRAWER_ID AND V.BU_ID=R.BU_ID AND V.USER_ROLE_ID=" + userRoleId + " AND V.SYSUSER_ID=" + userId + " AND V.DRAWER_ST='O' AND V.REC_ST='O'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT V.DRAWER_ID, V.DRAWER_NO, R.GL_ACCT_NO, R.LAST_DRAWER_OPEN_DT, V.REC_ST FROM " + APController.coreSchemaName + ".V_DRAWER_USER_ROLES V, " + APController.coreSchemaName + ".DRAWER R WHERE R.DRAWER_ID=V.DRAWER_ID AND V.BU_ID=R.BU_ID AND V.USER_ROLE_ID=" + userRoleId + " AND V.SYSUSER_ID=" + userId + " AND V.DRAWER_ST='O' AND V.REC_ST='O'"))
         {
             if (rs != null)
             {
@@ -1715,11 +1974,11 @@ public final class DBClient
         }
         return drawers;
     }
-    
+
     public ArrayList<URLimit> queryRoleLimits(Long roleId, Long channelId)
     {
         ArrayList<URLimit> limits = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT ROLE_ID, CRNCY_CD_ISO, PREVENTIVE_CR_LIMIT, PREVENTIVE_DR_LIMIT FROM " + APController.coreSchemaName + ".V_BUSINESS_ROLE_CHANNEL_LIMIT WHERE REC_ST='A' AND CHANNEL_ID=" + channelId + " AND ROLE_ID=" + roleId))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT ROLE_ID, CRNCY_CD_ISO, PREVENTIVE_CR_LIMIT, PREVENTIVE_DR_LIMIT FROM " + APController.coreSchemaName + ".V_BUSINESS_ROLE_CHANNEL_LIMIT WHERE REC_ST='A' AND CHANNEL_ID=" + channelId + " AND ROLE_ID=" + roleId))
         {
             if (rs != null)
             {
@@ -1740,11 +1999,11 @@ public final class DBClient
         }
         return limits;
     }
-    
+
     public ArrayList<CNCurrency> queryDrawerCurrencies(Long drawerId)
     {
         ArrayList<CNCurrency> currencies = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT CRNCY_ID, CRNCY_CD, INITCAP(CRNCY_NM) AS CRNCY_NM, CRNCY_POSN FROM " + APController.coreSchemaName + ".CURRENCY WHERE CRNCY_ID IN (SELECT CRNCY_ID FROM " + APController.coreSchemaName + ".DRAWER_CURRENCY WHERE DRAWER_ID=" + drawerId + ") AND REC_ST='A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT CRNCY_ID, CRNCY_CD, INITCAP(CRNCY_NM) AS CRNCY_NM, CRNCY_POSN FROM " + APController.coreSchemaName + ".CURRENCY WHERE CRNCY_ID IN (SELECT CRNCY_ID FROM " + APController.coreSchemaName + ".DRAWER_CURRENCY WHERE DRAWER_ID=" + drawerId + ") AND REC_ST='A'"))
         {
             if (rs != null)
             {
@@ -1765,11 +2024,11 @@ public final class DBClient
         }
         return currencies;
     }
-    
+
     public ArrayList<CNBranch> queryBusinessUnits()
     {
         ArrayList<CNBranch> branches = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT BU_ID, BU_NO, BU_NM, GL_PREFIX_CD, REC_ST FROM " + APController.coreSchemaName + ".BUSINESS_UNIT WHERE REC_ST='A' ORDER BY BU_NO"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT BU_ID, BU_NO, BU_NM, GL_PREFIX_CD, REC_ST FROM " + APController.coreSchemaName + ".BUSINESS_UNIT WHERE REC_ST='A' ORDER BY BU_NO"))
         {
             if (rs != null)
             {
@@ -1791,11 +2050,11 @@ public final class DBClient
         }
         return branches;
     }
-    
+
     public CNBranch queryBusinessUnit(Long buId)
     {
         CNBranch cNBranch = new CNBranch();
-        try (ResultSet rs = executeQueryToResultSet("SELECT BU_ID, BU_NO, BU_NM, GL_PREFIX_CD, REC_ST FROM " + APController.coreSchemaName + ".BUSINESS_UNIT WHERE REC_ST='A' AND BU_ID=" + buId))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT BU_ID, BU_NO, BU_NM, GL_PREFIX_CD, REC_ST FROM " + APController.coreSchemaName + ".BUSINESS_UNIT WHERE REC_ST='A' AND BU_ID=" + buId))
         {
             if (rs != null && rs.next())
             {
@@ -1812,11 +2071,11 @@ public final class DBClient
         }
         return cNBranch;
     }
-    
+
     public CNBranch queryBusinessUnit(String buNo)
     {
         CNBranch cNBranch = new CNBranch();
-        try (ResultSet rs = executeQueryToResultSet("SELECT BU_ID, BU_NO, BU_NM, GL_PREFIX_CD, REC_ST FROM " + APController.coreSchemaName + ".BUSINESS_UNIT WHERE REC_ST='A' AND BU_NO='" + buNo + "'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT BU_ID, BU_NO, BU_NM, GL_PREFIX_CD, REC_ST FROM " + APController.coreSchemaName + ".BUSINESS_UNIT WHERE REC_ST='A' AND BU_NO='" + buNo + "'"))
         {
             if (rs != null && rs.next())
             {
@@ -1833,11 +2092,11 @@ public final class DBClient
         }
         return cNBranch;
     }
-    
+
     public AXTxn queryTxn(Long channelId, String txnRef)
     {
         AXTxn axTxn = new AXTxn();
-        try (ResultSet rs = executeQueryToResultSet("SELECT REC_ID, TXN_REF, ACCOUNT, CURRENCY, AMOUNT, XAPI_CODE, RESULT, RESP_CODE, REC_ST FROM " + APController.cmSchemaName + ".PHL_TXN_LOG WHERE CHANNEL_ID = " + channelId + " AND TXN_REF='" + txnRef + "' AND RESULT='SUCCESS' AND TXN_DATE>=SYSDATE-30 AND REC_ST = 'A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_ID, TXN_REF, ACCOUNT, CURRENCY, AMOUNT, XAPI_CODE, RESULT, RESP_CODE, REC_ST FROM " + APController.cmSchemaName + ".PHL_TXN_LOG WHERE CHANNEL_ID = " + channelId + " AND TXN_REF='" + txnRef + "' AND RESULT='SUCCESS' AND TXN_DATE>=SYSDATE-30 AND REC_ST = 'A'"))
         {
             if (rs != null && rs.next())
             {
@@ -1858,46 +2117,46 @@ public final class DBClient
         }
         return axTxn;
     }
-    
+
     public boolean validateDuplicate(Long channelId, String txnRef, boolean reversed)
     {
         return checkExists("SELECT TXN_REF FROM " + APController.cmSchemaName + ".PHL_TXN_LOG WHERE CHANNEL_ID = " + channelId + " AND TXN_REF='" + txnRef + "' AND TXN_DATE>=SYSDATE-30 AND REC_ST = '" + (reversed ? "R" : "A") + "'");
     }
-    
+
     public boolean deleteInvalidChannelUsers()
     {
         return executeUpdate("DELETE " + APController.coreSchemaName + ".CUST_CHANNEL_ACCOUNT WHERE CREATED_BY='SYSTEM' AND CUST_ID NOT IN(SELECT CUST_ID FROM " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER)", true) && executeUpdate("DELETE " + APController.coreSchemaName + ".CUSTOMER_CHANNEL WHERE USER_ID='SYSTEM' AND CUST_ID NOT IN (SELECT CUST_ID FROM " + APController.coreSchemaName + ".CUST_CHANNEL_ACCOUNT)", true) && executeUpdate("DELETE " + APController.coreSchemaName + ".CUSTOMER_CHANNEL WHERE USER_ID='SYSTEM' AND CUST_ID NOT IN (SELECT CUST_ID FROM " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER)", true) && executeUpdate("DELETE " + APController.coreSchemaName + ".CUST_CHANNEL_SCHEME WHERE USER_ID='SYSTEM' AND CUST_ID NOT IN (SELECT CUST_ID FROM " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER)", true);
     }
-    
+
     public Object[][] queryProducts()
     {
         return executeQueryToArray("SELECT PROD_ID, PROD_DESC FROM " + APController.coreSchemaName + ".PRODUCT WHERE REC_ST='A' ORDER BY PROD_ID");
     }
-    
+
     public Object[][] queryBranches()
     {
         return executeQueryToArray("SELECT BU_ID, BU_NM FROM " + APController.coreSchemaName + ".BUSINESS_UNIT WHERE REC_ST='A' ORDER BY BU_ID");
     }
-    
+
     public Object[][] queryProducts(int productId)
     {
         return executeQueryToArray("SELECT PROD_ID, PROD_DESC FROM " + APController.coreSchemaName + ".PRODUCT WHERE REC_ST='A' AND PROD_ID=" + productId + " ORDER BY PROD_CD");
     }
-    
+
     public Object[][] queryChannelSchemes()
     {
         return executeQueryToArray("SELECT SCHEME_ID, SCHEME_DESC FROM " + APController.coreSchemaName + ".SERVICE_CHANNEL_SCHEME WHERE REC_ST='A' ORDER BY SCHEME_ID ASC");
     }
-    
+
     public Object[][] queryCustomerTypes()
     {
         return executeQueryToArray("SELECT CUST_TY_ID, CUST_TY_DESC FROM " + APController.coreSchemaName + ".CUSTOMER_TYPE_REF WHERE REC_ST='A' ORDER BY CUST_TY_ID");
     }
-    
+
     public ArrayList<CAEvent> queryAccountEvents(Long channelId)
     {
         ArrayList<CAEvent> events = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT A.CUST_CHANNEL_ACCT_ID, A.CUST_ID, M.CUST_NO, M.CUST_CAT, U.CHANNEL_USER_CUST_ID, U.ACCESS_CD, A.ACCT_ID, C.ACCT_NO, C.PROD_ID, NVL(A.SHORT_NAME, C.ACCT_NO) AS SHORT_NAME, A.AUDIT_ACTION FROM " + APController.coreSchemaName + ".CUST_CHANNEL_ACCOUNT$AUD A, " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M, " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER U WHERE A.CHANNEL_ID=U.CHANNEL_ID AND A.CUST_ID=U.CUST_ID AND A.CUST_ID=M.CUST_ID AND C.ACCT_ID=A.ACCT_ID AND U.REC_ST='A' AND A.FORWARDED IS NULL AND A.CHANNEL_ID=" + channelId + " ORDER BY A.AUDIT_TS ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT A.CUST_CHANNEL_ACCT_ID, A.CUST_ID, M.CUST_NO, M.CUST_CAT, U.CHANNEL_USER_CUST_ID, U.ACCESS_CD, A.ACCT_ID, C.ACCT_NO, C.PROD_ID, NVL(A.SHORT_NAME, C.ACCT_NO) AS SHORT_NAME, A.AUDIT_ACTION FROM " + APController.coreSchemaName + ".CUST_CHANNEL_ACCOUNT$AUD A, " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M, " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER U WHERE A.CHANNEL_ID=U.CHANNEL_ID AND A.CUST_ID=U.CUST_ID AND A.CUST_ID=M.CUST_ID AND C.ACCT_ID=A.ACCT_ID AND U.REC_ST='A' AND A.FORWARDED IS NULL AND A.CHANNEL_ID=" + channelId + " ORDER BY A.AUDIT_TS ASC"))
         {
             if (rs != null)
             {
@@ -1925,11 +2184,11 @@ public final class DBClient
         }
         return events;
     }
-    
+
     public ArrayList<CAEvent> queryGroupAccountEvents(Long channelId, Long memberCustId, String auditAction)
     {
         ArrayList<CAEvent> events = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT A.CUST_CHANNEL_ACCT_ID, A.CUST_ID, M.CUST_NO, M.CUST_CAT, U.CHANNEL_USER_CUST_ID, U.ACCESS_CD, A.ACCT_ID, C.ACCT_NO, C.PROD_ID, NVL(A.SHORT_NAME, C.ACCT_NO) AS SHORT_NAME, '" + auditAction + "' AS AUDIT_ACTION FROM " + APController.coreSchemaName + ".CUST_CHANNEL_ACCOUNT A, " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M, " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER U WHERE A.CHANNEL_ID=U.CHANNEL_ID AND A.CUST_ID=U.CUST_ID AND A.CUST_ID=M.CUST_ID AND C.ACCT_ID=A.ACCT_ID AND U.REC_ST='A' AND A.CHANNEL_ID=" + channelId + " AND A.CUST_ID IN (SELECT MAIN_CUST_ID FROM " + APController.coreSchemaName + ".V_CUSTOMER_RELATIONSHIP WHERE REL_CUST_ID=" + memberCustId + ")"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT A.CUST_CHANNEL_ACCT_ID, A.CUST_ID, M.CUST_NO, M.CUST_CAT, U.CHANNEL_USER_CUST_ID, U.ACCESS_CD, A.ACCT_ID, C.ACCT_NO, C.PROD_ID, NVL(A.SHORT_NAME, C.ACCT_NO) AS SHORT_NAME, '" + auditAction + "' AS AUDIT_ACTION FROM " + APController.coreSchemaName + ".CUST_CHANNEL_ACCOUNT A, " + APController.coreSchemaName + ".ACCOUNT C, " + APController.coreSchemaName + ".CUSTOMER M, " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER U WHERE A.CHANNEL_ID=U.CHANNEL_ID AND A.CUST_ID=U.CUST_ID AND A.CUST_ID=M.CUST_ID AND C.ACCT_ID=A.ACCT_ID AND U.REC_ST='A' AND A.CHANNEL_ID=" + channelId + " AND A.CUST_ID IN (SELECT MAIN_CUST_ID FROM " + APController.coreSchemaName + ".V_CUSTOMER_RELATIONSHIP WHERE REL_CUST_ID=" + memberCustId + ")"))
         {
             if (rs != null)
             {
@@ -1957,11 +2216,46 @@ public final class DBClient
         }
         return events;
     }
-    
+
+    public TreeMap<String, ESTask> queryTasks()
+    {
+        TreeMap<String, ESTask> tasks = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_ID, REC_CD, CREATE_DT, DOCUMENT, RANGE, DESCRIPTION, RUN_TIME, CHARGE, CYCLE, NEXT_DATE, LAST_DATE, EXPIRY_DATE, FILTER_BY, REC_ST FROM " + APController.cmSchemaName + ".PHS_TASK ORDER BY REC_CD ASC"))
+        {
+            if (rs != null)
+            {
+                while (rs.next())
+                {
+                    ESTask eSTask = new ESTask();
+                    eSTask.setRecId(rs.getLong("REC_ID"));
+                    eSTask.setCode(rs.getString("REC_CD"));
+                    eSTask.setDocument(rs.getString("DOCUMENT"));
+                    eSTask.setRange(rs.getString("RANGE"));
+                    eSTask.setDescription(rs.getString("DESCRIPTION"));
+                    eSTask.setRunTime(rs.getString("RUN_TIME"));
+                    eSTask.setCharge(rs.getString("CHARGE"));
+                    eSTask.setCycle(rs.getString("CYCLE"));
+                    eSTask.setNextDate(rs.getDate("NEXT_DATE"));
+                    eSTask.setPreviousDate(rs.getDate("LAST_DATE"));
+                    eSTask.setExpiryDate(rs.getDate("EXPIRY_DATE"));
+                    eSTask.setFilterBy(rs.getString("FILTER_BY"));
+                    eSTask.setStatus(rs.getString("REC_ST"));
+                    eSTask.setFilters(queryFilters(ESController.module, eSTask.getCode()));
+                    tasks.put(eSTask.getCode(), eSTask);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            getLog().logEvent(ex);
+        }
+        return tasks;
+    }
+
     public Date getProcessingDate()
     {
         Date currentDate = new Date();
-        try (ResultSet rs = executeQueryToResultSet("SELECT TO_DATE(DISPLAY_VALUE,'DD/MM/YYYY') AS PROC_DATE FROM " + APController.coreSchemaName + ".CTRL_PARAMETER WHERE PARAM_CD = 'S02'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT TO_DATE(DISPLAY_VALUE,'DD/MM/YYYY') AS PROC_DATE FROM " + APController.coreSchemaName + ".CTRL_PARAMETER WHERE PARAM_CD = 'S02'"))
         {
             if (rs != null && rs.next())
             {
@@ -1974,11 +2268,11 @@ public final class DBClient
         }
         return currentDate;
     }
-    
+
     public Date getSystemDate()
     {
         Date currentDate = new Date();
-        try (ResultSet rs = executeQueryToResultSet("SELECT SYSDATE AS SYS_DATE FROM DUAL"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT SYSDATE AS SYS_DATE FROM DUAL"))
         {
             if (rs != null && rs.next())
             {
@@ -1991,14 +2285,14 @@ public final class DBClient
         }
         return currentDate;
     }
-    
+
     public void loadPendingAlerts(MXAlert mXAlert)
     {
         checkConnection();
         if (!"SE".equals(mXAlert.getAlertType()) && !"SD".equals(mXAlert.getAlertType()) && !"PC".equals(mXAlert.getAlertType()))
         {
             String[] days = !getWorker().isBlank(mXAlert.getAlertDays()) ? mXAlert.getAlertDays().split(",") : new String[1];
-            int times = ("LA".equals(mXAlert.getAlertType()) || "LD".equals(mXAlert.getAlertType())) ? days.length : 1;
+            int times = ("LA".equals(mXAlert.getAlertType()) || "LD".equals(mXAlert.getAlertType()) || "GR".equals(mXAlert.getAlertType())) ? days.length : 1;
             for (int i = 0; i < times; i++)
             {
                 if (mXAlert.getFilters().isEmpty())
@@ -2017,11 +2311,11 @@ public final class DBClient
 //                        System.err.println("mXAlert.getAlertCode() "+filter);
                         getAlertStatement().setString(1, mXAlert.getAlertCode());
                         getAlertStatement().setString(2, mXAlert.getAlertType());
-                        
-                        getAlertStatement().setInt(3, (("LA".equals(mXAlert.getAlertType()) || "LD".equals(mXAlert.getAlertType())) ? getWorker().convertToType(days[i], Integer.class) : 1));
+
+                        getAlertStatement().setInt(3, (("LA".equals(mXAlert.getAlertType()) || "LD".equals(mXAlert.getAlertType()) || "GR".equals(mXAlert.getAlertType())) ? getWorker().convertToType(days[i], Integer.class) : 1));
                         getAlertStatement().setString(4, APController.getCurrency().getCurrencyCode());
                         getAlertStatement().setString(5, mXAlert.getFilterBy());
-                        
+
                         getAlertStatement().setString(6, filter);
                         getAlertStatement().execute();
                     }
@@ -2038,11 +2332,11 @@ public final class DBClient
         }
         dispose();
     }
-    
+
     public ArrayList<MXMessage> queryPendingAlerts(MXAlert mXAlert)
     {
         ArrayList<MXMessage> alerts = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT ALERT_ID, ALERT_DATE, ALERT_TIME, ALERT_CODE, ALERT_TYPE, TXN_ID, BU_ID, CUST_ID, CUST_NAME, ACCT_NO, CONTRA, CHRG_ACCT, TXN_DATE, CURRENCY, NVL(TXN_AMT,0) AS TXN_AMT, NVL(TXN_CHG,0) AS TXN_CHG, CHRG_AMT, CHG_ID, TXN_DESC, CLRD_BAL, CONTACT, CASE WHEN NVL(ORIGINATOR,CUST_NAME) ='null' then CUST_NAME else NVL(ORIGINATOR,CUST_NAME) end AS ORIGINATOR, SCHEME_ID, ACCESS_CD, PASSWORD, MATURITY_DT, START_DT, TENOR, RATE, REC_ST,PROD_ID,GUARANTOR_NM FROM " + APController.cmSchemaName + ".PHA_ALERTS WHERE REC_ST='P' AND ALERT_TYPE='" + mXAlert.getAlertType() + "' AND (ALERT_CODE='" + mXAlert.getAlertCode() + "' OR ALERT_CODE IS NULL) " + ("CS".equals(mXAlert.getFilterBy()) ? "AND SCHEME_ID IN (" + getWorker().createCSVList(mXAlert.getFilters()) + ") " : "") + "AND ALERT_DATE>=SYSDATE-1 AND ROWNUM<=5000"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT ALERT_ID, ALERT_DATE, ALERT_TIME, ALERT_CODE, ALERT_TYPE, TXN_ID, BU_ID, CUST_ID, CUST_NAME, ACCT_NO, CONTRA, CHRG_ACCT, TXN_DATE, CURRENCY, NVL(TXN_AMT,0) AS TXN_AMT, NVL(TXN_CHG,0) AS TXN_CHG, CHRG_AMT, CHG_ID, TXN_DESC, CLRD_BAL, CONTACT, CASE WHEN NVL(ORIGINATOR,CUST_NAME) ='null' then CUST_NAME else NVL(ORIGINATOR,CUST_NAME) end AS ORIGINATOR, SCHEME_ID, ACCESS_CD, PASSWORD, MATURITY_DT, START_DT, TENOR, RATE, REC_ST,PROD_ID,GUARANTOR_NM FROM " + APController.cmSchemaName + ".PHA_ALERTS WHERE REC_ST='P' AND ALERT_TYPE='" + mXAlert.getAlertType() + "' AND (ALERT_CODE='" + mXAlert.getAlertCode() + "' OR ALERT_CODE IS NULL) " + ("CS".equals(mXAlert.getFilterBy()) ? "AND SCHEME_ID IN (" + getWorker().createCSVList(mXAlert.getFilters()) + ") " : "") + "AND ALERT_DATE>=SYSDATE-1 AND ROWNUM<=5000"))
         {
             if (rs != null)
             {
@@ -2091,11 +2385,11 @@ public final class DBClient
         }
         return alerts;
     }
-    
+
     public TreeMap<String, AXCharge> queryCharges(String scheme)
     {
         TreeMap<String, AXCharge> charges = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-        try (ResultSet rs = executeQueryToResultSet("SELECT REC_ID, REC_CD, DESCRIPTION, ACCOUNT, LEDGER, SCHEME, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHC_CHARGE WHERE SCHEME='" + scheme + "' ORDER BY REC_CD ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_ID, REC_CD, DESCRIPTION, ACCOUNT, LEDGER, SCHEME, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHC_CHARGE WHERE SCHEME='" + scheme + "' ORDER BY REC_CD ASC"))
         {
             if (rs != null)
             {
@@ -2121,11 +2415,11 @@ public final class DBClient
         }
         return charges;
     }
-    
+
     public AXCharge queryCharge(String scheme, String code)
     {
         AXCharge charge = new AXCharge();
-        try (ResultSet rs = executeQueryToResultSet("SELECT REC_ID, REC_CD, DESCRIPTION, ACCOUNT, LEDGER, SCHEME, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHC_CHARGE WHERE SCHEME='" + scheme + "' AND REC_CD='" + code + "' ORDER BY REC_CD ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_ID, REC_CD, DESCRIPTION, ACCOUNT, LEDGER, SCHEME, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHC_CHARGE WHERE SCHEME='" + scheme + "' AND REC_CD='" + code + "' ORDER BY REC_CD ASC"))
         {
             if (rs != null && rs.next())
             {
@@ -2147,10 +2441,10 @@ public final class DBClient
         }
         return charge;
     }
-    
+
     public AXCharge setValues(AXCharge charge)
     {
-        try (ResultSet rs = executeQueryToResultSet("SELECT REC_ID, CURRENCY, VALUE_TYPE, MIN_VALUE, MAX_VALUE, VALUE FROM " + APController.cmSchemaName + ".PHC_VALUE WHERE PARENT_KEY='" + charge.getRecId() + "' ORDER BY CURRENCY ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_ID, CURRENCY, VALUE_TYPE, MIN_VALUE, MAX_VALUE, VALUE FROM " + APController.cmSchemaName + ".PHC_VALUE WHERE PARENT_KEY='" + charge.getRecId() + "' ORDER BY CURRENCY ASC"))
         {
             charge.getValues().clear();
             if (rs != null)
@@ -2176,10 +2470,10 @@ public final class DBClient
         }
         return charge;
     }
-    
+
     public AXCharge setWaivers(AXCharge charge)
     {
-        try (ResultSet rs = executeQueryToResultSet("SELECT REC_ID, PROD_ID, MATCH_ACCT, WAIVED_PERC, CONDITION, THRESHOLD FROM " + APController.cmSchemaName + ".PHC_WAIVER WHERE PARENT_KEY='" + charge.getRecId() + "' ORDER BY PROD_ID ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_ID, PROD_ID, MATCH_ACCT, WAIVED_PERC, CONDITION, THRESHOLD FROM " + APController.cmSchemaName + ".PHC_WAIVER WHERE PARENT_KEY='" + charge.getRecId() + "' ORDER BY PROD_ID ASC"))
         {
             charge.getWaivers().clear();
             if (rs != null)
@@ -2203,11 +2497,11 @@ public final class DBClient
         }
         return charge;
     }
-    
+
     public TreeMap<String, TCScheme> querySchemes(String channel)
     {
         TreeMap<String, TCScheme> schemes = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-        try (ResultSet rs = executeQueryToResultSet("SELECT REC_CD, CREATE_DT, CHANNEL, DESCRIPTION, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHC_SCHEME WHERE CHANNEL='" + channel + "' ORDER BY REC_CD ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_CD, CREATE_DT, CHANNEL, DESCRIPTION, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHC_SCHEME WHERE CHANNEL='" + channel + "' ORDER BY REC_CD ASC"))
         {
             if (rs != null)
             {
@@ -2230,11 +2524,11 @@ public final class DBClient
         }
         return schemes;
     }
-    
+
     public TreeMap<String, AXBank> queryBanks()
     {
         TreeMap<String, AXBank> banks = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-        try (ResultSet rs = executeQueryToResultSet("SELECT BIN, CREATE_DT, BANK_NAME, LORO_LEDGER, TRANSFER_LEDGER, SUSPENSE_LEDGER, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHL_BANK ORDER BY BIN ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT BIN, CREATE_DT, BANK_NAME, LORO_LEDGER, TRANSFER_LEDGER, SUSPENSE_LEDGER, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHL_BANK ORDER BY BIN ASC"))
         {
             if (rs != null)
             {
@@ -2259,13 +2553,13 @@ public final class DBClient
         }
         return banks;
     }
-    
+
     public AXBank queryBank(String BIN)
     {
         AXBank bank = new AXBank();
         if (!getWorker().isBlank(BIN))
         {
-            try (ResultSet rs = executeQueryToResultSet("SELECT BIN, CREATE_DT, BANK_NAME, LORO_LEDGER, TRANSFER_LEDGER, SUSPENSE_LEDGER, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHL_BANK WHERE BIN='" + BIN + "'"))
+            try ( ResultSet rs = executeQueryToResultSet("SELECT BIN, CREATE_DT, BANK_NAME, LORO_LEDGER, TRANSFER_LEDGER, SUSPENSE_LEDGER, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHL_BANK WHERE BIN='" + BIN + "'"))
             {
                 if (rs != null && rs.next())
                 {
@@ -2286,11 +2580,11 @@ public final class DBClient
         }
         return bank;
     }
-    
+
     public TreeMap<String, AXUser> queryUsers()
     {
         TreeMap<String, AXUser> users = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-        try (ResultSet rs = executeQueryToResultSet("SELECT A.EMP_NO, A.CREATE_DT, A.LOGIN_ID, A.STAFF_NAME, A.SYS_USER, A.SYS_DATE, A.REC_ST FROM " + APController.cmSchemaName + ".PHU_USER A, " + APController.coreSchemaName + ".SYSUSER B WHERE A.EMP_NO=B.EMP_NO AND B.REC_ST='A' ORDER BY A.EMP_NO ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT A.EMP_NO, A.CREATE_DT, A.LOGIN_ID, A.STAFF_NAME, A.SYS_USER, A.SYS_DATE, A.REC_ST FROM " + APController.cmSchemaName + ".PHU_USER A, " + APController.coreSchemaName + ".SYSUSER B WHERE A.EMP_NO=B.EMP_NO AND B.REC_ST='A' ORDER BY A.EMP_NO ASC"))
         {
             if (rs != null)
             {
@@ -2313,13 +2607,13 @@ public final class DBClient
         }
         return users;
     }
-    
+
     public AXUser queryUser(String userNumber, String userName, boolean enrolled)
     {
         AXUser user = new AXUser();
         if (enrolled)
         {
-            try (ResultSet rs = executeQueryToResultSet("SELECT A.EMP_NO, A.CREATE_DT, A.LOGIN_ID, A.STAFF_NAME, A.SYS_USER, A.SYS_DATE, A.REC_ST FROM " + APController.cmSchemaName + ".PHU_USER A, " + APController.coreSchemaName + ".SYSUSER B WHERE A.EMP_NO=B.EMP_NO AND (A.EMP_NO='" + userNumber + "' OR A.LOGIN_ID='" + userName + "') AND B.REC_ST='A' ORDER BY A.EMP_NO ASC"))
+            try ( ResultSet rs = executeQueryToResultSet("SELECT A.EMP_NO, A.CREATE_DT, A.LOGIN_ID, A.STAFF_NAME, A.SYS_USER, A.SYS_DATE, A.REC_ST FROM " + APController.cmSchemaName + ".PHU_USER A, " + APController.coreSchemaName + ".SYSUSER B WHERE A.EMP_NO=B.EMP_NO AND (A.EMP_NO='" + userNumber + "' OR A.LOGIN_ID='" + userName + "') AND B.REC_ST='A' ORDER BY A.EMP_NO ASC"))
             {
                 if (rs != null && rs.next())
                 {
@@ -2339,7 +2633,7 @@ public final class DBClient
         }
         else
         {
-            try (ResultSet rs = executeQueryToResultSet("SELECT EMP_NO, LOGIN_ID, FIRST_NM || ' ' || LAST_NM AS NAME, REC_ST FROM " + APController.coreSchemaName + ".SYSUSER WHERE (EMP_NO='" + userNumber + "' OR LOGIN_ID='" + userName + "') AND REC_ST='A'"))
+            try ( ResultSet rs = executeQueryToResultSet("SELECT EMP_NO, LOGIN_ID, FIRST_NM || ' ' || LAST_NM AS NAME, REC_ST FROM " + APController.coreSchemaName + ".SYSUSER WHERE (EMP_NO='" + userNumber + "' OR LOGIN_ID='" + userName + "') AND REC_ST='A'"))
             {
                 if (rs != null && rs.next())
                 {
@@ -2356,10 +2650,10 @@ public final class DBClient
         }
         return user;
     }
-    
+
     public AXUser setUserRoles(AXUser user)
     {
-        try (ResultSet rs = executeQueryToResultSet("SELECT ROLE FROM " + APController.cmSchemaName + ".PHU_ROLE WHERE EMP_NO='" + user.getUserNumber() + "'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT ROLE FROM " + APController.cmSchemaName + ".PHU_ROLE WHERE EMP_NO='" + user.getUserNumber() + "'"))
         {
             user.getRoles().clear();
             if (rs != null)
@@ -2379,11 +2673,11 @@ public final class DBClient
         }
         return user;
     }
-    
+
     public CNScheme queryChannelScheme(Long schemeId)
     {
         CNScheme scheme = new CNScheme();
-        try (ResultSet rs = executeQueryToResultSet("SELECT SCHEME_ID, CHANNEL_ID, SCHEME_CD, SCHEME_DESC, REC_ST FROM " + APController.coreSchemaName + ".SERVICE_CHANNEL_SCHEME WHERE SCHEME_ID=" + schemeId))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT SCHEME_ID, CHANNEL_ID, SCHEME_CD, SCHEME_DESC, REC_ST FROM " + APController.coreSchemaName + ".SERVICE_CHANNEL_SCHEME WHERE SCHEME_ID=" + schemeId))
         {
             if (rs != null && rs.next())
             {
@@ -2400,11 +2694,11 @@ public final class DBClient
         }
         return scheme;
     }
-    
+
     public CMChannel queryCustomerChannelId(Long schemeId, Long custId)
     {
         CMChannel customerChannel = new CMChannel();
-        try (ResultSet rs = executeQueryToResultSet("SELECT CUST_CHANNEL_ID, REC_ST FROM " + APController.coreSchemaName + ".CUSTOMER_CHANNEL WHERE CHANNEL_SCHEME_ID=" + schemeId + " AND CUST_ID=" + custId))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT CUST_CHANNEL_ID, REC_ST FROM " + APController.coreSchemaName + ".CUSTOMER_CHANNEL WHERE CHANNEL_SCHEME_ID=" + schemeId + " AND CUST_ID=" + custId))
         {
             if (rs != null && rs.next())
             {
@@ -2418,11 +2712,11 @@ public final class DBClient
         }
         return customerChannel;
     }
-    
+
     public Long queryTxnId(Long channelId, String accessCode, String reference)
     {
         Long txnId = null;
-        try (ResultSet rs = executeQueryToResultSet("SELECT MAX(TRAN_JOURNAL_ID) AS TRAN_JOURNAL_ID FROM " + APController.coreSchemaName + ".XAPI_ACTIVITY_HISTORY WHERE REQ_RECEIVED_TIME>SYSDATE-1 AND REQ_CHANNEL_ID=" + channelId + " AND REFERENCE = '" + reference + "' AND CARD_NO='" + accessCode + "'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT MAX(TRAN_JOURNAL_ID) AS TRAN_JOURNAL_ID FROM " + APController.coreSchemaName + ".XAPI_ACTIVITY_HISTORY WHERE REQ_RECEIVED_TIME>SYSDATE-1 AND REQ_CHANNEL_ID=" + channelId + " AND REFERENCE = '" + reference + "' AND CARD_NO='" + accessCode + "'"))
         {
             if (rs != null && rs.next())
             {
@@ -2435,21 +2729,30 @@ public final class DBClient
         }
         return txnId;
     }
-    
+
     public boolean updateTxnRefText(Long txnId, String reference)
     {
         return executeUpdate("UPDATE " + APController.coreSchemaName + ".GL_ACCOUNT_HISTORY SET TRAN_REF_TXT='" + reference + "' WHERE TRAN_JOURNAL_ID=" + txnId, true) && executeUpdate("UPDATE " + APController.coreSchemaName + ".TXN_JOURNAL SET TRAN_REF_TXT='" + reference + "' WHERE TRAN_JOURNAL_ID=" + txnId, true);
     }
-    
+
+    public boolean synchroniseDates()
+    { 
+        return executeUpdate("BEGIN "
+                + "FOR i IN (SELECT ALERT_CODE,ALERT_TYPE,NEXT_DATE,LAST_DATE FROM " + APController.cmSchemaName + ".PHA_ALERT WHERE REC_ST IN ('A','R') AND NEXT_DATE<=SYSDATE) "
+                + "LOOP UPDATE " + APController.cmSchemaName + ".PHA_ALERT SET NEXT_DATE = TO_DATE(TO_CHAR(SYSDATE,'DD/MM/YYYY'),'DD/MM/YYYY'), LAST_DATE = TO_DATE(TO_CHAR(SYSDATE -1,'DD/MM/YYYY'),'DD/MM/YYYY'),REC_ST ='A' WHERE ALERT_CODE = i.ALERT_CODE AND ALERT_TYPE = i.ALERT_TYPE; "
+                + "END LOOP; "
+                + "END;", true);
+    }
+
     public boolean deleteXapiHistory()
     {
         return executeUpdate("DELETE " + APController.coreSchemaName + ".XAPI_ACTIVITY_HISTORY WHERE REQ_RECEIVED_TIME<SYSDATE-2", true);
     }
-    
+
     public TreeMap<String, AXPayment> queryPayments(String channel)
     {
         TreeMap<String, AXPayment> payments = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
-        try (ResultSet rs = executeQueryToResultSet("SELECT REC_ID, CREATE_DT, CHANNEL, TXN_CD, TYPE, DESCRIPTION, CODE_FIELD, CODE, DETAIL_FIELD, ACCOUNT, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHB_PAYMENT WHERE CHANNEL='" + channel + "' ORDER BY REC_ID ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_ID, CREATE_DT, CHANNEL, TXN_CD, TYPE, DESCRIPTION, CODE_FIELD, CODE, DETAIL_FIELD, ACCOUNT, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHB_PAYMENT WHERE CHANNEL='" + channel + "' ORDER BY REC_ID ASC"))
         {
             if (rs != null)
             {
@@ -2479,11 +2782,11 @@ public final class DBClient
         }
         return payments;
     }
-    
+
     public AXPayment queryPayment(String channel, String code)
     {
         AXPayment payment = new AXPayment();
-        try (ResultSet rs = executeQueryToResultSet("SELECT REC_ID, CREATE_DT, CHANNEL, TXN_CD, TYPE, DESCRIPTION, CODE_FIELD, CODE, DETAIL_FIELD, ACCOUNT, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHB_PAYMENT WHERE CHANNEL='" + channel + "' AND CODE='" + code + "' ORDER BY REC_ID ASC"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT REC_ID, CREATE_DT, CHANNEL, TXN_CD, TYPE, DESCRIPTION, CODE_FIELD, CODE, DETAIL_FIELD, ACCOUNT, SYS_USER, SYS_DATE, REC_ST FROM " + APController.cmSchemaName + ".PHB_PAYMENT WHERE CHANNEL='" + channel + "' AND CODE='" + code + "' ORDER BY REC_ID ASC"))
         {
             if (rs != null)
             {
@@ -2511,11 +2814,11 @@ public final class DBClient
         }
         return payment;
     }
-    
+
     public ArrayList<CNCustomer> queryGroupMembers(long groupCustId)
     {
         ArrayList<CNCustomer> customers = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT C.CUST_NO FROM " + APController.coreSchemaName + ".GROUP_MEMBER G, " + APController.coreSchemaName + ".CUSTOMER C WHERE G.GROUP_CUST_ID=" + groupCustId + " AND C.CUST_ID=G.MEMBER_CUST_ID AND G.REC_ST='A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT C.CUST_NO FROM " + APController.coreSchemaName + ".GROUP_MEMBER G, " + APController.coreSchemaName + ".CUSTOMER C WHERE G.GROUP_CUST_ID=" + groupCustId + " AND C.CUST_ID=G.MEMBER_CUST_ID AND G.REC_ST='A'"))
         {
             if (rs != null)
             {
@@ -2531,11 +2834,11 @@ public final class DBClient
         }
         return customers;
     }
-    
+
     public ArrayList<GPMember> queryGroupMembers(Long groupCustId)
     {
         ArrayList<GPMember> members = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT GROUP_MEMBER_ID, GROUP_CUST_ID, MEMBERSHIP_REF_NO, MEMBER_CUST_ID, DEFLT_ACCT_NO, GROUP_RELSHIP_ID, SUB_GROUP_ID, REC_ST FROM " + APController.coreSchemaName + ".GROUP_MEMBER WHERE GROUP_CUST_ID=" + groupCustId + " AND REC_ST='A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT GROUP_MEMBER_ID, GROUP_CUST_ID, MEMBERSHIP_REF_NO, MEMBER_CUST_ID, DEFLT_ACCT_NO, GROUP_RELSHIP_ID, SUB_GROUP_ID, REC_ST FROM " + APController.coreSchemaName + ".GROUP_MEMBER WHERE GROUP_CUST_ID=" + groupCustId + " AND REC_ST='A'"))
         {
             if (rs != null)
             {
@@ -2560,11 +2863,11 @@ public final class DBClient
         }
         return members;
     }
-    
+
     public GPMember queryGroupMember(Long groupCustId, Long memberCustId)
     {
         GPMember member = new GPMember();
-        try (ResultSet rs = executeQueryToResultSet("SELECT GROUP_MEMBER_ID, GROUP_CUST_ID, MEMBERSHIP_REF_NO, MEMBER_CUST_ID, DEFLT_ACCT_NO, GROUP_RELSHIP_ID, SUB_GROUP_ID, REC_ST FROM " + APController.coreSchemaName + ".GROUP_MEMBER WHERE GROUP_CUST_ID=" + groupCustId + " AND MEMBER_CUST_ID=" + memberCustId + " AND REC_ST='A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT GROUP_MEMBER_ID, GROUP_CUST_ID, MEMBERSHIP_REF_NO, MEMBER_CUST_ID, DEFLT_ACCT_NO, GROUP_RELSHIP_ID, SUB_GROUP_ID, REC_ST FROM " + APController.coreSchemaName + ".GROUP_MEMBER WHERE GROUP_CUST_ID=" + groupCustId + " AND MEMBER_CUST_ID=" + memberCustId + " AND REC_ST='A'"))
         {
             if (rs != null)
             {
@@ -2587,11 +2890,11 @@ public final class DBClient
         }
         return member;
     }
-    
+
     public ArrayList<RLCustomer> queryXshipMembers(Long groupCustId)
     {
         ArrayList<RLCustomer> customers = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT CUST_RELSHIP_ID, CUST_RELSHIP_TY_ID, MAIN_CUST, MAIN_CUST_NM, REL_CUST_NO, REL_CUST_NM, MAIN_CUST_ID, REL_CUST_ID, REL_SHIP, RELSHIP_TY, CUST_RELSHIP_TY, CUST_CAT, REC_ST FROM " + APController.coreSchemaName + ".V_CUSTOMER_RELATIONSHIP_PHL WHERE MAIN_CUST_ID=" + groupCustId + " AND REC_ST='A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT CUST_RELSHIP_ID, CUST_RELSHIP_TY_ID, MAIN_CUST, MAIN_CUST_NM, REL_CUST_NO, REL_CUST_NM, MAIN_CUST_ID, REL_CUST_ID, REL_SHIP, RELSHIP_TY, CUST_RELSHIP_TY, CUST_CAT, REC_ST FROM " + APController.coreSchemaName + ".V_CUSTOMER_RELATIONSHIP_PHL WHERE MAIN_CUST_ID=" + groupCustId + " AND REC_ST='A'"))
         {
             if (rs != null)
             {
@@ -2615,11 +2918,11 @@ public final class DBClient
         }
         return customers;
     }
-    
+
     public RLCustomer queryXshipMember(Long groupCustId, Long relCustId)
     {
         RLCustomer customer = new RLCustomer();
-        try (ResultSet rs = executeQueryToResultSet("SELECT CUST_RELSHIP_ID, CUST_RELSHIP_TY_ID, MAIN_CUST, MAIN_CUST_NM, REL_CUST_NO, REL_CUST_NM, MAIN_CUST_ID, REL_CUST_ID, REL_SHIP, RELSHIP_TY, CUST_RELSHIP_TY, CUST_CAT, REC_ST FROM " + APController.coreSchemaName + ".V_CUSTOMER_RELATIONSHIP_PHL WHERE MAIN_CUST_ID=" + groupCustId + " AND REL_CUST_ID=" + relCustId + " AND REC_ST='A'"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT CUST_RELSHIP_ID, CUST_RELSHIP_TY_ID, MAIN_CUST, MAIN_CUST_NM, REL_CUST_NO, REL_CUST_NM, MAIN_CUST_ID, REL_CUST_ID, REL_SHIP, RELSHIP_TY, CUST_RELSHIP_TY, CUST_CAT, REC_ST FROM " + APController.coreSchemaName + ".V_CUSTOMER_RELATIONSHIP_PHL WHERE MAIN_CUST_ID=" + groupCustId + " AND REL_CUST_ID=" + relCustId + " AND REC_ST='A'"))
         {
             if (rs != null && rs.next())
             {
@@ -2638,11 +2941,11 @@ public final class DBClient
         }
         return customer;
     }
-    
+
     public ArrayList<CNCustomer> queryGroupLoanBeneficiaries(long groupCustId, String accountNumber)
     {
         ArrayList<CNCustomer> customers = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT CUST_NO FROM " + APController.coreSchemaName + ".CUSTOMER WHERE CUST_ID IN (SELECT MEMBER_ID FROM " + APController.coreSchemaName + ".GROUP_LOAN_ALLOTMENT_MEMO WHERE GRP_CUST_ID=" + groupCustId + " AND APPL_ID=(SELECT APPL_ID FROM " + APController.coreSchemaName + ".LOAN_ACCOUNT WHERE ACCT_NO='" + accountNumber + "'))"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT CUST_NO FROM " + APController.coreSchemaName + ".CUSTOMER WHERE CUST_ID IN (SELECT MEMBER_ID FROM " + APController.coreSchemaName + ".GROUP_LOAN_ALLOTMENT_MEMO WHERE GRP_CUST_ID=" + groupCustId + " AND APPL_ID=(SELECT APPL_ID FROM " + APController.coreSchemaName + ".LOAN_ACCOUNT WHERE ACCT_NO='" + accountNumber + "'))"))
         {
             if (rs != null)
             {
@@ -2658,11 +2961,11 @@ public final class DBClient
         }
         return customers;
     }
-    
+
     public ArrayList<DHRecord> queryDepositAccountHistory(String accountsList, Long acctHistId, Long pageSize)
     {
         ArrayList<DHRecord> records = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT Q.* FROM (SELECT ACCT_HIST_ID, TRAN_JOURNAL_ID, SYS_CREATE_TS, EVENT_CD, ACCT_NO, ORIGIN_BU_ID, BU_NM, TRAN_DT, VALUE_DT, CHANNEL_ID,CHANNEL_DESC, TRAN_REF_TXT, CHQ_NO, TRAN_DESC, DR_CR_IND, ACCT_CRNCY_CD_ISO, ACCT_AMT, TXN_CONTRA_ACCT_NO, DEPOSITOR_PAYEE_NM, REV_TXN_FG, REV_TRAN_JOURNAL_ID, STMNT_BAL FROM " + APController.coreSchemaName + ".V_DEPOSIT_ACCOUNT_HISTORY_EXT WHERE ACCT_NO IN (" + getWorker().cleanCSVList(accountsList) + ") AND ACCT_HIST_ID>" + acctHistId + " AND CHRG_ID IS NULL ORDER BY ACCT_HIST_ID ASC) Q WHERE ROWNUM<=" + pageSize))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT Q.* FROM (SELECT ACCT_HIST_ID, TRAN_JOURNAL_ID, SYS_CREATE_TS, EVENT_CD, ACCT_NO, ORIGIN_BU_ID, BU_NM, TRAN_DT, VALUE_DT, CHANNEL_ID,CHANNEL_DESC, TRAN_REF_TXT, CHQ_NO, TRAN_DESC, DR_CR_IND, ACCT_CRNCY_CD_ISO, ACCT_AMT, TXN_CONTRA_ACCT_NO, DEPOSITOR_PAYEE_NM, REV_TXN_FG, REV_TRAN_JOURNAL_ID, STMNT_BAL FROM " + APController.coreSchemaName + ".V_DEPOSIT_ACCOUNT_HISTORY_EXT WHERE ACCT_NO IN (" + getWorker().cleanCSVList(accountsList) + ") AND ACCT_HIST_ID>" + acctHistId + " AND CHRG_ID IS NULL ORDER BY ACCT_HIST_ID ASC) Q WHERE ROWNUM<=" + pageSize))
         {
             if (rs != null)
             {
@@ -2702,11 +3005,11 @@ public final class DBClient
         }
         return records;
     }
-    
+
     public ArrayList<LHRecord> queryGLAccountHistory(String accountsList, Long acctHistId, Long pageSize)
     {
         ArrayList<LHRecord> records = new ArrayList<>();
-        try (ResultSet rs = executeQueryToResultSet("SELECT Q.* FROM (SELECT ACCT_HIST_ID, TRAN_JOURNAL_ID, SYS_CREATE_TS, EVENT_CD, GL_ACCT_NO, ORIGIN_BU_ID, BU_NM, TRAN_DT, VALUE_DT, CHANNEL_ID,CHANNEL_DESC, TRAN_REF_TXT, CHQ_NO, TRAN_DESC, DR_CR_IND, CRNCY_CD_ISO, ACCT_AMT, CONTRA_ACCT_NO, STMNT_BAL FROM " + APController.coreSchemaName + ".V_GL_ACCOUNT_HISTORY WHERE GL_ACCT_NO IN (" + getWorker().cleanCSVList(accountsList) + ") AND ACCT_HIST_ID>" + acctHistId + " ORDER BY ACCT_HIST_ID ASC) Q WHERE ROWNUM<=" + pageSize))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT Q.* FROM (SELECT ACCT_HIST_ID, TRAN_JOURNAL_ID, SYS_CREATE_TS, EVENT_CD, GL_ACCT_NO, ORIGIN_BU_ID, BU_NM, TRAN_DT, VALUE_DT, CHANNEL_ID,CHANNEL_DESC, TRAN_REF_TXT, CHQ_NO, TRAN_DESC, DR_CR_IND, CRNCY_CD_ISO, ACCT_AMT, CONTRA_ACCT_NO, STMNT_BAL FROM " + APController.coreSchemaName + ".V_GL_ACCOUNT_HISTORY WHERE GL_ACCT_NO IN (" + getWorker().cleanCSVList(accountsList) + ") AND ACCT_HIST_ID>" + acctHistId + " ORDER BY ACCT_HIST_ID ASC) Q WHERE ROWNUM<=" + pageSize))
         {
             if (rs != null)
             {
@@ -2743,36 +3046,36 @@ public final class DBClient
         }
         return records;
     }
-    
+
     public boolean upsertPayment(AXPayment payment)
     {
         return checkExists("SELECT CODE FROM " + APController.cmSchemaName + ".PHB_PAYMENT WHERE CHANNEL='" + payment.getChannel() + "' AND CODE='" + payment.getCode() + "'") ? updatePayment(payment) : savePayment(payment);
     }
-    
+
     private boolean savePayment(AXPayment payment)
     {
         return executeUpdate("INSERT INTO " + APController.cmSchemaName + ".PHB_PAYMENT(REC_ID, CREATE_DT, CHANNEL, TXN_CD, TYPE, DESCRIPTION, CODE_FIELD, CODE, DETAIL_FIELD, ACCOUNT, SYS_USER, SYS_DATE, REC_ST) VALUES(" + APController.cmSchemaName + ".SEQ_PHB_PAYMENT.NEXTVAL, SYSDATE, '" + payment.getChannel() + "', '" + payment.getTxnCd() + "', '" + payment.getType() + "', '" + payment.getDescription() + "', " + payment.getCodeField() + ", '" + payment.getCode() + "', " + payment.getDetailField() + ", '" + payment.getAccount() + "', '" + payment.getSysUser() + "', SYSDATE, '" + payment.getStatus() + "')", true);
     }
-    
+
     private boolean updatePayment(AXPayment payment)
     {
         return executeUpdate("UPDATE " + APController.cmSchemaName + ".PHB_PAYMENT SET DESCRIPTION='" + payment.getDescription() + "', ACCOUNT='" + payment.getAccount() + "', TXN_CD='" + payment.getTxnCd() + "', TYPE='" + payment.getType() + "', CODE_FIELD=" + payment.getCodeField() + ", DETAIL_FIELD=" + payment.getDetailField() + ", SYS_USER='" + payment.getSysUser() + "', SYS_DATE=SYSDATE, REC_ST='" + payment.getStatus() + "' WHERE REC_ID=" + payment.getRecId(), true);
     }
-    
+
     public boolean saveEnrollLog(MURecord record)
     {
         return executeUpdate("INSERT INTO " + APController.cmSchemaName + ".PHL_ENRL_LOG(REC_ID, CREATE_DT, CHANNEL_ID, ADDRESS, ACCESS_CD, CUST_NO, ACCOUNT, ALIAS, ROLE, TYPE, STATE, RESULT) VALUES(" + APController.cmSchemaName + ".SEQ_PHL_ENRL_LOG.NEXTVAL, SYSDATE, " + record.getChannelId() + ", '" + record.getAddress() + "', '" + record.getAccessCd() + "', '" + record.getCustNo() + "', '" + record.getAccount() + "', '" + record.getAlias().replace("'", "''") + "', '" + record.getRole() + "', '" + record.getType() + "', '" + record.getState() + "', '" + record.getResult() + "')", true);
     }
-    
+
     public boolean isAccountPermitted(Long schemeId, String accountNumber)
     {
         return checkExists("SELECT ACCT_NO FROM " + APController.coreSchemaName + ".ACCOUNT WHERE ACCT_NO='" + accountNumber + "' AND PROD_ID IN (SELECT PROD_ID FROM " + APController.coreSchemaName + ".PRODUCT_CHANNEL_SCHEME WHERE SCHEME_ID=" + schemeId + ")");
     }
-    
+
     public CNActivity queryMonthActivity(Long channelId, String accountNumber, String txnCode)
     {
         CNActivity cNActivity = new CNActivity();
-        try (ResultSet rs = executeQueryToResultSet("SELECT COUNT(*) AS COUNT, NVL(SUM(AMOUNT),0) AS TOTAL FROM " + APController.cmSchemaName + ".PHL_TXN_LOG WHERE REC_ST='A' AND CHANNEL_ID=" + channelId + " AND TXN_CODE='" + txnCode + "' AND ACCOUNT='" + accountNumber + "' AND TXN_DATE>=TRUNC(ADD_MONTHS(LAST_DAY(SYSDATE),-1)+1) AND TXN_DATE<=TRUNC(LAST_DAY(SYSDATE))"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT COUNT(*) AS COUNT, NVL(SUM(AMOUNT),0) AS TOTAL FROM " + APController.cmSchemaName + ".PHL_TXN_LOG WHERE REC_ST='A' AND CHANNEL_ID=" + channelId + " AND TXN_CODE='" + txnCode + "' AND ACCOUNT='" + accountNumber + "' AND TXN_DATE>=TRUNC(ADD_MONTHS(LAST_DAY(SYSDATE),-1)+1) AND TXN_DATE<=TRUNC(LAST_DAY(SYSDATE))"))
         {
             if (rs != null && rs.next())
             {
@@ -2786,11 +3089,11 @@ public final class DBClient
         }
         return cNActivity;
     }
-    
+
     public CNActivity queryDayActivity(Long channelId, String accountNumber, String txnType)
     {
         CNActivity cNActivity = new CNActivity();
-        try (ResultSet rs = executeQueryToResultSet("SELECT COUNT(*) AS COUNT, NVL(SUM(AMOUNT),0) AS TOTAL FROM " + APController.cmSchemaName + ".PHL_TXN_LOG WHERE REC_ST='A' AND CHANNEL_ID=" + channelId + " AND TXN_TYPE='" + txnType + "' AND ACCOUNT='" + accountNumber + "' AND TXN_DATE>=TRUNC(SYSDATE)"))
+        try ( ResultSet rs = executeQueryToResultSet("SELECT COUNT(*) AS COUNT, NVL(SUM(AMOUNT),0) AS TOTAL FROM " + APController.cmSchemaName + ".PHL_TXN_LOG WHERE REC_ST='A' AND CHANNEL_ID=" + channelId + " AND TXN_TYPE='" + txnType + "' AND ACCOUNT='" + accountNumber + "' AND TXN_DATE>=TRUNC(SYSDATE)"))
         {
             if (rs != null && rs.next())
             {
@@ -2804,11 +3107,11 @@ public final class DBClient
         }
         return cNActivity;
     }
-    
+
     public int countRecords(String query)
     {
         int count = 0;
-        try (ResultSet rs = executeQueryToResultSet(query))
+        try ( ResultSet rs = executeQueryToResultSet(query))
         {
             count = getRowCount(rs);
         }
@@ -2818,7 +3121,7 @@ public final class DBClient
         }
         return count;
     }
-    
+
     private boolean saveValues(AXCharge charge)
     {
         boolean RC = deleteValues(charge);
@@ -2832,7 +3135,7 @@ public final class DBClient
         }
         return RC;
     }
-    
+
     private boolean saveDeductions(TCValue value)
     {
         boolean RC = deleteDeductions(value);
@@ -2843,7 +3146,7 @@ public final class DBClient
         }
         return RC;
     }
-    
+
     private boolean saveWaivers(AXCharge charge)
     {
         boolean RC = deleteWaivers(charge);
@@ -2854,102 +3157,145 @@ public final class DBClient
         }
         return RC;
     }
-    
+
+    public Object[][] queryDepositProducts()
+    {
+        return executeQuery("SELECT PROD_ID, PROD_DESC FROM " + APController.coreSchemaName + ".PRODUCT WHERE PROD_CAT_TY='DP' AND REC_ST='A' ORDER BY PROD_ID");
+    }
+
     public boolean moveCustomerWFItem(long custId, long newBuId)
     {
         return executeUpdate("UPDATE " + APController.coreSchemaName + ".WF_WORK_ITEM SET BU_ID=" + newBuId + " WHERE WORK_ITEM_ID=(SELECT MAX(WORK_ITEM_ID) FROM " + APController.coreSchemaName + ".WF_WORK_ITEM WHERE CUST_ID=" + custId + ")", true);
     }
-    
+
     public CNAccount queryAnyAccount(String accountNumber)
     {
         return getWorker().isLedger(accountNumber) ? queryGLAccount(accountNumber) : queryDepositAccount(accountNumber);
     }
-    
+
     private boolean deleteDeductions(TCValue value)
     {
         return executeUpdate("DELETE " + APController.cmSchemaName + ".PHC_DEDUCTION WHERE PARENT_KEY='" + value.getValueId() + "'", true);
     }
-    
+
     private boolean deleteValues(AXCharge charge)
     {
         return executeUpdate("DELETE " + APController.cmSchemaName + ".PHC_VALUE WHERE PARENT_KEY='" + charge.getRecId() + "'", true);
     }
-    
+
     private boolean deleteWaivers(AXCharge charge)
     {
         return executeUpdate("DELETE " + APController.cmSchemaName + ".PHC_WAIVER WHERE PARENT_KEY='" + charge.getRecId() + "'", true);
     }
-    
+
     public int countPendingAlerts()
     {
         return countRecords("SELECT REC_ST FROM " + APController.cmSchemaName + ".PHA_ALERTS WHERE REC_ST='P'");
     }
-    
+
     public int countPendingAlerts(ArrayList<String> prefixes)
     {
         return countRecords("SELECT REC_ST FROM " + APController.cmSchemaName + ".PHA_ALERTS WHERE AND REC_ST='P'");
     }
-    
+
     public boolean upsertCharge(AXCharge charge)
     {
         return checkExists("SELECT REC_ID FROM " + APController.cmSchemaName + ".PHC_CHARGE WHERE REC_ID=" + charge.getRecId()) ? updateCharge(charge) : saveCharge(charge);
     }
-    
+
     private boolean saveCharge(AXCharge charge)
     {
         return executeUpdate("INSERT INTO " + APController.cmSchemaName + ".PHC_CHARGE(REC_ID, REC_CD, CREATE_DT, DESCRIPTION, ACCOUNT, LEDGER, SCHEME, SYS_USER, SYS_DATE, REC_ST) VALUES(" + charge.getRecId() + ", '" + charge.getCode() + "', SYSDATE, '" + charge.getDescription() + "', '" + charge.getChargeAccount() + "', '" + charge.getChargeLedger() + "', '" + charge.getScheme() + "', '" + charge.getSysUser() + "', SYSDATE, '" + charge.getStatus() + "')", true) ? saveValues(charge) && saveWaivers(charge) : false;
     }
-    
+
     private boolean updateCharge(AXCharge charge)
     {
         return executeUpdate("UPDATE " + APController.cmSchemaName + ".PHC_CHARGE SET REC_CD='" + charge.getCode() + "', DESCRIPTION='" + charge.getDescription() + "', ACCOUNT='" + charge.getChargeAccount() + "', LEDGER='" + charge.getChargeLedger() + "', SCHEME='" + charge.getScheme() + "', SYS_USER='" + charge.getSysUser() + "', SYS_DATE=SYSDATE, REC_ST='" + charge.getStatus() + "' WHERE REC_ID=" + charge.getRecId(), true) ? saveValues(charge) && saveWaivers(charge) : false;
     }
-    
+
     public boolean upsertScheme(TCScheme scheme)
     {
         return checkExists("SELECT REC_CD FROM " + APController.cmSchemaName + ".PHC_SCHEME WHERE REC_CD='" + scheme.getCode() + "'") ? updateScheme(scheme) : saveScheme(scheme);
     }
-    
+
     private boolean saveScheme(TCScheme scheme)
     {
         return executeUpdate("INSERT INTO " + APController.cmSchemaName + ".PHC_SCHEME(REC_CD, CREATE_DT, CHANNEL, DESCRIPTION, SYS_USER, SYS_DATE, REC_ST) VALUES('" + scheme.getCode() + "', SYSDATE, '" + scheme.getChannel() + "', '" + scheme.getDescription() + "', '" + scheme.getSysUser() + "', SYSDATE, '" + scheme.getStatus() + "')", true);
     }
-    
+
     private boolean updateScheme(TCScheme scheme)
     {
         return executeUpdate("UPDATE " + APController.cmSchemaName + ".PHC_SCHEME SET CHANNEL='" + scheme.getChannel() + "', DESCRIPTION='" + scheme.getDescription() + "', SYS_USER='" + scheme.getSysUser() + "', SYS_DATE=SYSDATE, REC_ST='" + scheme.getStatus() + "' WHERE REC_CD='" + scheme.getCode() + "'", true);
     }
-    
+
     public boolean upsertBank(AXBank bank)
     {
         return checkExists("SELECT BIN FROM " + APController.cmSchemaName + ".PHL_BANK WHERE BIN='" + bank.getBin() + "'") ? updateBank(bank) : saveBank(bank);
     }
-    
+
     private boolean saveBank(AXBank bank)
     {
         return executeUpdate("INSERT INTO " + APController.cmSchemaName + ".PHL_BANK(BIN, CREATE_DT, BANK_NAME, LORO_LEDGER, TRANSFER_LEDGER, SUSPENSE_LEDGER, SYS_USER, SYS_DATE, REC_ST) VALUES('" + bank.getBin() + "', SYSDATE, '" + bank.getName() + "', '" + bank.getLoroLedger() + "', '" + bank.getTransferLedger() + "', '" + bank.getSuspenseLedger() + "', '" + bank.getSysUser() + "', SYSDATE, '" + bank.getStatus() + "')", true);
     }
-    
+
     private boolean updateBank(AXBank bank)
     {
         return executeUpdate("UPDATE " + APController.cmSchemaName + ".PHL_BANK SET BANK_NAME='" + bank.getName() + "', LORO_LEDGER='" + bank.getLoroLedger() + "', TRANSFER_LEDGER='" + bank.getTransferLedger() + "', SUSPENSE_LEDGER='" + bank.getSuspenseLedger() + "', SYS_USER='" + bank.getSysUser() + "', SYS_DATE=SYSDATE, REC_ST='" + bank.getStatus() + "' WHERE BIN='" + bank.getBin() + "'", true);
     }
-    
+
     public boolean upsertUser(AXUser user)
     {
         return checkExists("SELECT EMP_NO FROM " + APController.cmSchemaName + ".PHU_USER WHERE EMP_NO='" + user.getUserNumber() + "'") ? updateUser(user) : saveUser(user);
     }
-    
+
     private boolean saveUser(AXUser user)
     {
         return executeUpdate("INSERT INTO " + APController.cmSchemaName + ".PHU_USER(EMP_NO, CREATE_DT, LOGIN_ID, STAFF_NAME, SYS_USER, SYS_DATE, REC_ST) VALUES('" + user.getUserNumber() + "', SYSDATE, '" + user.getUserName() + "', '" + user.getStaffName() + "', '" + user.getSysUser() + "', SYSDATE, '" + user.getStatus() + "')", true) && saveUserRoles(user);
     }
-    
+
     private boolean updateUser(AXUser user)
     {
         return executeUpdate("UPDATE " + APController.cmSchemaName + ".PHU_USER SET LOGIN_ID='" + user.getUserName() + "', STAFF_NAME='" + user.getStaffName() + "', SYS_USER='" + user.getSysUser() + "', SYS_DATE=SYSDATE, REC_ST='" + user.getStatus() + "' WHERE EMP_NO='" + user.getUserNumber() + "'", true) && saveUserRoles(user);
     }
-    
+
+    public String convertToOracleDate(Date date)
+    {
+        return !getWorker().isBlank(date) ? "TO_DATE('" + AXConstant.standardDateFormat.format(date) + "','DD-MM-YYYY')" : null;
+    }
+
+    public boolean deleteTask(ESTask eSTask)
+    {
+        return deleteFilters(ESController.module, eSTask.getCode()) && executeUpdate("DELETE " + APController.cmSchemaName + ".PHS_TASK WHERE REC_CD='" + eSTask.getCode() + "'", true);
+    }
+
+    public boolean upsertTask(ESTask eSTask)
+    {
+        return checkExists("SELECT REC_CD FROM " + APController.cmSchemaName + ".PHS_TASK WHERE REC_CD='" + eSTask.getCode() + "'") ? updateTask(eSTask) : saveTask(eSTask);
+    }
+
+    private boolean saveTask(ESTask eSTask)
+    {
+        if (executeUpdate("INSERT INTO " + APController.cmSchemaName + ".PHS_TASK(REC_ID, REC_CD, CREATE_DT, DOCUMENT, RANGE, DESCRIPTION, RUN_TIME, CHARGE, CYCLE, NEXT_DATE, LAST_DATE, EXPIRY_DATE, FILTER_BY, REC_ST) VALUES(" + APController.cmSchemaName + ".SEQ_PHS_TASK.NEXTVAL, '" + eSTask.getCode() + "', SYSDATE, '" + eSTask.getDocument() + "', '" + eSTask.getRange() + "', '" + eSTask.getDescription() + "', '" + eSTask.getRunTime() + "', '" + eSTask.getCharge() + "', '" + eSTask.getCycle() + "', " + convertToOracleDate(eSTask.getNextDate()) + ", " + convertToOracleDate(eSTask.getPreviousDate()) + ", " + convertToOracleDate(eSTask.getExpiryDate()) + ", '" + eSTask.getFilterBy() + "', '" + eSTask.getStatus() + "')", true))
+        {
+            return saveFilters(ESController.module, eSTask.getCode(), eSTask.getFilters());
+        }
+        return false;
+    }
+
+    private boolean updateTask(ESTask eSTask)
+    {
+        if (executeUpdate("UPDATE " + APController.cmSchemaName + ".PHS_TASK SET REC_CD='" + eSTask.getCode() + "', DOCUMENT='" + eSTask.getDocument() + "', RANGE='" + eSTask.getRange() + "', DESCRIPTION='" + eSTask.getDescription() + "', RUN_TIME='" + eSTask.getRunTime() + "', CHARGE='" + eSTask.getCharge() + "', CYCLE='" + eSTask.getCycle() + "', NEXT_DATE=" + convertToOracleDate(eSTask.getNextDate()) + ", LAST_DATE=" + convertToOracleDate(eSTask.getPreviousDate()) + ", EXPIRY_DATE=" + convertToOracleDate(eSTask.getExpiryDate()) + ", FILTER_BY='" + eSTask.getFilterBy() + "', REC_ST='" + eSTask.getStatus() + "' WHERE REC_CD='" + eSTask.getCode() + "'", true))
+        {
+            return saveFilters(ESController.module, eSTask.getCode(), eSTask.getFilters());
+        }
+        return false;
+    }
+
+    public boolean pushTask(ESTask eSTask)
+    {
+        return executeUpdate("UPDATE " + APController.cmSchemaName + ".PHS_TASK SET NEXT_DATE=" + convertToOracleDate(eSTask.getNextDate()) + ", LAST_DATE=" + convertToOracleDate(eSTask.getPreviousDate()) + ", REC_ST='" + eSTask.getStatus() + "' WHERE REC_CD='" + eSTask.getCode() + "'", true);
+    }
+
     private boolean saveUserRoles(AXUser user)
     {
         boolean RC = executeUpdate("DELETE " + APController.cmSchemaName + ".PHU_ROLE WHERE EMP_NO='" + user.getUserNumber() + "'", true);
@@ -2959,7 +3305,7 @@ public final class DBClient
         }
         return RC;
     }
-    
+
     private String checkPassword(CNUser cNUser, String password)
     {
         if (!getWorker().isBlank(password) && getCrypt().isEqEncrypted(password))
@@ -2970,97 +3316,97 @@ public final class DBClient
         }
         return password;
     }
-    
+
     public boolean updateAccountEvent(CAEvent event)
     {
         return executeUpdate("UPDATE " + APController.coreSchemaName + ".CUST_CHANNEL_ACCOUNT$AUD SET FORWARDED='Y' WHERE FORWARDED IS NULL AND CUST_CHANNEL_ACCT_ID=" + event.getCustChannelAcctId(), true);
     }
-    
+
     public boolean changeUserPin(Long userId, String newPin)
     {
         return executeUpdate("UPDATE " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER SET PASSWORD='" + newPin + "', PWD_RESET_FG='N' WHERE CUST_CHANNEL_USER_ID=" + userId, true) && unlockChannelUser(userId);
     }
-    
+
     public boolean updateUserKey(Long userId, String newKey)
     {
         return executeUpdate("UPDATE " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER SET QUIZ_CD='" + newKey + "' WHERE CUST_CHANNEL_USER_ID=" + userId, true);
     }
-    
+
     public boolean unlockChannelUser(Long userId)
     {
         return executeUpdate("UPDATE " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER SET LOCKED_FG='N', RANDOM_SEED=0, SECURITY_CD=NULL, EXPIRY_DT=SYSDATE+180 WHERE CUST_CHANNEL_USER_ID=" + userId, true);
     }
-    
+
     public boolean pushUserExpiry(Long userId)
     {
         return executeUpdate("UPDATE " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER SET EXPIRY_DT=SYSDATE+180 WHERE CUST_CHANNEL_USER_ID=" + userId, true);
     }
-    
+
     private boolean updateNextEntityId(String tableName, String columnName)
     {
         return executeUpdate("UPDATE " + APController.coreSchemaName + ".ENTITY SET NEXT_NO=(SELECT MAX(" + columnName + ")+1 FROM " + APController.coreSchemaName + "." + tableName + ") WHERE ENTITY_NM = '" + tableName + "'", true);
     }
-    
+
     public boolean saveChannelAccount(CNUser cNUser, CNAccount cNAccount)
     {
         return executeUpdate("INSERT INTO " + APController.coreSchemaName + ".CUST_CHANNEL_ACCOUNT (CUST_CHANNEL_ACCT_ID, CUST_ID, CHANNEL_ID, ACCT_ID, SHORT_NAME, REC_ST, VERSION_NO, ROW_TS, USER_ID, CREATE_DT, CREATED_BY, SYS_CREATE_TS, CUST_CHANNEL_ID) VALUES ((SELECT MAX(CUST_CHANNEL_ACCT_ID) + 1 FROM " + APController.coreSchemaName + ".CUST_CHANNEL_ACCOUNT), " + cNAccount.getCustId() + ", " + cNUser.getChannelId() + ", " + cNAccount.getAcctId() + ", NULL, 'A', 1, SYSDATE, 'SYSTEM', SYSDATE, 'SYSTEM', SYSDATE, " + cNUser.getCustChannelId() + ")", true) && updateNextEntityId("CUST_CHANNEL_ACCOUNT", "CUST_CHANNEL_ACCT_ID");
     }
-    
+
     public boolean updateChannelAccount(CNUser cNUser, CNAccount cNAccount)
     {
         return executeUpdate("UPDATE " + APController.coreSchemaName + ".CUSTOMER_CHANNEL SET CHRG_ACCT_ID=" + cNAccount.getAcctId() + " WHERE CUST_CHANNEL_ID=" + cNUser.getCustChannelId(), true);
     }
-    
+
     public boolean updateAccessName(CNUser cNUser)
     {
         return executeUpdate("UPDATE " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER SET ACCESS_NM='" + cNUser.getAccessName() + "' WHERE CUST_CHANNEL_USER_ID=" + cNUser.getUserId(), true);
     }
-    
+
     public boolean updateEnrollmentDevice(Long schemeId, String accessCode, String deviceId)
     {
         return executeUpdate("UPDATE " + APController.coreSchemaName + ".CUSTOMER_CHANNEL_USER SET DEVICE_ID='" + deviceId + "' WHERE ACCESS_CD='" + accessCode + "' AND CHANNEL_SCHEME_ID=" + schemeId, true);
     }
-    
+
     public void updateAlert(MXMessage mXRequest)
     {
         executeUpdate("UPDATE " + APController.cmSchemaName + ".PHA_ALERTS SET ALERT_CODE='" + mXRequest.getAlertCode() + "', CONTACT='" + mXRequest.getMsisdn() + "', CHRG_AMT=" + mXRequest.getChargeAmount() + ", CHG_ID='" + mXRequest.getChargeId() + "', REC_ST='" + mXRequest.getStatus() + "' WHERE ALERT_ID=" + mXRequest.getAlertId(), true);
     }
-    
+
     public void saveMessage(MXMessage mXMessage)
     {
         executeUpdate("INSERT INTO " + APController.cmSchemaName + ".PHA_MESSAGE(REC_ID, CREATE_DT, ALERT_ID, ALERT_CODE, CUST_ID, CONTACT, MESSAGE, RESP_ID, REC_ST) VALUES(" + APController.cmSchemaName + ".SEQ_PHA_MESSAGE.NEXTVAL, SYSDATE, " + mXMessage.getAlertId() + ", '" + mXMessage.getAlertCode() + "', " + mXMessage.getCustId() + ", '" + mXMessage.getMsisdn() + "', '" + String.valueOf(mXMessage.getMessage()).replace("'", "''") + "', '" + mXMessage.getResponseId() + "', '" + mXMessage.getStatus() + "')", true);
     }
-    
+
     public void expireOldAlerts()
     {
         executeUpdate("UPDATE " + APController.cmSchemaName + ".PHA_ALERTS SET REC_ST='E' WHERE ALERT_DATE<SYSDATE-5 AND REC_ST='P'", true);
     }
-    
+
     public String queryBankName()
     {
         return getWorker().capitalize(queryParameter("S04", String.class));
     }
-    
+
     public String querySwiftCode()
     {
         return getWorker().capitalize(queryParameter("S14", String.class));
     }
-    
+
     public Long nextChargeId()
     {
         return nextSequenceId("SEQ_PHC_CHARGE");
     }
-    
+
     public Long nextDeductionId()
     {
         return nextSequenceId("SEQ_PHC_DEDUCTION");
     }
-    
+
     public Long nextValueId()
     {
         return nextSequenceId("SEQ_PHC_VALUE");
     }
-    
+
     public Long nextWaiverId()
     {
         return nextSequenceId("SEQ_PHC_WAIVER");
@@ -3129,7 +3475,7 @@ public final class DBClient
     {
         this.box = box;
     }
-    
+
     private APLog getLog()
     {
         return getBox().getLog();

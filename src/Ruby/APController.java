@@ -63,7 +63,7 @@ public class APController
     public static String databaseUrl = "jdbc:oracle:thin:@//192.168.1.56:1521/WKLLVPDB", cmSchemaName = "CHANNELMANAGER";
 
     public static String lockShutdown = "No", cmSchemaPassword = "k6MjR8pvTyRrwjLHPRk5FA==";
-    public static String enableDebug = "No", displayConsole = "Yes";
+    public static String enableDebug = "No", displayConsole = "Yes", suspendMailer = "No", suspendAlert = "No";
     private static HashMap<Long, CLItem> languages = new HashMap<>();
 
     public static String databaseDriverName = "oracle.jdbc.driver.OracleDriver";
@@ -102,7 +102,7 @@ public class APController
 
     public static boolean configure()
     {
-        try (InputStream sin = new FileInputStream(new File(confDir, "settings.prp")))
+        try ( InputStream sin = new FileInputStream(new File(confDir, "settings.prp")))
         {
             getSettings().loadFromXML(sin);
             try
@@ -173,6 +173,12 @@ public class APController
         }
     }
 
+    public static void updateSetting(String name, String value)
+    {
+        getSettings().setProperty(name, value);
+        updateSettings();
+    }
+
     private static void updateXapiCodes()
     {
         getdClient().updateXapiErrors();
@@ -214,7 +220,7 @@ public class APController
 
     public static boolean checkLicense()
     {
-        try (ResultSet rs = getdClient().executeQueryToResultSet("SELECT TO_NUMBER(TO_DATE(DISPLAY_VALUE,'DD/MM/YYYY')-(SELECT TO_DATE(DISPLAY_VALUE,'DD/MM/YYYY') FROM " + coreSchemaName + ".CTRL_PARAMETER WHERE PARAM_CD='S02')) AS DAYS FROM " + coreSchemaName + ".CTRL_PARAMETER WHERE PARAM_CD='S769'"))
+        try ( ResultSet rs = getdClient().executeQueryToResultSet("SELECT TO_NUMBER(TO_DATE(DISPLAY_VALUE,'DD/MM/YYYY')-(SELECT TO_DATE(DISPLAY_VALUE,'DD/MM/YYYY') FROM " + coreSchemaName + ".CTRL_PARAMETER WHERE PARAM_CD='S02')) AS DAYS FROM " + coreSchemaName + ".CTRL_PARAMETER WHERE PARAM_CD='S769'"))
         {
             if (rs.next())
             {

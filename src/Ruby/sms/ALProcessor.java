@@ -21,53 +21,64 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ALProcessor
 {
+
     private static final ATBox box = new ATBox(APMain.smsLog);
     public static final ConcurrentHashMap<String, Date> runningAlerts = new ConcurrentHashMap<>();
 
     public static void process()
     {
-        try
+        if (!APMain.exit && !ALController.isSuspended())
         {
-            APMain.smsLog.logDebug("---<process>---");
-            processPendingAlerts();
-            getdClient().dispose();
-        }
-        catch (Throwable ex)
-        {
-            APMain.smsLog.logEvent(ex);
+            try
+            {
+                APMain.smsLog.logDebug("---<process>---");
+                processPendingAlerts();
+                getdClient().dispose();
+            }
+            catch (Throwable ex)
+            {
+                APMain.smsLog.logEvent(ex);
+            }
         }
     }
 
     private static ArrayList<MXAlert> getPendingAlerts()
-    { 
+    {
         Date currentDate = getdClient().getProcessingDate();
         ArrayList<MXAlert> pendingAlerts = new ArrayList<>();
         TreeMap<String, MXAlert> alerts = getdClient().queryAlerts();
         alerts.values().stream().map((mXAlert)
-                -> 
+                ->
+        {
+            if (currentDate.after(mXAlert.getExpiryDate()))
+            {
+                mXAlert.setStatus("E");
+            }
+            if (mXAlert.getNextDate().before(getdClient().getSystemDate()))
+            {
+                if (mXAlert.getStatus().equals("R"))
                 {
-                    if (currentDate.after(mXAlert.getExpiryDate()))
-                    {
-                        mXAlert.setStatus("E");
-                    }
-                    return mXAlert;
+                    mXAlert.setStatus("A");
+                }
+            }
+            return mXAlert;
         }).filter((mXAlert) -> ("A".equals(mXAlert.getStatus()) && !"Triggered".equalsIgnoreCase(mXAlert.getFrequency()) && isTimeRight(mXAlert) && (currentDate.after(mXAlert.getNextDate()) || currentDate.equals(mXAlert.getNextDate()) || "Real-Time".equalsIgnoreCase(mXAlert.getFrequency())))).forEach((mXAlert)
-                -> 
-                {
-                    pendingAlerts.add(mXAlert);
+                ->
+        {
+            pendingAlerts.add(mXAlert);
         });
-        alerts.clear();        
+        alerts.clear();
         return pendingAlerts;
     }
 
     private static void processPendingAlerts()
-    { 
+    {
         ArrayList<MXAlert> pendingAlerts = getPendingAlerts();
         pendingAlerts.stream().filter((mXAlert) -> (!runningAlerts.containsKey(mXAlert.getAlertCode()))).forEach((mXAlert)
-                -> 
-                {
-                    
-                    new ALWorker(mXAlert).start();
+                ->
+        {
+
+            new ALWorker(mXAlert).start();
         });
         pendingAlerts.clear();
     }

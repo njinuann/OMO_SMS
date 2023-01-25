@@ -5,6 +5,7 @@
  */
 package Ruby.sms;
 
+import Ruby.APController;
 import Ruby.APMain;
 import Ruby.DBClient;
 import Ruby.acx.APLog;
@@ -32,6 +33,7 @@ import javax.swing.SwingUtilities;
  */
 public class ALController
 {
+
     public static String restricted = "Yes";
     public static final String channel = "SMS";
     public static final Long channelId = 9L, systemUserId = -99L;
@@ -40,9 +42,9 @@ public class ALController
     private static TreeMap<String, AXSetting> settings = new TreeMap<>();
     public static String chargeScheme = "S01";
 
-    public static String senderId = "WAKULIMASAC", user = "Wakulima Sacco ", clientId ="1092";
+    public static String senderId = "WAKULIMASAC", user = "Wakulima Sacco ", clientId = "1092";
     public static String password = "f5fb2487f3546093894d44a68e743a9b62407b3531aa9f6d761b52f86afef3969a09f558dfc748f4793df9d7a66e26be31679f48f5b63354bb73afb0cf0bff38";
-    public static String apiKey ="iv0akGjyFWNDUltdqeh2oQucBYLCOsbP8ZJHmXxn31VzfK4gr97Ip6wT5SMEAR";
+    public static String apiKey = "iv0akGjyFWNDUltdqeh2oQucBYLCOsbP8ZJHmXxn31VzfK4gr97Ip6wT5SMEAR";
     private static ArrayList<ALHeader> headers = new ArrayList();
 
     private static ArrayList<TRItem> treeLog = new ArrayList();
@@ -67,6 +69,7 @@ public class ALController
         {
             setSystemRole(getdClient().queryUserRoles(systemUserId, channelId).get(0));
             setBranch(getdClient().queryChannelBranch(channelId));
+            getdClient().synchroniseDates();
         }
     }
 
@@ -132,13 +135,13 @@ public class ALController
 
     public static void addTreeItem(TRItem item)
     {
-        getTreeLog().add(item);
+        // getTreeLog().add(item);
         if (APMain.apFrame != null)
         {
             SwingUtilities.invokeLater(()
-                    -> 
-                    {
-                        APMain.apFrame.insertTreeItem(item, channel);
+                    ->
+            {
+                APMain.apFrame.insertTreeItem(item, channel);
             });
         }
     }
@@ -151,7 +154,7 @@ public class ALController
             getxFile().createDirectory(arc.getParent());
             if (getTreeLog() != null)
             {
-                try (ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(arc)))
+                try ( ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(arc)))
                 {
                     os.writeObject(getTreeLog());
                     os.flush();
@@ -306,5 +309,10 @@ public class ALController
     public static void setSystemRole(USRole aSystemRole)
     {
         systemRole = aSystemRole;
+    }
+
+    public static boolean isSuspended()
+    {
+        return getWorker().isYes(APController.suspendAlert);
     }
 }

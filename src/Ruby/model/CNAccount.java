@@ -7,6 +7,7 @@ package Ruby.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  *
@@ -25,8 +26,13 @@ public class CNAccount implements Serializable, Comparable<CNAccount>
     private CNBranch branch = new CNBranch();
     private CNCurrency currency = new CNCurrency();
     private BigDecimal clearedBalance = BigDecimal.ZERO;
+    private BigDecimal balance = BigDecimal.ZERO;
     private String custCat;
     private String productDesc;
+    private Date openDate;
+    private Date endDate;
+    
+    
 
     public CNAccount()
     {
@@ -251,5 +257,53 @@ public class CNAccount implements Serializable, Comparable<CNAccount>
     public void setProductDesc(String productDesc)
     {
         this.productDesc = productDesc;
+    }
+
+    /**
+     * @return the balance
+     */
+    public BigDecimal getBalance()
+    {
+        return balance;
+    }
+
+    /**
+     * @param balance the balance to set
+     */
+    public void setBalance(BigDecimal balance)
+    {
+        this.balance = balance;
+    }
+
+    /**
+     * @return the openDate
+     */
+    public Date getOpenDate()
+    {
+        return openDate;
+    }
+
+    /**
+     * @param openDate the openDate to set
+     */
+    public void setOpenDate(Date openDate)
+    {
+        this.openDate = openDate;
+    }
+
+    /**
+     * @return the endDate
+     */
+    public Date getEndDate()
+    {
+        return endDate;
+    }
+
+    /**
+     * @param endDate the endDate to set
+     */
+    public void setEndDate(Date endDate)
+    {
+        this.endDate = endDate;
     }
 }

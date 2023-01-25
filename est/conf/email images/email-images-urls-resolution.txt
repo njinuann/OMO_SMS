@@ -1,0 +1,26 @@
+The Images are hosted on Evan's Google Drive as 
+https://drive.google.com/drive/u/0/folders/1ehAV33pL-Vu38o89nCStGy-4DAK9BtCT
+
+Google Drive has offered the official feature to create an embedding link.
+
+1) Open the preview page of public image,
+2) Click the 3 dots icon on the top-right then "Open in new window",
+3) Click the 3 dots icon again in new window, then "Embed item".
+
+For embed > https://drive.google.com/file/d/file's ID/preview
+For direct link > https://drive.google.com/uc?export=view&id=file's ID
+For share > https://drive.google.com/file/d/file's ID/view?usp=sharing
+
+Embed URLs below
+
+fortune-logo -> https://drive.google.com/uc?export=view&id=1exQC3a-bgHCNe3KxQml5Cxr9LWVrtzVs
+
+facebook-logo -> https://drive.google.com/uc?export=view&id=1Ka9Fnw4urS3nLOpKMHf9aVlV4_s6Yug6
+
+twitter-logo -> https://drive.google.com/uc?export=view&id=1lEBKF6RAfOqCKlPf9D-gfgmdERchiL9k
+
+instagram-logo -> https://drive.google.com/uc?export=view&id=15PawnmB16R11ZsoUZ5bexMGHbgcGLLJp
+
+linkedin-logo -> https://drive.google.com/uc?export=view&id=1JMgJNtJ2ui3dleXQZWJxm02FQhK4gxcL
+
+youtube-logo -> https://drive.google.com/uc?export=view&id=1JTVfoWShNvMPymJ7-FZ4ChYxpZMOFHRa

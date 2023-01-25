@@ -1,0 +1,18 @@
+<html>
+    <body style="font-family:Arial; font-size:12px; line-height:150%; "><b>Dear {NAME},</b><br/>
+    Please find your account statement attached to this email. When asked for password to open the statement, enter the last 5 digits of your account number.
+    <br/>
+    <br/>
+    For example, for account number 0123456789 the password is 56789
+    <br/>
+    <br/>
+    For more information, Please visit any Nawiri Sacco branch near you.
+    <br/>
+    Nawiri Sacco.
+    <br/>
+    <hr/>
+    <font color="gray">
+    This message contains confidential information and is intended only for {NAME}. If you are not the named addressee you should not disseminate, distribute or copy this e-mail. Please notify the sender immediately if you have received this e-mail by mistake and delete this e-mail from your system. Finally, the recipient should check this email and any attachments for the presence of viruses. The bank accepts no liability for any damage caused by any virus transmitted by this email. {DATE}.
+    </font>
+    </body>
+</html>

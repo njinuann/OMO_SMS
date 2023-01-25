@@ -279,6 +279,20 @@ public final class AXCaller extends APLog implements Serializable
     {
         getCalls().put(String.format("%02d", (replace ? getCalls().size() - 1 : getCalls().size())) + callRef.toLowerCase(), new LGItem(prefix, callObject));
     }
+     
+     @Override
+    public void setCall(String callRef, Object callObject, long position)
+    {
+        setCall(callRef, callObject, false, position, null);
+    }
+     
+    public void setCall(String callRef, Object callObject, boolean replace, long position, String prefix)
+    {
+        if (!isBlank(callObject))
+        {
+            getCalls().put(String.format("%02d", (position <= 0 ? (replace ? getCalls().size() - 1 : getCalls().size()) : position)) + (callRef = callRef.toLowerCase()), new LGItem(callRef,  callObject));
+        }
+    }
 
     public void dump(PrintStream p, String indent)
     {
@@ -300,4 +314,6 @@ public final class AXCaller extends APLog implements Serializable
     {
         this.tag = tag;
     }
+
+    
 }

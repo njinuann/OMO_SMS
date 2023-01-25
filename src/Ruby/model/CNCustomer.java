@@ -19,6 +19,7 @@ public class CNCustomer implements Serializable
     private String custCat;
     private String custName;
     private String mobileNumber;
+    private String identity;
 
     /**
      * @return the buId
@@ -114,5 +115,21 @@ public class CNCustomer implements Serializable
     public void setMobileNumber(String mobileNumber)
     {
         this.mobileNumber = mobileNumber;
+    }
+
+    /**
+     * @return the identity
+     */
+    public String getIdentity()
+    {
+        return identity;
+    }
+
+    /**
+     * @param identity the identity to set
+     */
+    public void setIdentity(String identity)
+    {
+        this.identity = identity;
     }
 }

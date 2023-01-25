@@ -26,6 +26,7 @@ import java.util.zip.ZipOutputStream;
 
 public class AXFile
 {
+
     private static final int BUFFER_SIZE = 1048576;
     private static final Charset CHARSET = StandardCharsets.UTF_8;
 
@@ -198,6 +199,15 @@ public class AXFile
             return true;
         }
         return false;
+    }
+
+    public File checkParent(File file)
+    {
+        if (file != null)
+        {
+            createDirectory(file.getParent());
+        }
+        return file;
     }
 
     public void compressFileToGzip(File f) throws Exception

@@ -20,7 +20,10 @@ import Ruby.acx.ULPanel;
 import Ruby.acx.TCPanel;
 import Ruby.acx.AXNode;
 import Ruby.acx.AXWorker;
+import Ruby.acx.CSPanel;
 import Ruby.acx.TRItem;
+import Ruby.est.ESController;
+import Ruby.est.ESPanel;
 import Ruby.model.ALHeader;
 import Ruby.sms.ALController;
 import Ruby.sms.ALPanel;
@@ -51,6 +54,7 @@ import javax.swing.tree.DefaultTreeModel;
  */
 public class APFrame extends javax.swing.JFrame
 {
+
     private static final ATBox box = new ATBox(APMain.acxLog);
 
     /**
@@ -115,6 +119,16 @@ public class APFrame extends javax.swing.JFrame
         alertChargesMenuItem = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         manageAlertsMenuItem = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        suspendAlertCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
+        mailerMenu = new javax.swing.JMenu();
+        mailerSettingsMenuItem = new javax.swing.JMenuItem();
+        manageMailerTaskMenuItem = new javax.swing.JMenuItem();
+        jSeparator16 = new javax.swing.JPopupMenu.Separator();
+        mailerSchemeMenuItem = new javax.swing.JMenuItem();
+        mailerChargesMenuItem = new javax.swing.JMenuItem();
+        jSeparator19 = new javax.swing.JPopupMenu.Separator();
+        suspendMailerCheckBoxMenuItem = new javax.swing.JCheckBoxMenuItem();
         aboutMenu = new javax.swing.JMenu();
         aboutMenuItem = new javax.swing.JMenuItem();
 
@@ -194,7 +208,7 @@ public class APFrame extends javax.swing.JFrame
         activityBox.setBackground(new java.awt.Color(102, 204, 255));
         activityBox.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         activityBox.setForeground(java.awt.Color.white);
-        activityBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SMS" }));
+        activityBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SMS", "EST" }));
         activityBox.setBorder(null);
         activityBox.setFocusable(false);
         ((JLabel)activityBox.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
@@ -508,8 +522,98 @@ public class APFrame extends javax.swing.JFrame
             }
         });
         alertsMenu.add(manageAlertsMenuItem);
+        alertsMenu.add(jSeparator3);
+
+        suspendAlertCheckBoxMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F11, java.awt.event.InputEvent.ALT_MASK));
+        suspendAlertCheckBoxMenuItem.setSelected(!ESController.isSuspended());
+        suspendAlertCheckBoxMenuItem.setText("Suspend Alert");
+        suspendAlertCheckBoxMenuItem.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
+                suspendAlertCheckBoxMenuItemItemStateChanged(evt);
+            }
+        });
+        suspendAlertCheckBoxMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                suspendAlertCheckBoxMenuItemActionPerformed(evt);
+            }
+        });
+        alertsMenu.add(suspendAlertCheckBoxMenuItem);
 
         menuBar.add(alertsMenu);
+
+        mailerMenu.setMnemonic('L');
+        mailerMenu.setText("Mailer");
+
+        mailerSettingsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.ALT_MASK));
+        mailerSettingsMenuItem.setText("Mailer Settings");
+        mailerSettingsMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mailerSettingsMenuItemActionPerformed(evt);
+            }
+        });
+        mailerMenu.add(mailerSettingsMenuItem);
+
+        manageMailerTaskMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
+        manageMailerTaskMenuItem.setText("Manage Tasks");
+        manageMailerTaskMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                manageMailerTaskMenuItemActionPerformed(evt);
+            }
+        });
+        mailerMenu.add(manageMailerTaskMenuItem);
+        mailerMenu.add(jSeparator16);
+
+        mailerSchemeMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_MASK));
+        mailerSchemeMenuItem.setText("Mailer Schemes");
+        mailerSchemeMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mailerSchemeMenuItemActionPerformed(evt);
+            }
+        });
+        mailerMenu.add(mailerSchemeMenuItem);
+
+        mailerChargesMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.ALT_MASK));
+        mailerChargesMenuItem.setText("Mailer Charges");
+        mailerChargesMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                mailerChargesMenuItemActionPerformed(evt);
+            }
+        });
+        mailerMenu.add(mailerChargesMenuItem);
+        mailerMenu.add(jSeparator19);
+
+        suspendMailerCheckBoxMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F10, java.awt.event.InputEvent.ALT_MASK));
+        suspendMailerCheckBoxMenuItem.setSelected(!ESController.isSuspended());
+        suspendMailerCheckBoxMenuItem.setText("Suspend Mailer");
+        suspendMailerCheckBoxMenuItem.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
+                suspendMailerCheckBoxMenuItemItemStateChanged(evt);
+            }
+        });
+        suspendMailerCheckBoxMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                suspendMailerCheckBoxMenuItemActionPerformed(evt);
+            }
+        });
+        mailerMenu.add(suspendMailerCheckBoxMenuItem);
+
+        menuBar.add(mailerMenu);
 
         aboutMenu.setMnemonic('B');
         aboutMenu.setText("About");
@@ -546,7 +650,7 @@ public class APFrame extends javax.swing.JFrame
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(leftToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(metersToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(metersToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(bigSplitPane))
                 .addContainerGap())
         );
@@ -617,6 +721,7 @@ public class APFrame extends javax.swing.JFrame
     {
         metersToolBar.removeAll();
         metersToolBar.add(getSmsMeter());
+        metersToolBar.add(getEstMeter());
     }
 
     private void manageAlertsMenuItemActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_manageAlertsMenuItemActionPerformed
@@ -672,6 +777,104 @@ public class APFrame extends javax.swing.JFrame
         }
     }//GEN-LAST:event_activityBoxItemStateChanged
 
+    private void mailerSettingsMenuItemActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_mailerSettingsMenuItemActionPerformed
+    {//GEN-HEADEREND:event_mailerSettingsMenuItemActionPerformed
+        // TODO add your handling code here:
+//        if (adminLogin.isUserAdmin("Mailer Settings", "SS"))
+//        {
+//            estSettings.showDialog(ESController.module);
+//        }
+        estSettings.showDialog(ESController.module);
+    }//GEN-LAST:event_mailerSettingsMenuItemActionPerformed
+
+    private void manageMailerTaskMenuItemActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_manageMailerTaskMenuItemActionPerformed
+    {//GEN-HEADEREND:event_manageMailerTaskMenuItemActionPerformed
+        // TODO add your handling code here:
+//        if (adminLogin.isUserAdmin("Mailer Tasks", "SA"))
+//        {
+//            estTasks.showDialog();
+//        }
+        estTasks.showDialog();
+    }//GEN-LAST:event_manageMailerTaskMenuItemActionPerformed
+
+    private void mailerSchemeMenuItemActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_mailerSchemeMenuItemActionPerformed
+    {//GEN-HEADEREND:event_mailerSchemeMenuItemActionPerformed
+        // TODO add your handling code here:
+        if (adminLogin.isUserAdmin("Mailer Schemes", "SE"))
+        {
+            estSchemes.showDialog(ESController.module);
+        }
+    }//GEN-LAST:event_mailerSchemeMenuItemActionPerformed
+
+    private void mailerChargesMenuItemActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_mailerChargesMenuItemActionPerformed
+    {//GEN-HEADEREND:event_mailerChargesMenuItemActionPerformed
+        // TODO add your handling code here:
+//        if (adminLogin.isUserAdmin("Mailer Charges", "SC"))
+//        {
+//            estCharges.showDialog(ESController.module);
+//        }
+        estCharges.showDialog(ESController.module);
+    }//GEN-LAST:event_mailerChargesMenuItemActionPerformed
+
+    private void suspendMailerCheckBoxMenuItemItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_suspendMailerCheckBoxMenuItemItemStateChanged
+    {//GEN-HEADEREND:event_suspendMailerCheckBoxMenuItemItemStateChanged
+        // TODO add your handling code here:
+        if (suspendMailerCheckBoxMenuItem.isSelected() == ESController.isSuspended())
+        {
+//            if (adminLogin.isUserAdmin("Suspend Mailer", "SU"))
+//            {
+//                APController.updateSetting("SuspendMailer", (APController.suspendMailer = (suspendMailerCheckBoxMenuItem.isSelected() ? "No" : "Yes")));
+//            }
+            APController.updateSetting("SuspendMailer", (APController.suspendMailer = (suspendMailerCheckBoxMenuItem.isSelected() ? "No" : "Yes")));
+            suspendMailerCheckBoxMenuItem.setText(ESController.isSuspended() ? "Start Mailer" : "Suspend Mailer");
+            suspendMailerCheckBoxMenuItem.setSelected(!ESController.isSuspended());
+            if (ESController.isSuspended())
+            {
+                estMeter.setConnected(false, "SUSPENDED");
+            }
+            else
+            {
+                estMeter.setConnected(true, "ONLINE");
+            }
+
+        }
+    }//GEN-LAST:event_suspendMailerCheckBoxMenuItemItemStateChanged
+
+    private void suspendMailerCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_suspendMailerCheckBoxMenuItemActionPerformed
+    {//GEN-HEADEREND:event_suspendMailerCheckBoxMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_suspendMailerCheckBoxMenuItemActionPerformed
+
+    private void suspendAlertCheckBoxMenuItemItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_suspendAlertCheckBoxMenuItemItemStateChanged
+    {//GEN-HEADEREND:event_suspendAlertCheckBoxMenuItemItemStateChanged
+        // TODO add your handling code here:
+        if (suspendAlertCheckBoxMenuItem.isSelected() == ALController.isSuspended())
+        {
+//            if (adminLogin.isUserAdmin("Suspend Mailer", "SU"))
+//            {
+//                APController.updateSetting("SuspendMailer", (APController.suspendMailer = (suspendMailerCheckBoxMenuItem.isSelected() ? "No" : "Yes")));
+//            }
+            APController.updateSetting("SuspendAlert", (APController.suspendAlert = (suspendAlertCheckBoxMenuItem.isSelected() ? "No" : "Yes")));
+            suspendAlertCheckBoxMenuItem.setText(ALController.isSuspended() ? "Start Alerts" : "Suspend Alerts");
+            suspendAlertCheckBoxMenuItem.setSelected(!ALController.isSuspended());
+
+            if (ALController.isSuspended())
+            {
+                smsMeter.setConnected(false, "SUSPENDED");
+            }
+            else
+            {
+                smsMeter.setConnected(true, "ONLINE");
+            }
+
+        }
+    }//GEN-LAST:event_suspendAlertCheckBoxMenuItemItemStateChanged
+
+    private void suspendAlertCheckBoxMenuItemActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_suspendAlertCheckBoxMenuItemActionPerformed
+    {//GEN-HEADEREND:event_suspendAlertCheckBoxMenuItemActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_suspendAlertCheckBoxMenuItemActionPerformed
+
     public final void showTxnTree()
     {
         try
@@ -700,15 +903,30 @@ public class APFrame extends javax.swing.JFrame
                     vec.add(new AXNode("LA", "Loan Arrears Alerts"));
                     vec.add(new AXNode("BR", "Broadcast Alerts"));
 
+                    vec.add(new AXNode("WR", "Credit Alerts Channe;s"));
+                    vec.add(new AXNode("GR", "Guarantor Notification"));
+
                     setTreeLog(ALController.getTreeLog());
+                    setHeaders(ALController.getHeaders());
+                    break;
+                case "EST":
+                    vec.add(new AXNode("D", "Daily Statement"));
+                    vec.add(new AXNode("W", "Weekly Statement"));
+                    vec.add(new AXNode("M", "Monthly Statement"));
+
+                    vec.add(new AXNode("Q", "Quarterly Statement"));
+                    vec.add(new AXNode("A", "Annual Statement"));
+                    vec.add(new AXNode("O", "One-Off Statement"));
+
+                    setTreeLog(ESController.getTreeLog());
                     setHeaders(ALController.getHeaders());
                     break;
             }
 
             vec.stream().forEach((item)
-                    -> 
-                    {
-                        setNodeItems(approvedNode, rejectedNode, getTreeLog(), item);
+                    ->
+            {
+                setNodeItems(approvedNode, rejectedNode, getTreeLog(), item);
             });
 
             getWorker().expandAllNodes(txnTree, TRItem.class);
@@ -727,16 +945,16 @@ public class APFrame extends javax.swing.JFrame
         try
         {
             list.stream().filter((item) -> (Objects.equals(node.getCode(), item.getCode()))).forEach((item)
-                    -> 
-                    {
-                        if (item.isApproved())
-                        {
-                            approvedItems.insert(new DefaultMutableTreeNode(item), 0);
-                        }
-                        else
-                        {
-                            rejectedItems.insert(new DefaultMutableTreeNode(item), 0);
-                        }
+                    ->
+            {
+                if (item.isApproved())
+                {
+                    approvedItems.insert(new DefaultMutableTreeNode(item), 0);
+                }
+                else
+                {
+                    rejectedItems.insert(new DefaultMutableTreeNode(item), 0);
+                }
             });
         }
         catch (Exception ex)
@@ -793,28 +1011,28 @@ public class APFrame extends javax.swing.JFrame
 
         LinkedHashSet<ALHeader> columns = new LinkedHashSet<>();
         getTreeLog().stream().filter((item) -> (Objects.equals(tXNode.getCode(), item.getCode()) && tXNode.isApproved() == item.isApproved())).map((item)
-                -> 
-                {
-                    getHeaders().stream().filter((header) -> (item.getDetail().containsKey(header))).map((header)
-                            -> 
-                            {
-                                row.add(item.getDetail().get(header));
-                                return header;
-                    }).forEach((header)
-                            -> 
-                            {
-                                columns.add(header);
-                    });
-                    return item;
+                ->
+        {
+            getHeaders().stream().filter((header) -> (item.getDetail().containsKey(header))).map((header)
+                    ->
+            {
+                row.add(item.getDetail().get(header));
+                return header;
+            }).forEach((header)
+                    ->
+            {
+                columns.add(header);
+            });
+            return item;
         }).map((_item)
-                -> 
-                {
-                    data.add(0, row.toArray());
-                    return _item;
+                ->
+        {
+            data.add(0, row.toArray());
+            return _item;
         }).forEach((_item)
-                -> 
-                {
-                    row.clear();
+                ->
+        {
+            row.clear();
         });
 
         table.setModel(new javax.swing.table.DefaultTableModel(data.toArray(new Object[0][0]), columns.isEmpty() ? getHeaders().toArray() : columns.toArray())
@@ -893,6 +1111,15 @@ public class APFrame extends javax.swing.JFrame
 
     public void insertTreeItem(TRItem item, String channel)
     {
+        switch (channel)
+        {
+            case "SMS":
+                ALController.getTreeLog().add(item);
+                break;
+            case "EST":
+                ESController.getTreeLog().add(item);
+                break;
+        }
         if (Objects.equals(getWorker().getBoxValue(activityBox).toUpperCase(), channel.toUpperCase()))
         {
             DefaultTreeModel model = (DefaultTreeModel) txnTree.getModel();
@@ -950,7 +1177,7 @@ public class APFrame extends javax.swing.JFrame
     private void showAboutInfo()
     {
         JOptionPane.showMessageDialog(this,
-                "<html><font face=\"Arial\" weight=\"plain\" size=\"2\">Ruby version 4.0.0, Product licensed to " + getdClient().queryBankName() + ", Mukurweini, Kenya"
+                "<html><font face=\"Arial\" weight=\"plain\" size=\"2\">Ruby Alerts version 4.0.0, Product licensed to " + getdClient().queryBankName() + ", Mukurweini, Kenya"
                 + "<br/>Copyright \u00A9 2017-" + AXConstant.yearFormat.format(new Date()) + ", Neptune Software Plc, 7th floor Victoria Towers,"
                 + "<br/>Kilimanjaro Road, Upperhill, Nairobi Kenya. All rights reserved.</font></html>", APController.application, JOptionPane.INFORMATION_MESSAGE);
     }
@@ -968,6 +1195,11 @@ public class APFrame extends javax.swing.JFrame
     public void setSmsCounter(int c, boolean outwards)
     {
         getSmsMeter().setUpperCounter(c);
+    }
+
+    public void showEstSignal(String txn, boolean outwards)
+    {
+        getEstMeter().setValue(outwards ? 400 : -400, txn);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -988,19 +1220,29 @@ public class APFrame extends javax.swing.JFrame
     private javax.swing.JMenu fileMenu;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator10;
+    private javax.swing.JPopupMenu.Separator jSeparator16;
+    private javax.swing.JPopupMenu.Separator jSeparator19;
     private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JToolBar leftToolBar;
     private javax.swing.JPanel lowerMessagePanel;
     private javax.swing.JTable lowerTable;
     private javax.swing.JScrollPane lowerTableScroller;
+    private javax.swing.JMenuItem mailerChargesMenuItem;
+    private javax.swing.JMenu mailerMenu;
+    private javax.swing.JMenuItem mailerSchemeMenuItem;
+    private javax.swing.JMenuItem mailerSettingsMenuItem;
     private javax.swing.JMenuItem manageAlertsMenuItem;
+    private javax.swing.JMenuItem manageMailerTaskMenuItem;
     public javax.swing.JMenuBar menuBar;
     private javax.swing.JToolBar metersToolBar;
     private javax.swing.JSplitPane msgSplitPane;
     private javax.swing.JSplitPane rightSplitPane;
     private javax.swing.JButton shutdownButton;
     private javax.swing.JMenuItem shutdownMenuItem;
+    private javax.swing.JCheckBoxMenuItem suspendAlertCheckBoxMenuItem;
+    private javax.swing.JCheckBoxMenuItem suspendMailerCheckBoxMenuItem;
     private javax.swing.JPanel treePanel;
     private javax.swing.JTree txnTree;
     private javax.swing.JScrollPane txnTreeScroller;
@@ -1013,11 +1255,17 @@ public class APFrame extends javax.swing.JFrame
 
     private final ALPanel alerts = new ALPanel();
     private final AXMeter smsMeter = new AXMeter("SMS", 1);
+    private final AXMeter estMeter = new AXMeter("EST", 2);
     private final TCPanel smsCharges = new TCPanel();
 
     private final ASPanel smsSettings = new ASPanel();
     private final ULPanel adminLogin = new ULPanel();
-    private final AEPanel cryptPanel = new AEPanel();    
+    private final AEPanel cryptPanel = new AEPanel();
+
+    private final CSPanel estSchemes = new CSPanel();
+    private final ASPanel estSettings = new ASPanel();
+    private final TCPanel estCharges = new TCPanel();
+    private final ESPanel estTasks = new ESPanel();
 
     private final AUPanel usersPanel = new AUPanel();
     private ArrayList<ALHeader> headers = ALController.getHeaders();
@@ -1071,5 +1319,13 @@ public class APFrame extends javax.swing.JFrame
     private DBClient getdClient()
     {
         return getBox().getdClient();
+    }
+
+    /**
+     * @return the estMeter
+     */
+    public AXMeter getEstMeter()
+    {
+        return estMeter;
     }
 }

@@ -57,7 +57,10 @@ public enum ALHeader
     SchemeId("Scheme Id"),
     AccessCode("Access Code"),
     Message("Message"),
-    RecSt("Status");
+    RecSt("Status"), Task("TTaskask"),
+    Address("Address"), 
+    StartDt("Start Date"),
+    EndDt("End Date");
 
     private String text;
 

@@ -1129,7 +1129,7 @@ public final class ALPanel extends javax.swing.JPanel
             getAlert().setDescription(descriptionField.getText());
             getAlert().setChargeCode(getWorker().getBoxValue(chargeBox));
             getAlert().setRunTime(runTimeBox.getSelectedItem().toString());
-            if ("LA".equals(getAlert().getAlertType()) || "LD".equals(getAlert().getAlertType()))
+            if ("LA".equals(getAlert().getAlertType()) || "LD".equals(getAlert().getAlertType()) || "GR".equals(getAlert().getAlertType()))
             {
                 getAlert().setAlertDays(alertDaysField.getText());
             }

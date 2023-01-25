@@ -12,6 +12,8 @@ import Ruby.acx.ACPanel;
 import Ruby.acx.ACStream;
 import Ruby.acx.AXAppender;
 import Ruby.acx.CSWorker;
+import Ruby.est.ESController;
+import Ruby.est.ESProcessor;
 import Ruby.sms.ALController;
 import Ruby.sms.ALProcessor;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
@@ -38,9 +40,11 @@ import org.apache.log4j.Logger;
  */
 public class APMain
 {
+
     public static APFrame apFrame;
     public static AXLogger acxLog;
     public static AXLogger smsLog;
+    public static AXLogger estLog;
 
     public static boolean exit = false;
     public static Color infoColor = new Color(0, 0, 128);
@@ -101,12 +105,12 @@ public class APMain
 
         consoleLayout.setHorizontalGroup(
                 consoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         consoleLayout.setVerticalGroup(
                 consoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         consoleDialog.setSize(500, 500);
@@ -121,23 +125,24 @@ public class APMain
     {
         acxLog = new AXLogger("acx", "acx" + File.separator + "logs");
         smsLog = new AXLogger("sms", "sms" + File.separator + "logs");
+        estLog = new AXLogger("est", "est" + File.separator + "logs");
         acxLog.logEvent("==========<" + APController.application + ">==========");
     }
 
     private void displayWindow()
     {
         EventQueue.invokeLater(()
-                -> 
-                {
-                    apFrame = new APFrame();
-                    consoleDialog.setVisible(false);
-                    for (Window window : APFrame.getWindows())
-                    {
-                        getWorker().prepareAllScrollers(window);
-                    }
-                    apFrame.setLocationRelativeTo(null);
-                    apFrame.setVisible(true);
-                    consoleDialog.dispose();
+                ->
+        {
+            apFrame = new APFrame();
+            consoleDialog.setVisible(false);
+            for (Window window : APFrame.getWindows())
+            {
+                getWorker().prepareAllScrollers(window);
+            }
+            apFrame.setLocationRelativeTo(null);
+            apFrame.setVisible(true);
+            consoleDialog.dispose();
         });
     }
 
@@ -176,18 +181,23 @@ public class APMain
     {
         APController.initialize();
         ALController.initialize();
+        ESController.initialize();
     }
 
     public static void startTasks()
     {
         scheduler.scheduleWithFixedDelay(ALProcessor::process, 0, 10, SECONDS);
+        scheduler.scheduleAtFixedRate(ESProcessor::process, 0, 10, SECONDS);
+        
         scheduler.scheduleAtFixedRate(CSWorker::process, 0, 1, DAYS);
         scheduler.scheduleWithFixedDelay(ALController::expireOldAlerts, 0, 1, DAYS);
+        
         scheduler.scheduleWithFixedDelay(APController::deleteXapiHistory, 0, 1, DAYS);
-
         scheduler.scheduleAtFixedRate(ALController::saveTreeLog, 2, 2, HOURS);
+        
         scheduler.scheduleAtFixedRate(APController::purgeTreeItems, 1, 1, HOURS);
         scheduler.scheduleAtFixedRate(APController::refresh, 1, 1, HOURS);
+        
         scheduler.scheduleAtFixedRate(APController::gc, 1, 1, HOURS);
     }
 

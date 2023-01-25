@@ -6,6 +6,7 @@
 <entry key="TreeLogSize">1000</entry>
 <entry key="DatabaseDriverName">oracle.jdbc.driver.OracleDriver</entry>
 <entry key="LockShutdown">No</entry>
+<entry key="SuspendAlert">Yes</entry>
 <entry key="YearsToKeepLogs">2</entry>
 <entry key="XapiWsContext">http://localhost:5555/rubikonci/services/|http://localhost:5555/rubikonci/services/</entry>
 <entry key="DisplayLines">1000</entry>
@@ -15,6 +16,7 @@
 <entry key="CmSchemaName">CHANNELMANAGERTEST</entry>
 <entry key="DefaultLanguage">EN</entry>
 <entry key="LanguageFieldId">119</entry>
+<entry key="SuspendMailer">Yes</entry>
 <entry key="CoreSchemaName">WAKULIMATEST</entry>
 <entry key="CountryCode">254</entry>
 <entry key="XapiPassword">ACdFgyoXow8uEp5NQ6xqXQ==</entry>

@@ -106,6 +106,7 @@ import javax.xml.soap.SOAPException;
  */
 public final class AXWorker implements Serializable
 {
+
     private ATBox box;
     private final Pattern holderPattern = Pattern.compile("\\{.*?\\}");
     private final Pattern namePattern = Pattern.compile("^[a-zA-Z\\s]*$");
@@ -359,17 +360,17 @@ public final class AXWorker implements Serializable
         try
         {
             fieldMap.keySet().stream().map((key)
-                    -> 
-                    {
-                        ArrayList arrayList = new ArrayList();
-                        arrayList.add(key);
-                        arrayList.add(fieldMap.get(key));
-                        arrayList.add(APController.getFields().getProperty(key, capitalize(spaceWords(key))));
-                        return arrayList;
+                    ->
+            {
+                ArrayList arrayList = new ArrayList();
+                arrayList.add(key);
+                arrayList.add(fieldMap.get(key));
+                arrayList.add(APController.getFields().getProperty(key, capitalize(spaceWords(key))));
+                return arrayList;
             }).forEach((arrayList)
-                    -> 
-                    {
-                        tableModel.addRow(arrayList.toArray());
+                    ->
+            {
+                tableModel.addRow(arrayList.toArray());
             });
 
             JTable table = new JTable(tableModel);
@@ -563,9 +564,9 @@ public final class AXWorker implements Serializable
         }
 
         splitMap.values().stream().forEach((spl)
-                -> 
-                {
-                    request.getCharge().getSplitList().add(spl);
+                ->
+        {
+            request.getCharge().getSplitList().add(spl);
         });
         splitMap.clear();
 
@@ -805,20 +806,20 @@ public final class AXWorker implements Serializable
 
             checkBox.setFont(border.getTitleFont());
             checkBox.addActionListener((ActionEvent e)
-                    -> 
+                    ->
+            {
+                boolean selected = checkBox.isSelected();
+                for (Component comp : panel.getComponents())
+                {
+                    if (selectBoxes && comp instanceof JCheckBox)
                     {
-                        boolean selected = checkBox.isSelected();
-                        for (Component comp : panel.getComponents())
-                        {
-                            if (selectBoxes && comp instanceof JCheckBox)
-                            {
-                                ((JCheckBox) comp).setSelected(selected);
-                            }
-                            else
-                            {
-                                comp.setEnabled(selected);
-                            }
-                        }
+                        ((JCheckBox) comp).setSelected(selected);
+                    }
+                    else
+                    {
+                        comp.setEnabled(selected);
+                    }
+                }
             });
             checkBox.setFocusPainted(false);
             panel.setBorder(new CQBorder(checkBox, panel, border.getBorder()));
@@ -881,6 +882,25 @@ public final class AXWorker implements Serializable
             getLog().logEvent(csvList, ex);
         }
         return list;
+    }
+
+    public String createCsvList(ArrayList list)
+    {
+        StringBuilder buffer = new StringBuilder();
+        if (list != null)
+        {
+            list.stream().forEach((item)
+                    ->
+            {
+                buffer.append(buffer.length() > 0 ? "," + item : item);
+            });
+        }
+        return buffer.toString();
+    }
+
+    public String formatDate(SimpleDateFormat format, Date date)
+    {
+        return !isBlank(date) ? format.format(date) : null;
     }
 
     public ArrayList<String> createArrayList(String csvList)
@@ -960,9 +980,9 @@ public final class AXWorker implements Serializable
         if (list != null)
         {
             list.stream().forEach((item)
-                    -> 
-                    {
-                        buffer.append(buffer.length() > 0 ? "," + item : item);
+                    ->
+            {
+                buffer.append(buffer.length() > 0 ? "," + item : item);
             });
         }
         return buffer.toString();
@@ -1257,8 +1277,7 @@ public final class AXWorker implements Serializable
         return dataMap;
     }
 
- 
-     public String errorCode(Exception event)
+    public String errorCode(Exception event)
     {
         String error = AXResult.FAILED.name();
         try
@@ -1309,7 +1328,6 @@ public final class AXWorker implements Serializable
         }
         return error;
     }
-
 
     public AXSetting createSetting(Field field, String module)
     {
@@ -1512,17 +1530,17 @@ public final class AXWorker implements Serializable
             element.setPrefix(prefix);
 
             list.stream().forEach((o)
-                    -> 
-                    {
-                        if (o instanceof QName)
-                        {
-                            element.removeNamespaceDeclaration(((QName) o).getPrefix());
-                            element.removeAttribute((QName) o);
-                        }
-                        else if (o instanceof String)
-                        {
-                            element.removeNamespaceDeclaration((String) o);
-                        }
+                    ->
+            {
+                if (o instanceof QName)
+                {
+                    element.removeNamespaceDeclaration(((QName) o).getPrefix());
+                    element.removeAttribute((QName) o);
+                }
+                else if (o instanceof String)
+                {
+                    element.removeNamespaceDeclaration((String) o);
+                }
             });
 
             Iterator<String> children = element.getChildElements();
@@ -1564,9 +1582,9 @@ public final class AXWorker implements Serializable
                 }
             }
             namespaces.keySet().stream().forEach((key)
-                    -> 
-                    {
-                        ownPrefixes.remove(key);
+                    ->
+            {
+                ownPrefixes.remove(key);
             });
             if (element.getPrefix() != null)
             {
@@ -1599,20 +1617,20 @@ public final class AXWorker implements Serializable
     public void updateTreeUI(JTree tree, boolean resetScrollers)
     {
         EventQueue.invokeLater(()
-                -> 
+                ->
+        {
+            Container container = SwingUtilities.getAncestorOfClass(JScrollPane.class, tree);
+            if (container instanceof JScrollPane)
+            {
+                JScrollPane scroller = (JScrollPane) container;
+                scroller.getHorizontalScrollBar().setValue(0);
+                if (resetScrollers)
                 {
-                    Container container = SwingUtilities.getAncestorOfClass(JScrollPane.class, tree);
-                    if (container instanceof JScrollPane)
-                    {
-                        JScrollPane scroller = (JScrollPane) container;
-                        scroller.getHorizontalScrollBar().setValue(0);
-                        if (resetScrollers)
-                        {
-                            scroller.getVerticalScrollBar().setValue(0);
-                        }
-                        scroller.setBorder(null);
-                    }
-                    tree.updateUI();
+                    scroller.getVerticalScrollBar().setValue(0);
+                }
+                scroller.setBorder(null);
+            }
+            tree.updateUI();
         });
     }
 
@@ -1631,10 +1649,10 @@ public final class AXWorker implements Serializable
         button.setFocusPainted(false);
         button.setFocusable(false);
         button.addActionListener((ActionEvent e)
-                -> 
-                {
-                    JScrollBar scrollBar = scroller.getVerticalScrollBar();
-                    scrollBar.setValue(scrollBar.getMaximum());
+                ->
+        {
+            JScrollBar scrollBar = scroller.getVerticalScrollBar();
+            scrollBar.setValue(scrollBar.getMaximum());
         });
         scroller.setCorner(ScrollPaneConstants.LOWER_RIGHT_CORNER, button);
     }
@@ -2004,6 +2022,11 @@ public final class AXWorker implements Serializable
     public String checkLength(String value, Integer maxLen)
     {
         return String.valueOf(value).length() > maxLen ? value.substring(value.length() - maxLen) : value;
+    }
+
+    public String firstName(String name)
+    {
+        return name != null && name.trim().length() > 0 ? capitalize(name.trim().split("\\s")[0]) : name;
     }
 
     public boolean isCsvList(String value)
